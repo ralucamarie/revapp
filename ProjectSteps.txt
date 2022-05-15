@@ -1,0 +1,4 @@
+
+
+http://localhost/revapp/php-backend/api/users/create.php
+http://localhost/revapp/php-backend/api/users/read.php
