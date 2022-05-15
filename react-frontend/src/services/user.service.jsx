@@ -1,26 +1,55 @@
 import axios from "axios";
 
-const USER_API_URL = "http://localhost/revapp/php-backend/api/";
+// axios
+//   .post("http://localhost:8080/pictures/platenumber", plate_number, {
+//     headers: {
+//       "Content-Type": "application/json",
+
+//       Accept: "application/json",
+
+//       Authorization: "Bearer " + token,
+//     },
+
+//     mode: "no-cors",
+//   })
+//   .then((response) => console.log(response.data));
+
+
+const USER_API_URL = "http://localhost/revapp/php-backend/api";
+
 
 class UserService {
   getUsers() {
-    return axios.get(`${USER_API_URL}/read.php`);
+    return axios.get(`${USER_API_URL}/users/read.php`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      mode: "no-cors",
+    });
   }
 
   createUser(user) {
-    return axios.post(`${USER_API_URL}/create.php`, user);
+    return axios.post(`${USER_API_URL}/users/create.php`, user, {
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      mode: "no-cors",
+    });
   }
 
   getUserById(id) {
-    return axios.get(`${USER_API_URL}/single_user.php`, { params: { id: id } });
+    return axios.get(`${USER_API_URL}/users/single_user.php`, { params: { id: id } });
   }
 
   updateUser(user) {
-    return axios.put(`${USER_API_URL}/update.php`, user);
+    return axios.put(`${USER_API_URL}/users/update.php`, user);
   }
 
   deleteUser(id) {
-    return axios.delete(`${USER_API_URL}/delete.php`, { params: { id: id } });
+    return axios.delete(`${USER_API_URL}/users/delete.php`, { params: { id: id } });
   }
 }
 

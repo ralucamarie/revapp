@@ -1,4 +1,15 @@
+Proiectul va fi clonat in folderul de XAMPP/htdocs:
+xampp\htdocs\revapp
 
 
-http://localhost/revapp/php-backend/api/users/create.php
-http://localhost/revapp/php-backend/api/users/read.php
+
+
+Linkuri pt testare backend in POSTMAN:
+
+Metoda Get: http://localhost/revapp/php-backend/api/users/read.php
+
+Metoda Post: http://localhost/revapp/php-backend/api/users/create.php
+
+Metoda GET: http://localhost/revapp/php-backend/api/users/single_user.php?id=72
+
+Metoda delete: http://localhost/revapp/php-backend/api/users/delete.php?id=72
