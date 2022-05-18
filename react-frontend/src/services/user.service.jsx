@@ -1,19 +1,5 @@
 import axios from "axios";
 
-// axios
-//   .post("http://localhost:8080/pictures/platenumber", plate_number, {
-//     headers: {
-//       "Content-Type": "application/json",
-
-//       Accept: "application/json",
-
-//       Authorization: "Bearer " + token,
-//     },
-
-//     mode: "no-cors",
-//   })
-//   .then((response) => console.log(response.data));
-
 
 const USER_API_URL = "http://localhost/revapp/php-backend/api";
 

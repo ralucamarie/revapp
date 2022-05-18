@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import UserService from "../../services/user.service";
+
 class ViewUserComponent extends Component {
   constructor(props) {
     super(props);
