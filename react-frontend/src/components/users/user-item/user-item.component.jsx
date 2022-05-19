@@ -10,6 +10,10 @@ const UserItem = (props) => {
     props.onDelete();
   };
 
+  const view = (user) => {
+    //link catre pagina de view user
+  };
+
   return (
     <div className="user-item-container">
       <div className="user-details">
