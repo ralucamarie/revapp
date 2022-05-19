@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import UserService from "../../services/user.service";
-import UserItem from "./user-item/user-item.component";
+import UserItem from "../users/user-item/user-item.component";
+import AddUser from "./add-user.component.jsx/add-user.component";
 
 const ListUserComponent = (props) => {
   const [users, setUsers] = useState([]);
+  // const [newUser, setNewUser] = useState([]);
+
   console.log(users);
   useEffect(() => {
     UserService.getUsers().then((res) => {
@@ -12,13 +15,18 @@ const ListUserComponent = (props) => {
     });
   }, []);
 
-  // deleteUser(id) {
-  //   UserService.deleteUser(id).then((res) => {
-  //     this.setState({
-  //       users: this.state.users.filter((user) => user.id !== id),
-  //     });
-  //   });
-  // }
+  const onSaveUserHandler = () => {
+    UserService.getUsers().then((res) => {
+      console.log(res.data);
+      setUsers(res.data);
+    });
+  };
+
+  const deleteUserHandler = () => {
+    UserService.getUsers().then((res) => {
+      setUsers(res.data);
+    });
+  };
   // viewUser(id) {
   //   this.props.history.push(`/view-user/${id}`);
   // }
@@ -34,6 +42,8 @@ const ListUserComponent = (props) => {
     <div>
       <h2 className="text-center">Users List</h2>
       <div className="row">
+        <AddUser onSave={onSaveUserHandler} />
+
         <button
           className="btn btn-primary"
           // onClick={this.addUser}
@@ -86,7 +96,11 @@ const ListUserComponent = (props) => {
           </table> */}
 
         {users.map((user) => (
-          <UserItem key={user.id} user={user} />
+          <UserItem
+            key={user.id}
+            user={user}
+            onDelete={() => deleteUserHandler()}
+          />
         ))}
       </div>
     </div>

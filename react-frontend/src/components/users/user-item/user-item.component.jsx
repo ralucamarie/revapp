@@ -1,7 +1,14 @@
+import userService from "../../../services/user.service";
 import "./user-item.styles.css";
 
-const UserItem = (user) => {
-  const { first_name, last_name, email_id } = user.user;
+const UserItem = (props) => {
+  const user = props.user;
+  const { first_name, last_name, email_id } = user;
+
+  const deleteUser = (id) => {
+    userService.deleteUser(id);
+    props.onDelete();
+  };
 
   return (
     <div className="user-item-container">
@@ -19,7 +26,7 @@ const UserItem = (user) => {
         </button>
         <button
           style={{ marginLeft: "10px" }}
-          //   onClick={() => this.deleteUser(user.id)}
+          onClick={() => deleteUser(user.id)}
           className="btn btn-danger"
         >
           Delete
