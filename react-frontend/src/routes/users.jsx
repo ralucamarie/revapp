@@ -27,6 +27,25 @@ const ListUserComponent = (props) => {
       setUsers(res.data);
     });
   };
+
+  function displayUsers() {
+    if(users.length !== 0) {
+      return (
+        users.map((user) => (
+          <UserItem
+            key={user.id}
+            user={user}
+            onDelete={() => deleteUserHandler()}
+          />
+        ))
+      )
+      
+    } else {
+      return <div>There is no users</div>
+    }
+  }
+
+  
   // viewUser(id) {
   //   this.props.history.push(`/view-user/${id}`);
   // }
@@ -95,13 +114,7 @@ const ListUserComponent = (props) => {
             </tbody>
           </table> */}
 
-        {users.map((user) => (
-          <UserItem
-            key={user.id}
-            user={user}
-            onDelete={() => deleteUserHandler()}
-          />
-        ))}
+        {displayUsers}
       </div>
     </div>
   );
