@@ -5,6 +5,9 @@ import AddUser from "../components/users/add-user/add-user.component";
 
 const ListUserComponent = (props) => {
   const [users, setUsers] = useState([]);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editedUser, setEditedUser] = useState({});
+  // const [userToAdd, setUserToAdd] = useState({});
   // const [newUser, setNewUser] = useState([]);
 
   console.log(users);
@@ -15,91 +18,56 @@ const ListUserComponent = (props) => {
     });
   }, []);
 
-  const onSaveUserHandler = () => {
-    UserService.getUsers().then((res) => {
-      console.log(res.data);
-      setUsers(res.data);
-    });
-  };
+  const onSaveUserHandler = (newUser) => {
+    console.log(newUser);
+    if (isEditMode && editedUser) {
+      const newUserList = users.map((user) =>
+        user.id !== newUser.id ? user : newUser
+      );
+      UserService.updateUser(newUser).then(setUsers(newUserList));
+    } else {
+      UserService.createUser(newUser).then(setUsers([...users, newUser]));
+    }
 
+    setEditedUser({});
+    setIsEditMode(false);
+    alert(`Users updated.`);
+  };
+  const editUserHandler = (user) => {
+    console.log(user);
+    setIsEditMode(true);
+    setEditedUser(user);
+    // UserService.updateUser(user)
+  };
   const deleteUserHandler = () => {
     UserService.getUsers().then((res) => {
       setUsers(res.data);
     });
   };
-  // viewUser(id) {
-  //   this.props.history.push(`/view-user/${id}`);
-  // }
-  // editUser(id) {
-  //   this.props.history.push(`/add-user/${id}`);
-  // }
 
-  // addUser() {
-  //   this.props.history.push("/add-user/_add");
-  // }
-  // render() {
+  const addUserOnClick = () => {
+    setIsEditMode(!isEditMode);
+  };
+
   return (
     <div>
       <h2 className="text-center">Users List</h2>
-      <div className="row">
-        <AddUser onSave={onSaveUserHandler} />
-
-        <button
-          className="btn btn-primary"
-          // onClick={this.addUser}
-        >
-          Add User
-        </button>
-      </div>
+      <button className="btn btn-primary" onClick={() => addUserOnClick()}>
+        {!isEditMode ? "Add User" : " Close "}
+      </button>
+      {isEditMode && (
+        <div className="row">
+          <AddUser onSave={onSaveUserHandler} userToEdit={editedUser} />
+        </div>
+      )}
       <br></br>
       <div className="row">
-        {/* <table className="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th> User First Name</th>
-                <th> User Last Name</th>
-                <th> User Email Id</th>
-                <th> Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.users.map((user) => (
-                <tr key={user.id}>
-                  <td> {user.first_name} </td>
-                  <td> {user.last_name}</td>
-                  <td> {user.email_id}</td>
-                  <td>
-                    <button
-                      onClick={() => this.editUser(user.id)}
-                      className="btn btn-warning"
-                    >
-                      Update{" "}
-                    </button>
-                    <button
-                      style={{ marginLeft: "10px" }}
-                      onClick={() => this.deleteUser(user.id)}
-                      className="btn btn-danger"
-                    >
-                      Delete{" "}
-                    </button>
-                    <button
-                      style={{ marginLeft: "10px" }}
-                      onClick={() => this.viewUser(user.id)}
-                      className="btn btn-info"
-                    >
-                      View{" "}
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table> */}
-
         {users.map((user) => (
           <UserItem
             key={user.id}
             user={user}
             onDelete={() => deleteUserHandler()}
+            onEdit={editUserHandler}
           />
         ))}
       </div>

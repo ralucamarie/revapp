@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import UserService from "../../../services/user.service";
 
-const newUser = {
+let newUser = {
+  id: null,
   first_name: "",
   last_name: "",
   email_id: "",
   password: "",
 };
+//TODO: if userToEdit is true then display values
 
-const AddUser = ({ onSave }) => {
-  const [userToAdd, setUserToAdd] = useState(newUser);
+const AddUser = ({ onSave, userToEdit }) => {
+  const [userToAdd, setUserToAdd] = useState(userToEdit ? userToEdit : newUser);
+  // const [id, setId] = useState(userToEdit ? userToEdit.id : null);
 
   const changeFirstNameHandler = (event) => {
     setUserToAdd({ ...userToAdd, first_name: event.target.value });
@@ -30,22 +33,25 @@ const AddUser = ({ onSave }) => {
   const saveUser = (e) => {
     e.preventDefault();
 
-    let newUser = {
+    newUser = {
+      id: userToEdit ? userToEdit.id : null,
       first_name: userToAdd.first_name,
       last_name: userToAdd.last_name,
       email_id: userToAdd.email_id,
       password: userToAdd.password,
     };
     console.log("user => " + JSON.stringify(newUser));
-    UserService.createUser(newUser);
+    // UserService.createUser(newUser);
+    // userToEdit ? onSave(...userToEdit, ...newUser) : onSave(newUser);
+    onSave(newUser);
     newUser = {
+      id: null,
       first_name: "",
       last_name: "",
       email_id: "",
       password: "",
     };
     setUserToAdd(newUser);
-    onSave();
   };
 
   return (
