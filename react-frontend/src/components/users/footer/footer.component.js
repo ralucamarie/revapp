@@ -13,7 +13,7 @@ function Copyright() {
         <React.Fragment>
             {'© '}
             <Link color="inherit" href="#">
-                Car Sharing
+               Online Shops Reviews App
             </Link>{' '}
             {new Date().getFullYear()}
         </React.Fragment>
