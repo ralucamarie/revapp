@@ -3,4 +3,7 @@
 # dependencies
 react-frontend/node_modules
 .vscode/
-
+node_modules/**/*
+dist/**/*
+dist/src/*
+dist/src

@@ -1,12 +1,12 @@
-import logo from "./logo.svg";
+import { Link, Outlet } from "react-router-dom";
 import "./App.css";
 import UserService from "./services/user.service.jsx";
-import ListUserComponent from "./components/users/list-user.component";
+
 
 function App() {
   return (
     <div className="App">
-      <ListUserComponent />
+      <Outlet />
     </div>
   );
 }
