@@ -6,9 +6,6 @@ import UserService from "./services/user.service.jsx";
 function App() {
   return (
     <div className="App">
-      <nav>
-        <Link to="/">Homepage</Link>| <Link to="/users">Users</Link>
-      </nav>
       <Outlet />
     </div>
   );
