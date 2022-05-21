@@ -3,15 +3,11 @@ import "./user-item.styles.css";
 
 const UserItem = (props) => {
   const user = props.user;
-  const { first_name, last_name, email_id } = user;
+  const { id, first_name, last_name, email_id } = user;
 
   const deleteUser = (id) => {
     userService.deleteUser(id);
     props.onDelete();
-  };
-
-  const view = (user) => {
-    //link catre pagina de view user
   };
 
   return (
@@ -25,8 +21,9 @@ const UserItem = (props) => {
         <button
           //   onClick={() => this.editUser(user.id)}
           className="btn btn-warning"
+          onClick={() => props.onEdit(user)}
         >
-          Update
+          Edit
         </button>
         <button
           style={{ marginLeft: "10px" }}
