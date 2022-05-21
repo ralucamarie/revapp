@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import UserService from "../services/user.service";
 import UserItem from "../components/users/user-item/user-item.component";
 import AddUser from "../components/users/add-user/add-user.component";
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 
 const ListUserComponent = (props) => {
   const [users, setUsers] = useState([]);
@@ -30,24 +30,26 @@ const ListUserComponent = (props) => {
   };
 
   function displayUsers() {
-    if(users.length !== 0) {
-      return (
-        users.map((user) => (
-          <UserItem
-            key={user.id}
-            user={user}
-            onDelete={() => deleteUserHandler()}
-          />
-        ))
-      )
-      
+    if (users.length !== 0) {
+      return users.map((user) => (
+        <UserItem
+          key={user.id}
+          user={user}
+          onDelete={() => deleteUserHandler()}
+        />
+      ));
     } else {
-      return <div>There are no users</div>
+      return <div>There are no users</div>;
     }
   }
 
   return (
-    <Box height="100vh" display="flex" flexDirection="column" sx={{marginTop: 10}}>
+    <Box
+      height="100vh"
+      display="flex"
+      flexDirection="column"
+      sx={{ marginTop: 10 }}
+    >
       <h2 className="text-center">Users List</h2>
       <div className="row">
         <AddUser onSave={onSaveUserHandler} />
@@ -60,9 +62,7 @@ const ListUserComponent = (props) => {
         </button>
       </div>
       <br></br>
-      <div className="row">
-        {displayUsers}
-      </div>
+      <div className="row">{displayUsers()}</div>
     </Box>
   );
 };
