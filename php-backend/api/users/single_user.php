@@ -20,7 +20,10 @@ if ($item != null) {
         "id" =>  $item->id,
         "first_name" => $item->first_name,
         "last_name" => $item->last_name,
-        "email_id" => $item->email_id
+        "address_id" => $item->address_id,
+        "role_id" => $item->role_id,
+        "email_id" => $item->email_id,
+        "password" => $item->password
     );
 
     http_response_code(200);

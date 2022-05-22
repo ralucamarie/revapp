@@ -21,7 +21,10 @@ $data = json_decode(file_get_contents("php://input"));
 $item->id = $data->id;
 $item->first_name = $data->first_name;
 $item->last_name = $data->last_name;
+$item->address_id = $data->address_id;
+$item->role_id = $data->role_id;
 $item->email_id = $data->email_id;
+$item->password = $data->password;
 
 
 if ($item->updateUser()) {

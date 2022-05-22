@@ -25,7 +25,10 @@ if ($itemCount > 0) {
             "id" => $id,
             "first_name" => $first_name,
             "last_name" => $last_name,
-            "email_id" => $email_id
+            "address_id" => $address_id,
+            "role_id" => $role_id,
+            "email_id" => $email_id,
+            "password" => $password
         );
 
         array_push($userArr, $e);
