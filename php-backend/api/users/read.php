@@ -23,9 +23,12 @@ if ($itemCount > 0) {
         extract($row);
         $e = array(
             "id" => $id,
-            "first_name" => $first_name,
-            "last_name" => $last_name,
-            "email_id" => $email_id
+            "name" => $name,
+            "surname" => $surname,
+            "email" => $email,
+            "city" => $city,
+            "country" => $country,
+            "role" => $role_name,
         );
 
         array_push($userArr, $e);

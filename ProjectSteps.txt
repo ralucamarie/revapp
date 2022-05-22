@@ -13,3 +13,14 @@ Metoda Post: http://localhost/revapp/php-backend/api/users/create.php
 Metoda GET: http://localhost/revapp/php-backend/api/users/single_user.php?id=72
 
 Metoda delete: http://localhost/revapp/php-backend/api/users/delete.php?id=72
+
+SELECT COMBINED TABLES:
+SELECT U.name, U.surname, U.email, A.city, A.country, R.role_name FROM user U, addresses A, role R WHERE U.address_ID=A.id AND U.role_ID=R.id;
+
+TODO Backend:
+- create Models for all the tables in the DB
+- Update the USER model AND user API - to get/send data accordingly with the new sructure
+TODO Frontend:
+- adjust USERS to receive/send data according to the new structure
+- implement MAtreial UI for all the components
+- Create Log-in/Sign-in page

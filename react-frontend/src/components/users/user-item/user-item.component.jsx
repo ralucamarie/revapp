@@ -3,7 +3,7 @@ import "./user-item.styles.css";
 
 const UserItem = (props) => {
   const user = props.user;
-  const { id, first_name, last_name, email_id } = user;
+  const { id, name, surname, email, city, country, role } = user;
 
   const deleteUser = (id) => {
     userService.deleteUser(id);
@@ -13,9 +13,12 @@ const UserItem = (props) => {
   return (
     <div className="user-item-container">
       <div className="user-details">
-        <div>{first_name}</div>
-        <div>{last_name}</div>
-        <div>{email_id}</div>
+        <div>{name}</div>
+        <div>{surname}</div>
+        <div>{email}</div>
+        <div>{city}</div>
+        <div>{country}</div>
+        <div>{role}</div>
       </div>
       <div className="buttons">
         <button
@@ -31,13 +34,6 @@ const UserItem = (props) => {
           className="btn btn-danger"
         >
           Delete
-        </button>
-        <button
-          style={{ marginLeft: "10px" }}
-          //   onClick={() => this.viewUser(user.id)}
-          className="btn btn-info"
-        >
-          View
         </button>
       </div>
     </div>

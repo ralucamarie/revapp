@@ -3,9 +3,9 @@ import UserService from "../../../services/user.service";
 
 let newUser = {
   id: null,
-  first_name: "",
-  last_name: "",
-  email_id: "",
+  name: "",
+  surname: "",
+  email: "",
   password: "",
 };
 //TODO: if userToEdit is true then display values
@@ -15,13 +15,13 @@ const AddUser = ({ onSave, userToEdit }) => {
   // const [id, setId] = useState(userToEdit ? userToEdit.id : null);
 
   const changeFirstNameHandler = (event) => {
-    setUserToAdd({ ...userToAdd, first_name: event.target.value });
+    setUserToAdd({ ...userToAdd, name: event.target.value });
   };
   const changeLastNameHandler = (event) => {
-    setUserToAdd({ ...userToAdd, last_name: event.target.value });
+    setUserToAdd({ ...userToAdd, surname: event.target.value });
   };
   const changeEmailHandler = (event) => {
-    setUserToAdd({ ...userToAdd, email_id: event.target.value });
+    setUserToAdd({ ...userToAdd, email: event.target.value });
   };
   const changePasswordHandler = (event) => {
     setUserToAdd({ ...userToAdd, password: event.target.value });
@@ -35,9 +35,9 @@ const AddUser = ({ onSave, userToEdit }) => {
 
     newUser = {
       id: userToEdit ? userToEdit.id : null,
-      first_name: userToAdd.first_name,
-      last_name: userToAdd.last_name,
-      email_id: userToAdd.email_id,
+      name: userToAdd.name,
+      surname: userToAdd.surname,
+      email: userToAdd.email,
       password: userToAdd.password,
     };
     console.log("user => " + JSON.stringify(newUser));
@@ -46,9 +46,9 @@ const AddUser = ({ onSave, userToEdit }) => {
     onSave(newUser);
     newUser = {
       id: null,
-      first_name: "",
-      last_name: "",
-      email_id: "",
+      name: "",
+      surname: "",
+      email: "",
       password: "",
     };
     setUserToAdd(newUser);
@@ -66,9 +66,9 @@ const AddUser = ({ onSave, userToEdit }) => {
                   <label> First Name: </label>
                   <input
                     placeholder="First Name"
-                    name="first_name"
+                    name="name"
                     className="form-control"
-                    value={userToAdd.first_name}
+                    value={userToAdd.name}
                     onChange={changeFirstNameHandler}
                   />
                 </div>
@@ -76,9 +76,9 @@ const AddUser = ({ onSave, userToEdit }) => {
                   <label> Last Name: </label>
                   <input
                     placeholder="Last Name"
-                    name="last_name"
+                    name="surname"
                     className="form-control"
-                    value={userToAdd.last_name}
+                    value={userToAdd.surname}
                     onChange={changeLastNameHandler}
                   />
                 </div>
@@ -86,9 +86,9 @@ const AddUser = ({ onSave, userToEdit }) => {
                   <label> Email Id: </label>
                   <input
                     placeholder="Email Address"
-                    name="email_id"
+                    name="email"
                     className="form-control"
-                    value={userToAdd.email_id}
+                    value={userToAdd.email}
                     onChange={changeEmailHandler}
                   />
                 </div>

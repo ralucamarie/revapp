@@ -21,12 +21,14 @@ const ListUserComponent = (props) => {
 
   const onSaveUserHandler = (newUser) => {
     console.log(newUser);
-    if (isEditMode && editedUser) {
+    if (editedUser.id) {
+      console.log("Edited user= " + editedUser);
       const newUserList = users.map((user) =>
         user.id !== newUser.id ? user : newUser
       );
       UserService.updateUser(newUser).then(setUsers(newUserList));
     } else {
+      console.log("User to add " + newUser);
       UserService.createUser(newUser).then(setUsers([...users, newUser]));
     }
 
@@ -76,7 +78,11 @@ const ListUserComponent = (props) => {
       </button>
       {isEditMode && (
         <div className="row">
-          <AddUser onSave={onSaveUserHandler} userToEdit={editedUser} />
+          <AddUser
+            key="addUser"
+            onSave={onSaveUserHandler}
+            userToEdit={editedUser}
+          />
         </div>
       )}
       <br></br>
