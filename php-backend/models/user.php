@@ -11,9 +11,9 @@
         public $id;
         public $first_name;
         public $last_name;
-        public $role_id;
-        public $address_id;
-        public $email_id;
+        public $role_ID;
+        public $address_ID;
+        public $email;
         public $password;
       
         // db conn
@@ -23,7 +23,7 @@
 
         // GET Users
         public function getUsers(){
-            $sqlQuery = "SELECT id, first_name, last_name, email_id, role_id, address_id, email_id, password_id
+            $sqlQuery = "SELECT id, first_name, last_name, role_ID, address_ID, email, password
                FROM " . $this->dbTable . "";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
@@ -37,9 +37,9 @@
                     SET
                     first_name = :first_name,
                     last_name = :first_name, 
-                    role_id = :role_id;
-                    address_id = :address_id;
-                    email_id = :email_id;
+                    role_ID = :role_ID;
+                    address_ID = :address_ID;
+                    email = :email;
                     password = :password";
                   
         
@@ -48,16 +48,16 @@
             // sanitize
             $this->first_name=htmlspecialchars(strip_tags($this->first_name));
             $this->last_name=htmlspecialchars(strip_tags($this->last_name));
-            $this->role_id=htmlspecialchars(strip_tags($this->role_id));  
-            $this->address_id=htmlspecialchars(strip_tags($this->address_id));
-            $this->email_id=htmlspecialchars(strip_tags($this->email_id));
+            $this->role_ID=htmlspecialchars(strip_tags($this->role_ID));  
+            $this->address_ID=htmlspecialchars(strip_tags($this->address_ID));
+            $this->email=htmlspecialchars(strip_tags($this->email));
             $this->password=htmlspecialchars(strip_tags($this->password));   
             // bind data
             $stmt->bindParam(":first_name", $this->first_name);
             $stmt->bindParam(":last_name", $this->last_name);
-            $stmt->bindParam(":address_id", $this->address_id);
-            $stmt->bindParam(":role_id", $this->role_id);
-            $stmt->bindParam(":email_id", $this->email_id);
+            $stmt->bindParam(":address_ID", $this->address_ID);
+            $stmt->bindParam(":role_ID", $this->role_ID);
+            $stmt->bindParam(":email", $this->email);
             $stmt->bindParam(":password",$this->password);
            
         
@@ -73,9 +73,9 @@
                        id, 
                        first_name, 
                        last_name,
-                       address_id,
-                       role_id, 
-                       email_id,
+                       address_ID,
+                       role_ID, 
+                       email,
                        password
                      FROM
                        ". $this->dbTable ."
@@ -93,9 +93,9 @@
 
            $this->first_name = $dataRow['first_name'];
            $this->last_name = $dataRow['last_name'];
-           $this->address_id = $dataRow['address_id'];
-           $this->role_id = $dataRow['role_id'];
-           $this->email_id = $dataRow['email_id'];
+           $this->address_ID = $dataRow['address_ID'];
+           $this->role_ID = $dataRow['role_ID'];
+           $this->email = $dataRow['email'];
            $this->password = $dataRow['password'];
     }
 
@@ -103,15 +103,14 @@
 
         // UPDATE User
         public function updateUser(){
-            $sqlQuery = "UPDATE
-                        ". $this->dbTable ."
-                    SET
-                    first_name = :first_name, 
-                    last_name = :last_name,
-                    role_id = :role_id,
-                    address_id = :address_id,
-                    email_id = :email_id,
-                    password = :password
+            $sqlQuery = "UPDATE ". $this->dbTable ." 
+                    SET 
+                        first_name = :first_name, 
+                        last_name = :last_name,
+                        role_ID = :role_ID,
+                        address_ID = :address_ID,
+                        email = :email,
+                        password = :password
                     WHERE 
                         id = :id";
         
@@ -119,18 +118,18 @@
         
             $this->first_name=htmlspecialchars(strip_tags($this->first_name));
             $this->last_name=htmlspecialchars(strip_tags($this->last_name));
-            $this->role_id=htmlspecialchars(strip_tags($this->role_id));
-            $this->address_id=htmlspecialchars(strip_tags($this->address_id));
-            $this->email_id=htmlspecialchars(strip_tags($this->email_id));
+            $this->role_ID=htmlspecialchars(strip_tags($this->role_ID));
+            $this->address_ID=htmlspecialchars(strip_tags($this->address_ID));
+            $this->email=htmlspecialchars(strip_tags($this->email));
             $this->password=htmlspecialchars(strip_tags($this->password));
             $this->id=htmlspecialchars(strip_tags($this->id));
         
             // bind data
             $stmt->bindParam(":first_name", $this->first_name);
             $stmt->bindParam(":last_name", $this->last_name);
-            $stmt->bindParam(":role_id", $this->role_id);
-            $stmt->bindParam(":address_id", $this->address_id);
-            $stmt->bindParam(":email_id", $this->email_id);
+            $stmt->bindParam(":role_ID", $this->role_ID);
+            $stmt->bindParam(":address_ID", $this->address_ID);
+            $stmt->bindParam(":email", $this->email);
             $stmt->bindParam(":password", $this->password);
             $stmt->bindParam(":id", $this->id);
         

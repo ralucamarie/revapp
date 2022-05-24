@@ -9,25 +9,25 @@ include_once '../../models/user.php';
 $database = new Database();
 $db = $database->getConnection();
 
-$item = new User($db);
+$item = new Review($db);
 
 $item->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-$item->getSingleUser();
+$item->getSingleReview();
 
 if ($item != null) {
-    $user_Arr = array(
+    $reviewArray = array(
         "id" =>  $item->id,
-        "first_name" => $item->first_name,
-        "last_name" => $item->last_name,
-        "address_id" => $item->address_ID,
-        "role_id" => $item->role_ID,
-        "email_id" => $item->email,
-        "password" => $item->password
+        "review_date" => $item->review_date,
+        "shop_ID" => $item->shop_ID,
+        "user_ID" => $item->user_ID,
+        "rating" => $item->rating,
+        "title" => $item->title,
+        "content" => $item->content
     );
 
     http_response_code(200);
-    echo json_encode($user_Arr);
+    echo json_encode($reviewArray);
 } else {
     http_response_code(404);
     echo json_encode("User record not found.");
