@@ -3,6 +3,7 @@ import UserService from "../services/user.service";
 import UserItem from "../components/users/user-item/user-item.component";
 import AddUser from "../components/users/add-user/add-user.component";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 const ListUserComponent = (props) => {
   const [users, setUsers] = useState([]);
@@ -33,14 +34,12 @@ const ListUserComponent = (props) => {
     }
 
     setEditedUser({});
-    setIsEditMode(false);
-    alert(`Users updated.`);
+    // setIsEditMode(false);
+    // alert(`Users updated.`);
   };
   const editUserHandler = (user) => {
-    console.log(user);
     setIsEditMode(true);
     setEditedUser(user);
-    // UserService.updateUser(user)
   };
   const deleteUserHandler = () => {
     UserService.getUsers().then((res) => {
@@ -51,6 +50,7 @@ const ListUserComponent = (props) => {
   const addUserOnClick = () => {
     setIsEditMode(!isEditMode);
   };
+
   function displayUsers() {
     if (users.length !== 0) {
       return users.map((user) => (
@@ -58,6 +58,7 @@ const ListUserComponent = (props) => {
           key={user.id}
           user={user}
           onDelete={() => deleteUserHandler()}
+          onEdit={() => editUserHandler(user)}
         />
       ));
     } else {
@@ -66,18 +67,17 @@ const ListUserComponent = (props) => {
   }
 
   return (
-    <Box
-      height="100vh"
-      display="flex"
-      flexDirection="column"
-      sx={{ marginTop: 10 }}
-    >
-      <h2 className="text-center">Users List</h2>
-      <button className="btn btn-primary" onClick={() => addUserOnClick()}>
+    <Box height="100vh" sx={{ marginTop: 10 }}>
+      <Button
+        variant="contained"
+        className="button"
+        onClick={() => addUserOnClick()}
+      >
         {!isEditMode ? "Add User" : " Close "}
-      </button>
+      </Button>
       {isEditMode && (
         <div className="row">
+          <h2>Add a new user:</h2>
           <AddUser
             key="addUser"
             onSave={onSaveUserHandler}
@@ -86,16 +86,7 @@ const ListUserComponent = (props) => {
         </div>
       )}
       <br></br>
-      <div className="row">
-        {users.map((user) => (
-          <UserItem
-            key={user.id}
-            user={user}
-            onDelete={() => deleteUserHandler()}
-            onEdit={editUserHandler}
-          />
-        ))}
-      </div>
+      <h2 className="text-center">Users List</h2>
       <div className="row">{displayUsers()}</div>
     </Box>
   );

@@ -24,3 +24,6 @@ TODO Frontend:
 - adjust USERS to receive/send data according to the new structure
 - implement MAtreial UI for all the components
 - Create Log-in/Sign-in page
+
+npm install @material-ui/core
+npm install @mui/icons-material

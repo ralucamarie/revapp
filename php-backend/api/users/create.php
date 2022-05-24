@@ -7,39 +7,86 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 include_once '../../models/user.php';
+include_once '../../models/role.php';
+include_once '../../models/address.php';
 include_once '../../config/database.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$item = new User($db);
-// $userAddress = new Address($db);
-// $userRole = new Role($db);
+
+$user = new User($db);
+$userAddress = new Address($db);
+$userRole = new Role($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
-$item->name = $data->name;
-$item->surname = $data->surname;
-$item->email = $data->email;
-$item->password = $data->password;
+//get user details from the received data
+$user->name = $data->name;
+$user->surname = $data->surname;
+$user->email = $data->email;
+$user->password = $data->password;
 
-// $userAddress->city = $data->city;
-// $userAddress->country = $data->country;
+//get address details from the received data
+$userAddress->city = $data->city;
+$userAddress->country = $data->country;
+var_dump($userAddress);
 
-// $userRole->role_name = $data->role_name;
+//get user role name from received data
+$userRole->role_name = $data->role;
+var_dump($userRole);
 
-//Se verifica userRole in baza de date si se ia role_ID din tabelul ROLES
-//Se asigneaza id-ul obtinut la $item->role_ID
-//Se cauta city + country in baza de date - daca exista se ia id-ul si se asigneaza la $item - > address_ID; Daca nu exista, se adauga si n baza de date si se retine id-ul care la fel se adauga la item.
+//get address id if exists
+$userAddress->getAddressIdByCityAndCountry();
+if ($userAddress->id) {
+    $user->address_ID = $userAddress->id;
+    echo ("User Address found:" . $userAddress->id . " " . $userAddress->city);
+    echo ($user->address_ID);
+} else {
+    echo ('No address found');
+}
+// $addresses = new Address($db);;
+// $stmt = $addresses->getAddresses();
+// $addressCount = $stmt->rowCount();
+// //asses if our address exists
+// if ($addressCount > 0) {
+//     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+//         extract($row);
+//         var_dump($row);
+//         if ((strtolower($userAddress->city) == strtolower($city)) && (strtolower($userAddress->country) == strtolower($country))) {
+//             $user->address_ID = $id;
+//         } else {
+//             $userAddress->createAddress();
+//             $user->address_ID = $db->lastInsertId;
+//         }
+//     }
+// }
 
-//Cand item-ul e complet se adauga in baza de date
+//get the role id
+//get all roles
+// $roles = new Role($db);
+// $stmt = $roles->getRoles();
+// $rowCount = $stmt->rowCount();
+// if ($rowCount > 0) {
+//     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+//         extract($row);
+//         if (strtoupper($userRole->role_name) == $role_name) {
+//             $user->role_ID = $id;
+//         } else {
+//             echo ("User Role not found");
+//         }
+//     }
+// }
+$userRole->getRoleIdByRoleName();
+if ($userRole->id) {
+    $user->role_ID = $userRole->id;
+    echo ("User Role found:" . $userRole->id);
+    echo ($user->role_ID);
+} else {
+    echo ('No role found');
+}
 
-
-//TODO: Create the model for the Address and for the Role. 
-//the USER model contains adderss_ID and role_ID. Therefore we need to create 2 objects - Role and Address, and use them whenever we add a new user.
-//when a new user is added - search in the DB for the address and Country. If they are not added, add new ADDRESS, else get the adderss_id and assign it to the USER object
-//with the role, assign the USER object the id of the user name received from the frontend.
-if ($item->createUser()) {
+if ($user->createUser()) {
     echo json_encode("User created.");
 } else {
     echo json_encode("Failed to create user.");

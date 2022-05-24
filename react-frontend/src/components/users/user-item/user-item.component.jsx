@@ -13,6 +13,7 @@ const UserItem = (props) => {
   return (
     <div className="user-item-container">
       <div className="user-details">
+        <div>{id}</div>
         <div>{name}</div>
         <div>{surname}</div>
         <div>{email}</div>
