@@ -4,7 +4,7 @@ header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Ca
 header("Content-Type: application/json;");
 
 include_once '../../config/database.php';
-include_once '../../models/categories.php';
+include_once '../../models/category.php';
 
 $database = new Database();
 $db = $database->getConnection();

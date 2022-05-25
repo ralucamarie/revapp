@@ -2,7 +2,7 @@
 class Category{
 
     private $conn;
-    private $dbTable = 'categories';
+    private $dbTable = 'category';
 
     public $id;
     public $category_name;
