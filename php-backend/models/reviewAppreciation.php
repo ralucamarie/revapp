@@ -1,5 +1,5 @@
 <?php
-class ReviewApprecitation{
+class ReviewAppreciation{
 
     private $conn;
     private $dbTable = 'review_appreciation';
@@ -8,7 +8,7 @@ class ReviewApprecitation{
     public $user_ID;
     public $like;
 
-    public function __constuct($db){
+    public function __construct($db){
         $this->conn = $db;
     }
 
@@ -28,9 +28,9 @@ class ReviewApprecitation{
     
             $stmt = $this->conn->prepare($query);
     
-            $this->review_ID=htmlspecialchars(strip_tags($this->review_ID));
-            $this->user_ID=htmlspecialchars(strip_tags($this->user_ID));
-            $this->like=htmlspecialchars(strip_tags($this->like));
+             $this->review_ID=htmlspecialchars(strip_tags($this->review_ID));
+             $this->user_ID=htmlspecialchars(strip_tags($this->user_ID));
+             $this->like=htmlspecialchars(strip_tags($this->like));
 
             $stmt->bindParams(":review_ID",$this->review_ID);
             $stmt->bindParams(":user_ID",$this->user_ID);
@@ -111,8 +111,6 @@ class ReviewApprecitation{
         }
         return false;
     }
-
-    
 
 }
 
