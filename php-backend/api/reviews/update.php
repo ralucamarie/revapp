@@ -9,7 +9,7 @@ header("Access-Control-Allow-Headers: Content-Type,
 
 
 include_once '../../config/database.php';
-include_once '../../models/user.php';
+include_once '../../models/review.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -28,7 +28,7 @@ $item->content = $data->content;
 
 
 if ($item->updateReview()) {
-    echo json_encode("Shop updated.");
+    echo json_encode("Review updated.");
 } else {
-    echo json_encode("Shop could not be updated.");
+    echo json_encode("Review could not be updated.");
 }

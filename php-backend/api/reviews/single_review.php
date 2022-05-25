@@ -4,7 +4,7 @@ header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Ca
 header("Content-Type: application/json;");
 
 include_once '../../config/database.php';
-include_once '../../models/user.php';
+include_once '../../models/review.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -30,5 +30,5 @@ if ($item != null) {
     echo json_encode($reviewArray);
 } else {
     http_response_code(404);
-    echo json_encode("User record not found.");
+    echo json_encode("Review not found.");
 }

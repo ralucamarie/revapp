@@ -8,7 +8,7 @@ header("Access-Control-Allow-Headers: Content-Type,
         Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 include_once '../../config/database.php';
-include_once '../../models/user.php';
+include_once '../../models/review.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -18,7 +18,7 @@ $item = new Review($db);
 $item->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 if ($item->deleteReview()) {
-    echo json_encode("User deleted.");
+echo json_encode("Review deleted.");
 } else {
     echo json_encode("Not deleted");
 }

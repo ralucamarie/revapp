@@ -9,7 +9,7 @@ header("Access-Control-Allow-Headers: Content-Type,
 
 
 include_once '../../config/database.php';
-include_once '../../models/user.php';
+include_once '../../models/shop.php';
 
 $database = new Database();
 $db = $database->getConnection();

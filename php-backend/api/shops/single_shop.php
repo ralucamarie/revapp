@@ -4,7 +4,7 @@ header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Ca
 header("Content-Type: application/json;");
 
 include_once '../../config/database.php';
-include_once '../../models/user.php';
+include_once '../../models/shop.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -27,5 +27,5 @@ if ($item != null) {
     echo json_encode($shop_Array);
 } else {
     http_response_code(404);
-    echo json_encode("User record not found.");
+    echo json_encode("Shop not found.");
 }

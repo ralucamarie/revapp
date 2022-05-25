@@ -6,7 +6,7 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-include_once '../../models/user.php';
+include_once '../../models/review.php';
 include_once '../../config/database.php';
 
 $database = new Database();
@@ -24,7 +24,7 @@ $item->title = $data->title;
 $item->content = $data->content;
 
 if ($item->createReview()) {
-    echo json_encode("User created.");
+    echo json_encode("Review created.");
 } else {
     echo json_encode("Failed to create user.");
 }

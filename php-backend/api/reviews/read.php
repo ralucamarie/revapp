@@ -4,7 +4,7 @@ header("Content-Type: application/json;");
 
 
 include_once '../../config/database.php';
-include_once '../../models/user.php';
+include_once '../../models/review.php';
 
 $database = new Database();
 $db = $database->getConnection();
