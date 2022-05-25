@@ -20,7 +20,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 $item->review_ID = $data->review_ID;
 $item->user_ID = $data->user_ID;
-$item->like = $data->like;
+$item->like_status = $data->like_status;
 
 if ($item->updateReviewAppreciation()) {
     echo json_encode("ReviewAppreciation updated.");

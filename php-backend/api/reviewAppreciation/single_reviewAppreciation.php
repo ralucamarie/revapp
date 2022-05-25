@@ -20,7 +20,7 @@ if ($item != null) {
     $reviewAppreciation_Array = array(
         "review_ID" =>  $item->review_ID,
         "user_ID" => $item->user_ID,
-        "like" => $item->like
+        "like_status" => $item->like_status
     );
 
     http_response_code(200);

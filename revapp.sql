@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 25, 2022 at 06:31 PM
+-- Generation Time: May 25, 2022 at 08:11 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -77,6 +77,14 @@ CREATE TABLE `review` (
   `content` varchar(999) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `review`
+--
+
+INSERT INTO `review` (`id`, `review_date`, `shop_ID`, `user_ID`, `rating`, `title`, `content`) VALUES
+(2, '2022-01-03', 3, 1, 5, 'Ce Naiba', 'Produsele nu sunt ok'),
+(3, '2021-04-01', 4, 1, 1, 'Nu-i OK', 'Produsele sunt expirate');
+
 -- --------------------------------------------------------
 
 --
@@ -85,9 +93,16 @@ CREATE TABLE `review` (
 
 CREATE TABLE `review_appreciation` (
   `review_ID` int(11) NOT NULL,
-  `users_ID` int(11) NOT NULL,
-  `like` tinyint(4) DEFAULT NULL
+  `user_ID` int(11) NOT NULL,
+  `like_status` tinyint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `review_appreciation`
+--
+
+INSERT INTO `review_appreciation` (`review_ID`, `user_ID`, `like_status`) VALUES
+(3, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -182,8 +197,8 @@ ALTER TABLE `review`
 -- Indexes for table `review_appreciation`
 --
 ALTER TABLE `review_appreciation`
-  ADD PRIMARY KEY (`review_ID`,`users_ID`),
-  ADD KEY `FK_user_like_idx` (`users_ID`),
+  ADD PRIMARY KEY (`review_ID`,`user_ID`),
+  ADD KEY `FK_user_like_idx` (`user_ID`),
   ADD KEY `FK_review_idx` (`review_ID`);
 
 --
@@ -228,7 +243,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -264,7 +279,7 @@ ALTER TABLE `review`
 --
 ALTER TABLE `review_appreciation`
   ADD CONSTRAINT `FK_review` FOREIGN KEY (`review_ID`) REFERENCES `review` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_user_like` FOREIGN KEY (`users_ID`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_user_like` FOREIGN KEY (`user_ID`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `shop`

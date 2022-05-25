@@ -24,7 +24,7 @@ if ($itemCount > 0) {
         $e = array(
             "review_ID" => $review_ID,
             "user_ID" => $user_ID,
-            "like" => $like
+            "like_status" => $like_status
         );
 
         array_push($reviewAppreciationArray, $e);
