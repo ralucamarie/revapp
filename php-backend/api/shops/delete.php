@@ -13,6 +13,8 @@ include_once '../../models/shop.php';
 $database = new Database();
 $db = $database->getConnection();
 
+//TODO: When deleting a shop delete all Reviews and ReviewAppreciations
+
 $item = new Shop($db);
 
 $item->id = isset($_GET['id']) ? $_GET['id'] : die();

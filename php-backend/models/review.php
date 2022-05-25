@@ -13,6 +13,7 @@ class Review
     public $title;
     public $content;
 
+
     public function __construct($db){
         $this->conn = $db;
     }

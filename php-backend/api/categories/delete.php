@@ -15,6 +15,8 @@ $db = $database->getConnection();
 
 $item = new Category($db);
 
+//???TODO???: When deleting a Category update all shops category to defalut "Altele"
+
 $item->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 if ($item->deleteCategory()) {

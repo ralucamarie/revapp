@@ -23,7 +23,7 @@ if ($itemCount > 0) {
         extract($row);
         $e = array(
             "id" => $id,
-            "shop_name" => $first_name,
+            "shop_name" => $shop_name,
             "category_ID" => $category_ID,
             "website_url" => $website_url
         );

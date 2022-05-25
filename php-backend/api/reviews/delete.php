@@ -13,7 +13,10 @@ include_once '../../models/review.php';
 $database = new Database();
 $db = $database->getConnection();
 
+//TODO: Delete all ReviewAppreciations when deleting a Review
+
 $item = new Review($db);
+
 
 $item->id = isset($_GET['id']) ? $_GET['id'] : die();
 

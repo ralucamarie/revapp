@@ -26,5 +26,5 @@ $item->content = $data->content;
 if ($item->createReview()) {
     echo json_encode("Review created.");
 } else {
-    echo json_encode("Failed to create user.");
+    echo json_encode("Failed to create Review.");
 }
