@@ -4,6 +4,33 @@ import UserItem from "../components/users/user-item/user-item.component";
 import AddUser from "../components/users/add-user/add-user.component";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { DataGrid } from "@mui/x-data-grid";
+
+const columns = [
+  { field: "id", headerName: "ID", width: 70 },
+  { field: "name", headerName: "First name", width: 130 },
+  { field: "surname", headerName: "Last name", width: 130 },
+  {
+    field: "email",
+    headerName: "Email",
+    width: 130,
+  },
+  {
+    field: "city",
+    headerName: "City",
+    width: 130,
+  },
+  {
+    field: "country",
+    headerName: "Country",
+    width: 130,
+  },
+  {
+    field: "role",
+    headerName: "Role",
+    width: 130,
+  },
+];
 
 const ListUserComponent = (props) => {
   const [users, setUsers] = useState([]);
@@ -14,11 +41,15 @@ const ListUserComponent = (props) => {
 
   console.log(users);
   useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = () => {
     UserService.getUsers().then((res) => {
       console.log(res.data);
       setUsers(res.data);
     });
-  }, []);
+  };
 
   const onSaveUserHandler = (newUser) => {
     console.log(newUser);
@@ -30,7 +61,8 @@ const ListUserComponent = (props) => {
       UserService.updateUser(newUser).then(setUsers(newUserList));
     } else {
       console.log("User to add " + newUser);
-      UserService.createUser(newUser).then(setUsers([...users, newUser]));
+
+      UserService.createUser(newUser).then(() => fetchData());
     }
 
     setEditedUser({});
@@ -86,8 +118,26 @@ const ListUserComponent = (props) => {
         </div>
       )}
       <br></br>
-      <h2 className="text-center">Users List</h2>
-      <div className="row">{displayUsers()}</div>
+      <div style={{ height: 400, width: "100%" }}>
+        <h2 className="text-center">Users List</h2>
+        <DataGrid
+          rows={
+            users
+            //users.map((user) => (
+            //   <UserItem
+            //     key={user.id}
+            //     user={user}
+            //     onDelete={() => deleteUserHandler()}
+            //     onEdit={() => editUserHandler(user)}
+            //   />
+            // ))
+          }
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          checkboxSelection
+        />
+      </div>
     </Box>
   );
 };

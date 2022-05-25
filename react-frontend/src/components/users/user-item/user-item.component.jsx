@@ -1,5 +1,6 @@
 import userService from "../../../services/user.service";
 import "./user-item.styles.css";
+import Button from "@mui/material/Button";
 
 const UserItem = (props) => {
   const user = props.user;
@@ -22,20 +23,22 @@ const UserItem = (props) => {
         <div>{role}</div>
       </div>
       <div className="buttons">
-        <button
-          //   onClick={() => this.editUser(user.id)}
-          className="btn btn-warning"
+        <Button
+          variant="contained"
+          className="button"
+          size="small"
           onClick={() => props.onEdit(user)}
         >
           Edit
-        </button>
-        <button
-          style={{ marginLeft: "10px" }}
+        </Button>
+        <Button
+          variant="outlined"
+          className="button"
+          size="small"
           onClick={() => deleteUser(user.id)}
-          className="btn btn-danger"
         >
           Delete
-        </button>
+        </Button>
       </div>
     </div>
   );

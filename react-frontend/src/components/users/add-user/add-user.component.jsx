@@ -27,7 +27,7 @@ let emptyUser = {
   country: "",
   role: "USER",
 };
-
+// user => {"email":"d@gmail.com","password":"123456","role":"20","name":"Raluca","surname":"Marie","city":"Cluj-Napoca","country":"Romania"}
 const useStyles = makeStyles((theme) => ({
   "@global": {
     body: {
@@ -110,9 +110,9 @@ const AddUser = ({ onSave, userToEdit }) => {
                   }}
                   onChange={editField}
                 >
-                  <option value={10}>User</option>
-                  <option value={20}>Administrator</option>
-                  <option value={30}>Moderator</option>
+                  <option value="USER">User</option>
+                  <option value="ADMINISTRATOR">Administrator</option>
+                  <option value="MODERATOR">Moderator</option>
                 </NativeSelect>
               </FormControl>
             </Grid>
