@@ -40,7 +40,7 @@ export default function Header() {
                                     }
                                 }}
                         >
-                           Online shops reviews App
+                           Online shops reviews
                         </Link>
                     </Typography>
                     <Box sx={{flexGrow: 1}}/>
