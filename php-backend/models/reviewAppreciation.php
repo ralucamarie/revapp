@@ -68,7 +68,7 @@ class ReviewAppreciation{
     public function updateReviewAppreciation(){
         $query = "UPDATE " . $this->dbTable . " 
                     SET 
-                        like_status = :like_status,
+                        like_status = :like_status
                     WHERE 
                         review_ID = :review_ID
                         AND
@@ -91,7 +91,7 @@ class ReviewAppreciation{
         return false;
     }
 
-    function deleteReview(){
+    public function deleteReviewAppreciation(){
         $query = "DELETE FROM " . $this->dbTable . " 
                     WHERE 
                         review_ID = ? 
@@ -112,6 +112,40 @@ class ReviewAppreciation{
         return false;
     }
 
+    public function deleteByReviewID(){
+        $query = "DELETE FROM " . $this->dbTable . " 
+                    WHERE 
+                        review_ID = ? ";
+
+        $stmt = $this->conn->prepare($query);
+
+        $this->review_ID=htmlspecialchars(strip_tags($this->review_ID));
+
+        $stmt->bindParam(1, $this->review_ID);
+
+        if($stmt->execute()){
+            return true;
+        }
+        return false;
+    }
+
+
+    public function deleteByUserID(){
+        $query = "DELETE FROM " . $this->dbTable . " 
+                    WHERE 
+                        user_ID = ? ";
+
+        $stmt = $this->conn->prepare($query);
+
+        $this->user_ID=htmlspecialchars(strip_tags($this->user_ID));
+
+        $stmt->bindParam(1, $this->user_ID);
+
+        if($stmt->execute()){
+            return true;
+        }
+        return false;
+    }
 }
 
 ?>
