@@ -5,13 +5,18 @@ header("Content-Type: application/json;");
 
 include_once '../../models/category.php';
 include_once '../../config/database.php';
+include_once '../../models/user.php';
+include_once '../../models/role.php';
+include_once '../../models/address.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$items = new Category($db);
+$users = new User($db);
+$address = new Address($db);
+$role = new Role($db);
 
-$stmt = $items->getCategories();
+$stmt = $users->getUsers();
 $itemCount = $stmt->rowCount();
 
 if ($itemCount > 0) {
@@ -21,12 +26,22 @@ if ($itemCount > 0) {
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
-        $e = array(
-            "id" => $id,
-            "category_name" => $category_name
-        );
+        $address->id = $address_ID;
+        $address->getSingleAddress();
+        $role->id = $role_ID;
+        $role->getSingleRole();
 
-        array_push($categoryArray, $e);
+
+        $oneUser = array(
+            "id" => $id,
+            "name" => $name,
+            "surname" => $surname,
+            "email" => $email,
+            "role" => $role->role_name,
+            "city" => $address->city,
+            "country" => "$address->country",
+        );
+        array_push($userArr, $oneUser);
     }
     echo json_encode($categoryArray);
 } else {

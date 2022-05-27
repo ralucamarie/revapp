@@ -36,3 +36,30 @@
     transform: rotate(360deg);
   }
 }
+
+/* Add-User styles: */
+.makeStyles-paper-45 {
+  margin-top: none !important;
+}
+.MuiContainer-root {
+  margin-left: none !important;
+}
+.makeStyles-paper-1{
+  margin-top: none !important;
+}
+
+/* .css-1oqqzyl-MuiContainer-root {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 30px;
+  max-width: 600px;
+
+}
+.role {
+  max-width: 200px;
+}
+.flexbox {
+  display: flex;
+  gap: 30px;
+} */
+/* END Add-User styles */
