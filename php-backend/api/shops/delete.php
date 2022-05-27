@@ -7,25 +7,20 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type,
         Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-
 include_once '../../config/database.php';
-include_once '../../models/user.php';
+include_once '../../models/shop.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$item = new User($db);
+//TODO: When deleting a shop delete all Reviews and ReviewAppreciations
 
-$data = json_decode(file_get_contents("php://input"));
+$item = new Shop($db);
 
-$item->id = $data->id;
-$item->first_name = $data->first_name;
-$item->last_name = $data->last_name;
-$item->email_id = $data->email_id;
+$item->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-
-if ($item->updateUser()) {
-    echo json_encode("User record updated.");
+if ($item->deleteShop()) {
+    echo json_encode("Shop deleted.");
 } else {
-    echo json_encode("User record could not be updated.");
+    echo json_encode("Shop Not deleted");
 }
