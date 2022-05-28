@@ -9,17 +9,23 @@ header("Access-Control-Allow-Headers: Content-Type,
 
 
 include_once '../../config/database.php';
-include_once '../../models/user.php';
+include_once '../../models/shop.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$item = new User($db);
+$item = new Shop($db);
 
-$item->id = isset($_GET['id']) ? $_GET['id'] : die();
+$data = json_decode(file_get_contents("php://input"));
 
-if ($item->deleteUser()) {
-    echo json_encode("User deleted.");
+$item->id = $data->id;
+$item->shop_name = $data->shop_name;
+$item->category_ID = $data->category_ID;
+$item->website_url = $data->website_url;
+
+
+if ($item->updateShop()) {
+    echo json_encode("Shop updated.");
 } else {
-    echo json_encode("Not deleted");
+    echo json_encode("Shop could not be updated.");
 }

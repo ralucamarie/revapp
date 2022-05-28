@@ -89,5 +89,5 @@ if ($userRole->id) {
 if ($user->createUser()) {
     echo json_encode("User created.");
 } else {
-    echo json_encode("Failed to create user.");
+    echo json_encode("Failed to create Category.");
 }

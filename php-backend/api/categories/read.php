@@ -3,6 +3,7 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json;");
 
 
+include_once '../../models/category.php';
 include_once '../../config/database.php';
 include_once '../../models/user.php';
 include_once '../../models/role.php';
@@ -20,7 +21,7 @@ $itemCount = $stmt->rowCount();
 
 if ($itemCount > 0) {
 
-    $userArr = array();
+    $categoryArray = array();
 
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -42,7 +43,7 @@ if ($itemCount > 0) {
         );
         array_push($userArr, $oneUser);
     }
-    echo json_encode($userArr);
+    echo json_encode($categoryArray);
 } else {
     echo json_encode("");
 }
