@@ -24,23 +24,26 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `addresses`
+-- Table structure for table `address`
 --
 
-CREATE TABLE `addresses` (
+CREATE TABLE `address` (
   `id` int(11) NOT NULL,
   `city` varchar(50) DEFAULT NULL,
   `country` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `addresses`
+-- Dumping data for table `address`
 --
 
-INSERT INTO `addresses` (`id`, `city`, `country`) VALUES
+INSERT INTO `address` (`id`, `city`, `country`) VALUES
 (1, 'Cluj-Napoca', 'Romania'),
 (2, 'Milan', 'Italy'),
-(3, 'Munich', 'Germany');
+(3, 'Munich', 'Germany'),
+(4, 'Oradea', 'Romania'),
+(5, 'Rome', 'Italy'),
+(6, 'Koln', 'Germany');
 
 -- --------------------------------------------------------
 
@@ -57,9 +60,31 @@ CREATE TABLE `category` (
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`id`, `category_name`) VALUES
-(1, 'Coconut'),
-(2, 'Nuts');
+INSERT INTO `category` (`id`,`category_name`) VALUES
+	(1,"Animals & Pets"),
+	(2,"Beauty & Well-being"),
+	(3,"Business Services"),
+	(4,"Construction & Manufacturing"),
+	(5,"Education & Training"),
+	(6,"Electronics & Technology"),
+	(7,"Events & Entertainment"),
+	(8,"Food, Beverages & Tobacco"),
+	(9,"Health & Medical"),
+	(10,"Hobbies & Crafts"),
+	(11,"Home & Garden"),
+	(12,"Home-Services"),
+	(13,"Legal Services & Government"),
+	(14,"Media & Publishing"),
+	(15,"Money & Insurance"),
+	(16,"Public & Local Services"),
+	(17,"Restaurants & Bars"),
+	(18,"Shopping & Fashion"),
+	(19,"Sports"),
+	(20,"Travel & Vacation"),
+	(21,"Utilities"),
+	(22,"Vehicles & Transportation");
+
+
 
 -- --------------------------------------------------------
 
@@ -77,19 +102,10 @@ CREATE TABLE `review` (
   `content` varchar(999) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `review`
---
 
-INSERT INTO `review` (`id`, `review_date`, `shop_ID`, `user_ID`, `rating`, `title`, `content`) VALUES
-(2, '2022-01-03', 3, 1, 5, 'Ce Naiba', 'Produsele nu sunt ok'),
-(3, '2021-04-01', 4, 1, 1, 'Nu-i OK', 'Produsele sunt expirate');
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `review_appreciation`
---
 
 CREATE TABLE `review_appreciation` (
   `review_ID` int(11) NOT NULL,
@@ -97,12 +113,6 @@ CREATE TABLE `review_appreciation` (
   `like_status` tinyint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `review_appreciation`
---
-
-INSERT INTO `review_appreciation` (`review_ID`, `user_ID`, `like_status`) VALUES
-(3, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -137,14 +147,11 @@ CREATE TABLE `shop` (
   `website_url` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `shop`
---
-
-INSERT INTO `shop` (`id`, `shop_name`, `category_ID`, `website_url`) VALUES
-(3, 'HawalwyAloha', 1, 'www.coconutjuice.com'),
-(4, 'CanbachaCorazon', 2, 'www.CanbachaOk.br'),
-(5, 'HelloShop', 2, 'www.HelloShop.cool');
+INSERT INTO `shop` (`id`,`shop_name`, `category_ID`, `website_url`) VALUES
+(1,"Happy Pet", 1, 'www.happypet.ro'),
+(2,"Animal Care", 1, 'www.animalcare.it'),
+(3,'Hairline', 2, 'www.hairline.de'),
+(4,'FairTrade', 3, 'www.fairtrade.com');
 
 -- --------------------------------------------------------
 
@@ -162,21 +169,37 @@ CREATE TABLE `user` (
   `password` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `surname`, `address_ID`, `role_ID`, `email`, `password`) VALUES
-(1, 'Andrea', 'Iordache', 1, 1, 'andrea@gmail.com', 'parola');
+
+INSERT INTO `user` (`id`,`name`, `surname`, `address_ID`, `role_ID`, `email`, `password`) VALUES
+(1,'Andrea', 'Iordache', 1, 1, 'andrea@gmail.com', 'parola'),
+(2,'Razvan', 'Suhan', 1, 1, 'razvan@gmail.com', 'parola'),
+(3,'Raluca', 'Ceuca', 1, 1, 'raluca@gmail.com', 'parola'),
+(4,'Sergiu', 'Casuneanu', 1, 1, 'sergiu@gmail.com', 'parola'),
+(5,'Simona', 'Labici', 1, 1, 'simona@gmail.com', 'parola'),
+(6,'Delia', 'Cotisel', 1, 1, 'delia@gmail.com', 'parola');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `addresses`
+-- Indexes for table `user`
 --
-ALTER TABLE `addresses`
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email_UNIQUE` (`email`),
+  ADD KEY `FK_address_idx` (`address_ID`),
+  ADD KEY `FK_role_idx` (`role_ID`);
+
+--
+-- Indexes for table `address`
+--
+ALTER TABLE `address`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -214,23 +237,15 @@ ALTER TABLE `shop`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_category_idx` (`category_ID`);
 
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email_UNIQUE` (`email`),
-  ADD KEY `FK_address_idx` (`address_ID`),
-  ADD KEY `FK_role_idx` (`role_ID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `addresses`
+-- AUTO_INCREMENT for table `address`
 --
-ALTER TABLE `addresses`
+ALTER TABLE `address`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
@@ -291,8 +306,10 @@ ALTER TABLE `shop`
 -- Constraints for table `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `FK_address` FOREIGN KEY (`address_ID`) REFERENCES `addresses` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_address` FOREIGN KEY (`address_ID`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_role` FOREIGN KEY (`role_ID`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
