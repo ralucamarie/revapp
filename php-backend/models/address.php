@@ -4,7 +4,7 @@ class Address
     private $conn;
 
     // table
-    private $dbTable = "addresses";
+    private $dbTable = "address";
 
     // col
     public $id;

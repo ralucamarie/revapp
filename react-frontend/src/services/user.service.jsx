@@ -15,6 +15,7 @@ class UserService {
   }
 
   createUser(user) {
+    console.log("user from api call", user);
     return axios.post(`${USER_API_URL}/create.php`, user, {
       headers: {
         "Content-Type": "application/json",

@@ -19,16 +19,22 @@ let emptyUser = {
   country: "",
   role: "USER",
 };
+
+let dbCreateUser = {
+  name: "",
+  surname: "",
+  email: "",
+  password: "",
+  city: "",
+  country: "",
+  role: "",
+}
 // user => {"email":"d@gmail.com","password":"123456","role":"20","name":"Raluca","surname":"Marie","city":"Cluj-Napoca","country":"Romania"}
 const useStyles = makeStyles((theme) => ({
   "@global": {
     body: {
       backgroundColor: theme.palette.common.white,
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
+    }, 
     flexDirection: "column",
     alignItems: "center",
   },
@@ -69,7 +75,16 @@ const AddUser = ({ onSave, userToEdit }) => {
     }
 
     console.log("user => " + JSON.stringify(userToAdd));
-    onSave(userToAdd);
+    dbCreateUser.name = userToAdd.name
+    dbCreateUser.surname = userToAdd.surname
+    dbCreateUser.email = userToAdd.email
+    dbCreateUser.city = userToAdd.city
+    dbCreateUser.country = userToAdd.country
+    dbCreateUser.password = userToAdd.password
+    dbCreateUser.role = userToAdd.role
+
+    console.log("user => " + JSON.stringify(dbCreateUser));
+    onSave(dbCreateUser);
     setUserToAdd(emptyUser);
   };
 
