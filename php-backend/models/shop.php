@@ -14,12 +14,25 @@ class Shop
         $this->conn = $db;
     }
 
-    public function getShops(){
+    public function getShops(?string $category_name){
         // with * select all columns
-        $query = "SELECT * FROM " . $this->dbTable . "";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt;
+        if ($category_name == null) {
+            $query = "SELECT * FROM " . $this->dbTable . "";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt;
+        }
+        else {
+            $query = "SELECT s.id, s.shop_name, s.category_ID, s.website_url, c.category_name
+                        FROM " . $this->dbTable . " s" ." 
+                        LEFT JOIN category c ON c.id = s.category_ID 
+                        WHERE c.category_name = :category_name";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":category_name", $category_name);
+            $stmt->execute();
+            return $stmt;
+        }
     }
 
     public function createShop(){

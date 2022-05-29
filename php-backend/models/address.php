@@ -4,7 +4,7 @@ class Address
     private $conn;
 
     // table
-    private $dbTable = "addresses";
+    private $dbTable = "address";
 
     // col
     public $id;
@@ -18,7 +18,7 @@ class Address
 
     public function getAddresses()
     {
-        $sqlQuery = "SELECT id, city, country FROM addresses";
+        $sqlQuery = "SELECT id, city, country FROM " . $this->dbTable;
         $stmt = $this->conn->prepare($sqlQuery);
         $stmt->execute();
         return $stmt;
