@@ -3,16 +3,13 @@ import cx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { Rating } from '@mui/material';
 import IconButton from '@material-ui/core/IconButton';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { useWideCardMediaStyles } from '@mui-treasury/styles/cardMedia/wide';
 import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded';
-import { usePushingGutterStyles } from '@mui-treasury/styles/gutter/pushing';
 
 const useStyles = makeStyles(() => ({
   root: {
