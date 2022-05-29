@@ -39,7 +39,6 @@ const ListUserComponent = (props) => {
   // const [userToAdd, setUserToAdd] = useState({});
   // const [newUser, setNewUser] = useState([]);
 
-  console.log(users);
   useEffect(() => {
     fetchData();
   }, []);

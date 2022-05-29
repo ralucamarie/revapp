@@ -1,18 +1,10 @@
 import React, { useState } from "react";
-import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import LockIcon from "@mui/icons-material/Lock";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import NativeSelect from "@mui/material/NativeSelect";
@@ -27,16 +19,22 @@ let emptyUser = {
   country: "",
   role: "USER",
 };
+
+let dbCreateUser = {
+  name: "",
+  surname: "",
+  email: "",
+  password: "",
+  city: "",
+  country: "",
+  role: "",
+}
 // user => {"email":"d@gmail.com","password":"123456","role":"20","name":"Raluca","surname":"Marie","city":"Cluj-Napoca","country":"Romania"}
 const useStyles = makeStyles((theme) => ({
   "@global": {
     body: {
       backgroundColor: theme.palette.common.white,
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
+    }, 
     flexDirection: "column",
     alignItems: "center",
   },
@@ -77,7 +75,16 @@ const AddUser = ({ onSave, userToEdit }) => {
     }
 
     console.log("user => " + JSON.stringify(userToAdd));
-    onSave(userToAdd);
+    dbCreateUser.name = userToAdd.name
+    dbCreateUser.surname = userToAdd.surname
+    dbCreateUser.email = userToAdd.email
+    dbCreateUser.city = userToAdd.city
+    dbCreateUser.country = userToAdd.country
+    dbCreateUser.password = userToAdd.password
+    dbCreateUser.role = userToAdd.role
+
+    console.log("user => " + JSON.stringify(dbCreateUser));
+    onSave(dbCreateUser);
     setUserToAdd(emptyUser);
   };
 
