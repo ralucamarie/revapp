@@ -28,13 +28,13 @@ let dbCreateUser = {
   city: "",
   country: "",
   role: "",
-}
+};
 // user => {"email":"d@gmail.com","password":"123456","role":"20","name":"Raluca","surname":"Marie","city":"Cluj-Napoca","country":"Romania"}
 const useStyles = makeStyles((theme) => ({
   "@global": {
     body: {
       backgroundColor: theme.palette.common.white,
-    }, 
+    },
     flexDirection: "column",
     alignItems: "center",
   },
@@ -75,13 +75,13 @@ const AddUser = ({ onSave, userToEdit }) => {
     }
 
     console.log("user => " + JSON.stringify(userToAdd));
-    dbCreateUser.name = userToAdd.name
-    dbCreateUser.surname = userToAdd.surname
-    dbCreateUser.email = userToAdd.email
-    dbCreateUser.city = userToAdd.city
-    dbCreateUser.country = userToAdd.country
-    dbCreateUser.password = userToAdd.password
-    dbCreateUser.role = userToAdd.role
+    dbCreateUser.name = userToAdd.name;
+    dbCreateUser.surname = userToAdd.surname;
+    dbCreateUser.email = userToAdd.email;
+    dbCreateUser.city = userToAdd.city;
+    dbCreateUser.country = userToAdd.country;
+    dbCreateUser.password = userToAdd.password;
+    dbCreateUser.role = userToAdd.role;
 
     console.log("user => " + JSON.stringify(dbCreateUser));
     onSave(dbCreateUser);
@@ -215,117 +215,7 @@ const AddUser = ({ onSave, userToEdit }) => {
           </Grid>
         </form>
       </div>
-      {/* TODO: This dropdown will be displayed only for the Admin and will get all the values in the DB for roles */}
     </Container>
-
-    // <div className="container">
-    //   <div className="row">
-    //     <div className="card col-md-6 offset-md-3 offset-md-3">
-    //       <div className="card-body">
-    //         <form>
-    //           <div className="form-group">
-    //             <label> First Name: </label>
-    //             <input
-    //               placeholder="First Name"
-    //               name="name"
-    //               className="form-control"
-    //               value={userToAdd.name}
-    //               onChange={editField}
-    //             />
-    //           </div>
-    //           <div className="form-group">
-    //             <label> Last Name: </label>
-    //             <input
-    //               placeholder="Last Name"
-    //               name="surname"
-    //               className="form-control"
-    //               value={userToAdd.surname}
-    //               onChange={editField}
-    //             />
-    //           </div>
-    //           <div className="form-group">
-    //             <label> Email: </label>
-    //             <input
-    //               placeholder="Email Address"
-    //               name="email"
-    //               className="form-control"
-    //               value={userToAdd.email}
-    //               onChange={editField}
-    //             />
-    //           </div>
-    //           <div className="form-group">
-    //             <label> Password: </label>
-    //             <input
-    //               type="password"
-    //               placeholder="Password"
-    //               name="password"
-    //               className="form-control"
-    //               value={userToAdd.password}
-    //               onChange={editField}
-    //             />
-    //           </div>
-    //           <div className="form-group">
-    //             <label> Repeat Password: </label>
-    //             <input
-    //               type="password"
-    //               placeholder="Password"
-    //               name="repeat-password"
-    //               className="form-control"
-    //               value={userToAdd.repeatPassword}
-    //               onChange={editField}
-    //             />
-    //           </div>
-    //           <div className="form-group">
-    //             <label> City </label>
-    //             <input
-    //               type="text"
-    //               placeholder="City"
-    //               name="city"
-    //               className="form-control"
-    //               value={userToAdd.city}
-    //               onChange={editField}
-    //             />
-    //           </div>
-    //           <div className="form-group">
-    //             <label> Country </label>
-    //             <input
-    //               type="text"
-    //               placeholder="Country"
-    //               name="country"
-    //               className="form-control"
-    //               value={userToAdd.country}
-    //               onChange={editField}
-    //             />
-    //           </div>
-    //           {/* This dropdown will be displayed only for the Admin and will get all the values in the DB for roles */}
-    //           <div className="form-group">
-    //             <label> Role </label>
-    //             <select
-    //               placeholder="Role"
-    //               name="role"
-    //               className="form-control"
-    //               value={userToAdd.role}
-    //               onChange={editField}
-    //             >
-    //               <option value="user">User</option>
-    //             </select>
-    //           </div>
-    //           <button className="btn btn-success" onClick={saveUser}>
-    //             Save
-    //           </button>
-    //           <button
-    //             className="btn btn-danger"
-    //             onClick={cancel}
-    //             style={{ marginLeft: "10px" }}
-    //           >
-    //             Cancel
-    //           </button>
-    //         </form>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
-    // </div>
   );
 };
 // }
