@@ -100,7 +100,7 @@ class Address
 
 
     //UPDATE Adress
-    public function updateUser()
+    public function updateAddress()
     {
         $sqlQuery = "UPDATE
                         " . $this->dbTable . "

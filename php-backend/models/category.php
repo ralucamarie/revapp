@@ -20,12 +20,13 @@ class Category{
     }
 
     public function createCategory(){
-        $query = "INSERT INTO " . $this->dbTable . " SET category_name = :category_name";
+        $query = "INSERT INTO " . $this->dbTable . " 
+                    SET category_name = :category_name";
 
         $stmt = $this->conn->prepare($query);
 
         $this->category_name=htmlspecialchars(strip_tags($this->category_name));
-        $stmt->bindParams(":category_name",$this->category_name);
+        $stmt->bindParam(":category_name",$this->category_name);
 
         if($stmt->execute()){
             return true;
@@ -60,8 +61,10 @@ class Category{
         $stmt = $this->conn->prepare($query);
 
         $this->category_name=htmlspecialchars(strip_tags($this->category_name));
+        $this->id=htmlspecialchars(strip_tags($this->id));
 
         $stmt->bindParam(":category_name",$this->category_name);
+        $stmt->bindParam(":id",$this->id);
 
         if($stmt->execute()){
             return true;
