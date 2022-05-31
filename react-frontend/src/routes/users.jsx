@@ -5,11 +5,23 @@ import AddUser from "../components/users/add-user/add-user.component";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
+import Stack from "@mui/material/Stack";
+
+let emptyUser = {
+  id: null,
+  name: "",
+  surname: "",
+  email: "",
+  password: "",
+  city: "",
+  country: "",
+  role: "",
+};
 
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
-  { field: "name", headerName: "First name", width: 130 },
-  { field: "surname", headerName: "Last name", width: 130 },
+  { field: "name", headerName: "First name", width: 130, editable: true },
+  { field: "surname", headerName: "Last name", width: 130, editable: true },
   {
     field: "email",
     headerName: "Email",
@@ -35,9 +47,7 @@ const columns = [
 const ListUserComponent = (props) => {
   const [users, setUsers] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [editedUser, setEditedUser] = useState({});
-  // const [userToAdd, setUserToAdd] = useState({});
-  // const [newUser, setNewUser] = useState([]);
+  const [editedUser, setEditedUser] = useState(emptyUser);
 
   useEffect(() => {
     fetchData();
@@ -96,6 +106,16 @@ const ListUserComponent = (props) => {
       return <div>There are no users</div>;
     }
   }
+  const testUsers = [
+    ...users.map((user) => (
+      <UserItem
+        key={user.id}
+        user={user}
+        onDelete={() => deleteUserHandler()}
+        onEdit={() => editUserHandler(user)}
+      />
+    )),
+  ];
 
   return (
     <Box height="100vh" sx={{ marginTop: 10 }}>
@@ -119,23 +139,24 @@ const ListUserComponent = (props) => {
       <br></br>
       <div style={{ height: 400, width: "100%" }}>
         <h2 className="text-center">Users List</h2>
-        <DataGrid
-          rows={
-            users
-            //users.map((user) => (
-            //   <UserItem
-            //     key={user.id}
-            //     user={user}
-            //     onDelete={() => deleteUserHandler()}
-            //     onEdit={() => editUserHandler(user)}
-            //   />
-            // ))
-          }
+        <Stack spacing={2}>
+          {users.map((user) => (
+            <UserItem
+              key={user.id}
+              user={user}
+              onDelete={() => deleteUserHandler()}
+              onEdit={() => editUserHandler(user)}
+            />
+          ))}
+        </Stack>
+
+        {/* <DataGrid
           columns={columns}
+          rows={testUsers}
           pageSize={5}
           rowsPerPageOptions={[5]}
           checkboxSelection
-        />
+        /> */}
       </div>
     </Box>
   );

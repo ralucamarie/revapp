@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Button from "@material-ui/core/Button";
@@ -8,6 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import NativeSelect from "@mui/material/NativeSelect";
+import Alert from "@mui/material/Alert";
 
 let emptyUser = {
   id: null,
@@ -15,9 +16,10 @@ let emptyUser = {
   surname: "",
   email: "",
   password: "",
+  repeatPassword: "",
   city: "",
   country: "",
-  role: "USER",
+  role: "",
 };
 
 let dbCreateUser = {
@@ -55,12 +57,86 @@ const AddUser = ({ onSave, userToEdit }) => {
   const [userToAdd, setUserToAdd] = useState(
     userToEdit ? userToEdit : emptyUser
   );
+
+  const [formErrors, setFormErrors] = useState({
+    name: "",
+    surname: "",
+    email: "",
+    password: "",
+    repeatPassword: "",
+  });
+
+  const [nameValid, setNameValid] = useState(false);
+  const [surnameValid, setSurnameValid] = useState(false);
+  const [emailValid, setEmailValid] = useState(false);
+  const [passwordValid, setPasswordValid] = useState(false);
+  const [passwordsMatch, setPasswordsMatch] = useState(false);
+
+  const [formValid, setFormValid] = useState(false);
+
   const classes = useStyles();
-  // const [role, setRole] = React.useState("");
-  // const [id, setId] = useState(userToEdit ? userToEdit.id : null);
 
   const editField = (event) => {
+    validateField(event.target.name, event.target.value);
     setUserToAdd({ ...userToAdd, [event.target.name]: event.target.value });
+  };
+
+  //TODO
+
+  //add RepeatPass to object and compare after.
+
+  const validateField = (fieldName, value) => {
+    let fieldValidationErrors = formErrors;
+
+    switch (fieldName) {
+      case "name":
+        setNameValid(value.length > 2);
+        fieldValidationErrors.name = nameValid ? "" : "Name is invalid";
+        break;
+      case "surname":
+        setSurnameValid(value.length > 2);
+        fieldValidationErrors.surname = surnameValid
+          ? ""
+          : "Surname is invalid";
+        break;
+      case "email":
+        const regex =
+          /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        setEmailValid(regex.test(value));
+        fieldValidationErrors.email = emailValid ? "" : " Email is invalid";
+        break;
+      case "password":
+        setPasswordValid(value.length >= 6);
+        fieldValidationErrors.password = passwordValid
+          ? ""
+          : "Password is too short";
+        break;
+      case "repeatPassword":
+        console.log(
+          "Passw: ",
+          userToAdd.password,
+          "repeat pass :",
+          userToAdd.repeatPassword
+        );
+        if (userToAdd.password === userToAdd.repeatPassword)
+          setPasswordsMatch(true);
+
+        console.log(passwordsMatch);
+        fieldValidationErrors.repeatPassword = passwordsMatch
+          ? ""
+          : "Passwords don't match";
+        break;
+      default:
+        break;
+    }
+    setFormErrors(fieldValidationErrors);
+    validateForm();
+  };
+
+  const validateForm = () => {
+    setFormValid(
+      nameValid && surnameValid && emailValid && passwordValid && passwordsMatch
+    );
   };
 
   const cancel = () => {
@@ -81,16 +157,14 @@ const AddUser = ({ onSave, userToEdit }) => {
     dbCreateUser.city = userToAdd.city;
     dbCreateUser.country = userToAdd.country;
     dbCreateUser.password = userToAdd.password;
-    dbCreateUser.role = userToAdd.role;
+    dbCreateUser.role = userToAdd.role ? userToAdd.role : "USER";
 
     console.log("user => " + JSON.stringify(dbCreateUser));
-    onSave(dbCreateUser);
-    setUserToAdd(emptyUser);
+    if (formValid) {
+      onSave(dbCreateUser);
+      setUserToAdd(emptyUser);
+    }
   };
-
-  // const handleChange = (event) => {
-  //   setRole(event.target.value);
-  // };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -110,7 +184,6 @@ const AddUser = ({ onSave, userToEdit }) => {
                   User role
                 </InputLabel>
                 <NativeSelect
-                  defaultValue={userToAdd.role ? userToAdd.role : "USER"}
                   inputProps={{
                     name: "role",
                     id: "uncontrolled-native",
@@ -132,6 +205,13 @@ const AddUser = ({ onSave, userToEdit }) => {
                 className="form-control"
                 value={userToAdd.name}
                 onChange={editField}
+                error={formErrors?.name.length > 0}
+                helperText={formErrors?.name}
+                autoComplete="given-name"
+                inputProps={{
+                  type: "text",
+                  autoComplete: "off",
+                }}
               />
             </Grid>
 
@@ -144,6 +224,9 @@ const AddUser = ({ onSave, userToEdit }) => {
                 className="form-control"
                 value={userToAdd.surname}
                 onChange={editField}
+                error={formErrors.surname.length > 0}
+                helperText={formErrors.surname}
+                autoComplete="family-name"
               />
             </Grid>
 
@@ -156,6 +239,8 @@ const AddUser = ({ onSave, userToEdit }) => {
                 className="form-control"
                 value={userToAdd.email}
                 onChange={editField}
+                error={formErrors.email.length > 0}
+                helperText={formErrors.email}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -167,17 +252,25 @@ const AddUser = ({ onSave, userToEdit }) => {
                 className="form-control"
                 value={userToAdd.password}
                 onChange={editField}
+                error={formErrors.password.length > 0}
+                helperText={formErrors.password}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 type="password"
                 label="Repeat Password"
-                name="repeat-password"
+                name="repeatPassword"
                 variant="standard"
                 className="form-control"
                 value={userToAdd.repeatPassword}
                 onChange={editField}
+                error={formErrors.repeatPassword.length > 0}
+                helperText={formErrors.repeatPassword}
+                // inputProps={{
+                //   type: "password",
+                //   autoComplete: "new-password",
+                // }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
