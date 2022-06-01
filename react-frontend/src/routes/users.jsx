@@ -18,36 +18,38 @@ let emptyUser = {
   role: "",
 };
 
-const columns = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "name", headerName: "First name", width: 130, editable: true },
-  { field: "surname", headerName: "Last name", width: 130, editable: true },
-  {
-    field: "email",
-    headerName: "Email",
-    width: 130,
-  },
-  {
-    field: "city",
-    headerName: "City",
-    width: 130,
-  },
-  {
-    field: "country",
-    headerName: "Country",
-    width: 130,
-  },
-  {
-    field: "role",
-    headerName: "Role",
-    width: 130,
-  },
-];
+// const columns = [
+//   { field: "id", headerName: "ID", width: 70 },
+//   { field: "name", headerName: "First name", width: 130, editable: true },
+//   { field: "surname", headerName: "Last name", width: 130, editable: true },
+//   {
+//     field: "email",
+//     headerName: "Email",
+//     width: 130,
+//   },
+//   {
+//     field: "city",
+//     headerName: "City",
+//     width: 130,
+//   },
+//   {
+//     field: "country",
+//     headerName: "Country",
+//     width: 130,
+//   },
+//   {
+//     field: "role",
+//     headerName: "Role",
+//     width: 130,
+//   },
+// ];
 
 const ListUserComponent = (props) => {
   const [users, setUsers] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editedUser, setEditedUser] = useState(emptyUser);
+  const [cities, setCities] = useState([]);
+  const [countries, setCountries] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -82,6 +84,7 @@ const ListUserComponent = (props) => {
     setIsEditMode(true);
     setEditedUser(user);
   };
+  
   const deleteUserHandler = () => {
     UserService.getUsers().then((res) => {
       setUsers(res.data);
@@ -150,13 +153,6 @@ const ListUserComponent = (props) => {
           ))}
         </Stack>
 
-        {/* <DataGrid
-          columns={columns}
-          rows={testUsers}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          checkboxSelection
-        /> */}
       </div>
     </Box>
   );

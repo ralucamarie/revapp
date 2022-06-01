@@ -6,13 +6,6 @@ import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 
-// const Item = styled(Paper)(({ theme }) => ({
-//   backgroundColor: "none ",
-//   ...theme.typography.body2,
-//   padding: theme.spacing(1),
-//   textAlign: "left !important",
-// }));
-
 const UserItem = (props) => {
   const user = props.user;
   const { id, name, surname, email, city, country, role } = user;
@@ -23,10 +16,13 @@ const UserItem = (props) => {
   };
 
   return (
-    <Grid container spacing={2}>
-      {/* <Grid item xs={1}>
-        {id}
-      </Grid> */}
+    <Grid
+      container
+      spacing={1}
+      direction="row"
+      justifyContent="flex-start"
+      alignItems="flex-start"
+    >
       <Grid item xs={2}>
         {name}
       </Grid>
@@ -65,31 +61,6 @@ const UserItem = (props) => {
           </Button>
         </div>
       </Grid>
-      {/* <div></div>
-      <div>{name}</div>
-      <div>{surname}</div>
-      <div>{email}</div>
-      <div>{city}</div>
-      <div>{country}</div>
-      <div>{role}</div> */}
-      {/* <div className="buttons">
-        <Button
-          variant="contained"
-          className="button"
-          size="small"
-          onClick={() => props.onEdit(user)}
-        >
-          Edit
-        </Button>
-        <Button
-          variant="outlined"
-          className="button"
-          size="small"
-          onClick={() => deleteUser(user.id)}
-        >
-          Delete
-        </Button>
-      </div> */}
     </Grid>
   );
 };

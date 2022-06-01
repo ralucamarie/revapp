@@ -151,6 +151,7 @@ const AddUser = ({ onSave, userToEdit }) => {
     }
 
     console.log("user => " + JSON.stringify(userToAdd));
+    dbCreateUser.id = userToEdit ? userToEdit.id : null;
     dbCreateUser.name = userToAdd.name;
     dbCreateUser.surname = userToAdd.surname;
     dbCreateUser.email = userToAdd.email;
