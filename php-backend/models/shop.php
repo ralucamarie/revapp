@@ -14,7 +14,7 @@ class Shop
         $this->conn = $db;
     }
 
-    public function getShops(?string $category_name){
+    public function getShops(?string $category_name = null){
         // with * select all columns
         if ($category_name == null) {
             $query = "SELECT * FROM " . $this->dbTable . "";

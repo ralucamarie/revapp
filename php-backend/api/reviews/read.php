@@ -10,8 +10,20 @@ $database = new Database();
 $db = $database->getConnection();
 
 $items = new Review($db);
+$user_ID = isset($_GET['user_ID']) ? $_GET['user_ID'] : null;
+$shop_ID = isset($_GET['shop_ID']) ? $_GET['shop_ID'] : null;
 
-$stmt = $items->getReviews();
+if($user_ID != null && $shop_ID == null)
+    $stmt = $items->getReviews($user_ID, null);
+
+if($user_ID == null && $shop_ID != null)
+    $stmt = $items->getReviews( null ,$shop_ID);
+
+if($user_ID != null && $shop_ID != null)
+    $stmt = $items->getReviews($user_ID,$shop_ID);
+    
+else $stmt = $items->getReviews();
+
 $itemCount = $stmt->rowCount();
 
 if ($itemCount > 0) {
@@ -34,5 +46,5 @@ if ($itemCount > 0) {
     }
     echo json_encode($reviewArray);
 } else {
-    echo json_encode("");
+    echo json_encode("No Review found or something went wrong");
 }

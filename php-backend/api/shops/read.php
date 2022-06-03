@@ -11,7 +11,7 @@ $db = $database->getConnection();
 
 $items = new Shop($db);
 
-$category_name = isset($_GET['category_name']) ? $_GET['category_name'] : die();
+$category_name = $_GET['category_name'] ?? null;
 
 if($category_name != null) {
     $stmt = $items->getShops($category_name);
@@ -28,8 +28,7 @@ if ($itemCount > 0) {
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
-        $e = ("why?");
-        if ($category_name == null) {
+        if (!isset($_GET['category_name'])) {
             $e = array(
                 "id" => $id,
                 "shop_name" => $shop_name,

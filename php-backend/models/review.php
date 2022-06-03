@@ -18,10 +18,39 @@ class Review
         $this->conn = $db;
     }
     
-    public function getReviews(){
+    //ar trebui sa se foloseasca long dar php nu are long sau bigint
+    //dar pentru noi e ok si int simplu
+    public function getReviews(?int $user_ID = null, ?int $shop_ID = null){
         // with * select all columns
         $query = "SELECT * from " . $this->dbTable;
         $stmt = $this->conn->prepare($query);
+        
+        if($shop_ID != null && $user_ID == null){
+            $query = "SELECT * from " . $this->dbTable . 
+                    " WHERE shop_ID = ?";
+            
+            $stmt = $this->conn->prepare($query);
+            $this->shop_ID=htmlspecialchars(strip_tags($shop_ID));
+            $stmt->bindParam(1, $this->shop_ID);
+        }
+        if($shop_ID == null && $user_ID != null){
+            $query = "SELECT * from " . $this->dbTable . 
+                    " WHERE user_ID = ?";
+    
+            $stmt = $this->conn->prepare($query);
+            $this->user_ID=htmlspecialchars(strip_tags($user_ID));
+            $stmt->bindParam(1, $this->user_ID);
+        }
+        if($shop_ID != null && $user_ID != null){
+            $query = "SELECT * from " . $this->dbTable . 
+                    " WHERE user_ID = ? AND shop_ID = ?";
+    
+            $stmt = $this->conn->prepare($query);
+            $this->user_ID=htmlspecialchars(strip_tags($user_ID));
+            $this->shop_ID=htmlspecialchars(strip_tags($shop_ID));
+            $stmt->bindParam(1, $this->user_ID);
+            $stmt->bindParam(2, $this->shop_ID);
+        }
         $stmt->execute();
         return $stmt;
     }
