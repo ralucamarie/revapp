@@ -6,7 +6,7 @@
 and import the file from this branch
 
 ##### 05.30.22 
-- Brought back categories api files (careate, read, single_category, delete and update) from back-up version
+- Brought back categories api files (create, read, single_category, delete and update) from back-up version
 ##### 06.03.22
 - Fixed no data return for the simple GET call of shops/read.php
 - Added CRUD in api/addresses/ 
