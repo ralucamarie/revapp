@@ -4,35 +4,32 @@ header("Content-Type: application/json;");
 
 
 include_once '../../config/database.php';
-include_once '../../models/review.php';
+include_once '../../models/reviewAppreciation.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$items = new Review($db);
+$items = new ReviewAppreciation($db);
 
-$stmt = $items->getReviews();
+$stmt = $items->getReviewAppreciations();
 $itemCount = $stmt->rowCount();
 
 if ($itemCount > 0) {
 
-    $reviewArray = array();
+    $reviewAppreciationArray = array();
+
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
         $e = array(
-            "id" => $id,
-            "review_date" => $review_date,
-            "shop_ID" => $shop_ID,
+            "review_ID" => $review_ID,
             "user_ID" => $user_ID,
-            "rating" => $rating,
-            "title" => $title,
-            "content" => $content
+            "like_status" => $like_status
         );
 
-        array_push($reviewArray, $e);
+        array_push($reviewAppreciationArray, $e);
     }
-    echo json_encode($reviewArray);
+    echo json_encode($reviewAppreciationArray);
 } else {
     echo json_encode("");
 }

@@ -4,35 +4,33 @@ header("Content-Type: application/json;");
 
 
 include_once '../../config/database.php';
-include_once '../../models/review.php';
+include_once '../../models/shop.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$items = new Review($db);
+$items = new Shop($db);
 
-$stmt = $items->getReviews();
+$stmt = $items->getShops();
 $itemCount = $stmt->rowCount();
 
 if ($itemCount > 0) {
 
-    $reviewArray = array();
+    $shopArray = array();
+
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
         $e = array(
             "id" => $id,
-            "review_date" => $review_date,
-            "shop_ID" => $shop_ID,
-            "user_ID" => $user_ID,
-            "rating" => $rating,
-            "title" => $title,
-            "content" => $content
+            "shop_name" => $shop_name,
+            "category_ID" => $category_ID,
+            "website_url" => $website_url
         );
 
-        array_push($reviewArray, $e);
+        array_push($shopArray, $e);
     }
-    echo json_encode($reviewArray);
+    echo json_encode($shopArray);
 } else {
     echo json_encode("");
 }
