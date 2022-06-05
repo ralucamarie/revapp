@@ -18,7 +18,7 @@ function msg($success,$status,$message,$extra = []){
 }
 
 $db_connection = new Database();
-$conn = $db_connection->getConnection();
+$db = $db_connection->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));
 $returnData = [];
@@ -55,7 +55,7 @@ else:
         try{
             
             $fetch_user_by_email = "SELECT * FROM user WHERE email = :email";
-            $query_stmt = $conn->prepare($fetch_user_by_email);
+            $query_stmt = $db->prepare($fetch_user_by_email);
             $query_stmt->bindValue(':email', $email,PDO::PARAM_STR);
             $query_stmt->execute();
 
@@ -73,7 +73,7 @@ else:
 
                     $jwt = new JwtHandler();
                     $token = $jwt->jwtEncodeData(
-                        'http://localhost/revapp/php-backend/token',
+                        'http://localhost/revapp/php-backend/api/token',
                         array("user_id"=> $row['id'])
                     );
                     
