@@ -82,7 +82,7 @@ const ViewUser = () => {
               </div>
 
               <List>
-                <ListItem disablePadding>
+                <ListItem>
                   <ListItemButton component="a" href="#simple-list">
                     <ListItemText primary="Edit my profile" />
                   </ListItemButton>
@@ -90,15 +90,6 @@ const ViewUser = () => {
               </List>
             </Box>
           </Container>
-        </Container>
-      </Paper>
-      <Paper
-        sx={{
-          mb: 2,
-        }}
-      >
-        <Container>
-          <h2>My Comments</h2>
         </Container>
       </Paper>
     </React.Fragment>

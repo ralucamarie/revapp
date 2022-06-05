@@ -8,16 +8,20 @@ import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import MuiAppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
-import logo from "../../../static/images/logo_transparent.jpg";
+import logo from "../../../static/images/logo.png";
+import userAvatar from "../../../static/images/avatar.jpg";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })(() => ({
   flexGrow: 1,
+  backgroundColor: "#fff",
+  textTransform: "uppercase",
+  fontWeight: "medium",
 }));
 
 const StyledLinks = styled("div")(() => ({
-  marginRight: 10,
+  marginRight: 20,
 }));
 
 const rightLink = {
@@ -49,44 +53,45 @@ export default function Header() {
               <Box
                 sx={{}}
                 component="img"
-                width="100px"
+                width="150px"
                 src={logo}
                 // "/public/logo_transparent.jpg"
               />
             </Link>
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
+          <Box className="avatar" sx={{ display: "flex" }}>
+            <StyledLinks>
+              <Link underline="none" href="/login" sx={rightLink}>
+                <div>Login</div>
+              </Link>
+            </StyledLinks>
 
-          <StyledLinks>
-            <Link underline="none" href="/login" sx={rightLink}>
-              <div>Login</div>
-            </Link>
-          </StyledLinks>
+            <StyledLinks>
+              <Link underline="none" href="/signup" sx={rightLink}>
+                <div>Signup</div>
+              </Link>
+            </StyledLinks>
 
-          <StyledLinks>
-            <Link underline="none" href="/signup" sx={rightLink}>
-              <div>Signup</div>
-            </Link>
-          </StyledLinks>
+            <StyledLinks>
+              <Link underline="none" href="/users" sx={rightLink}>
+                <div>Users</div>
+              </Link>
+            </StyledLinks>
 
-          <StyledLinks>
-            <Link underline="none" href="/users" sx={rightLink}>
-              <div>Users</div>
-            </Link>
-          </StyledLinks>
-
-          <StyledLinks>
-            <Link underline="none" href="/user-profile" sx={rightLink}>
-              <div className="avatar">
-                <span>Profile</span>
-                <Avatar
-                  alt="Remy Sharp"
-                  src="../../../static/images/avatar.jpg"
-                  sx={{ width: 24, height: 24 }}
-                />
-              </div>
-            </Link>
-          </StyledLinks>
+            <StyledLinks>
+              <Link underline="none" href="/user-profile" sx={rightLink}>
+                <Box className="avatar" sx={{ display: "flex" }}>
+                  <Box sx={{ pr: 0.5 }}>Profile</Box>
+                  <Avatar
+                    alt="Remy Sharp"
+                    src={userAvatar}
+                    sx={{ width: 24, height: 24 }}
+                  />
+                </Box>
+              </Link>
+            </StyledLinks>
+          </Box>
         </Toolbar>
       </AppBar>
     </div>
