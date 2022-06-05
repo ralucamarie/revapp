@@ -1,5 +1,6 @@
 <?php
-class ReviewAppreciation{
+class ReviewAppreciation
+{
 
     private $conn;
     private $dbTable = 'review_appreciation';
@@ -8,43 +9,47 @@ class ReviewAppreciation{
     public $user_ID;
     public $like_status;
 
-    public function __construct($db){
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
-    public function getReviewAppreciations(){
+    public function getReviewAppreciations()
+    {
         $query = "SELECT * FROM " . $this->dbTable;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
     }
 
-    public function createReviewAppreciation(){
-            $query = "INSERT INTO " . $this->dbTable . 
-                    " SET 
+    public function createReviewAppreciation()
+    {
+        $query = "INSERT INTO " . $this->dbTable .
+            " SET 
                         review_ID = :review_ID,
                         user_ID = :user_ID,
                         like_status = :like_status";
-    
-            $stmt = $this->conn->prepare($query);
-    
-            $this->review_ID=htmlspecialchars(strip_tags($this->review_ID));
-            $this->user_ID=htmlspecialchars(strip_tags($this->user_ID));
-            $this->like_status=htmlspecialchars(strip_tags($this->like_status));
 
-            $stmt->bindParam(":review_ID",$this->review_ID);
-            $stmt->bindParam(":user_ID",$this->user_ID);
-            $stmt->bindParam(":like_status",$this->like_status);
-    
-            if($stmt->execute()){
-                return true;
-            }
-            return false;
+        $stmt = $this->conn->prepare($query);
+
+        $this->review_ID = htmlspecialchars(strip_tags($this->review_ID));
+        $this->user_ID = htmlspecialchars(strip_tags($this->user_ID));
+        $this->like_status = htmlspecialchars(strip_tags($this->like_status));
+
+        $stmt->bindParam(":review_ID", $this->review_ID);
+        $stmt->bindParam(":user_ID", $this->user_ID);
+        $stmt->bindParam(":like_status", $this->like_status);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
     }
 
-    public function getSingleReviewAppreciation(){
+    public function getSingleReviewAppreciation()
+    {
         $sqlQuery = "SELECT * FROM
-                       ". $this->dbTable ."
+                       " . $this->dbTable . "
                    WHERE 
                         review_ID = ?
                     AND
@@ -65,7 +70,8 @@ class ReviewAppreciation{
         $this->like_status = $dataRow['like_status'];
     }
 
-    public function updateReviewAppreciation(){
+    public function updateReviewAppreciation()
+    {
         $query = "UPDATE " . $this->dbTable . " 
                     SET 
                         like_status = :like_status
@@ -76,22 +82,23 @@ class ReviewAppreciation{
 
         $stmt = $this->conn->prepare($query);
 
-        $this->like_status=htmlspecialchars(strip_tags($this->like_status));
+        $this->like_status = htmlspecialchars(strip_tags($this->like_status));
 
-        $this->review_ID=htmlspecialchars(strip_tags($this->review_ID));
-        $this->user_ID=htmlspecialchars(strip_tags($this->user_ID));
+        $this->review_ID = htmlspecialchars(strip_tags($this->review_ID));
+        $this->user_ID = htmlspecialchars(strip_tags($this->user_ID));
 
         $stmt->bindParam(":like_status", $this->like_status);
         $stmt->bindParam(":review_ID", $this->review_ID);
         $stmt->bindParam(":user_ID", $this->user_ID);
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
         }
         return false;
     }
 
-    public function deleteReviewAppreciation(){
+    public function deleteReviewAppreciation()
+    {
         $query = "DELETE FROM " . $this->dbTable . " 
                     WHERE 
                         review_ID = ? 
@@ -100,52 +107,52 @@ class ReviewAppreciation{
 
         $stmt = $this->conn->prepare($query);
 
-        $this->review_ID=htmlspecialchars(strip_tags($this->review_ID));
-        $this->user_ID=htmlspecialchars(strip_tags($this->user_ID));
+        $this->review_ID = htmlspecialchars(strip_tags($this->review_ID));
+        $this->user_ID = htmlspecialchars(strip_tags($this->user_ID));
 
         $stmt->bindParam(1, $this->review_ID);
         $stmt->bindParam(2, $this->user_ID);
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
         }
         return false;
     }
 
-    public function deleteByReviewID(){
+    public function deleteByReviewID()
+    {
         $query = "DELETE FROM " . $this->dbTable . " 
                     WHERE 
                         review_ID = ? ";
 
         $stmt = $this->conn->prepare($query);
 
-        $this->review_ID=htmlspecialchars(strip_tags($this->review_ID));
+        $this->review_ID = htmlspecialchars(strip_tags($this->review_ID));
 
         $stmt->bindParam(1, $this->review_ID);
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
         }
         return false;
     }
 
 
-    public function deleteByUserID(){
+    public function deleteByUserID()
+    {
         $query = "DELETE FROM " . $this->dbTable . " 
                     WHERE 
                         user_ID = ? ";
 
         $stmt = $this->conn->prepare($query);
 
-        $this->user_ID=htmlspecialchars(strip_tags($this->user_ID));
+        $this->user_ID = htmlspecialchars(strip_tags($this->user_ID));
 
         $stmt->bindParam(1, $this->user_ID);
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
         }
         return false;
     }
 }
-
-?>
