@@ -37,7 +37,6 @@ class Review
                 " LEFT JOIN user u ON u.id = r.user_ID  
                 LEFT JOIN shop s ON s.id = r.shop_ID";
             $query = $querySelect . $queryFrom;
-            echo $query;
         }
         $stmt = $this->conn->prepare($query);
 
@@ -49,8 +48,7 @@ class Review
             $stmt->bindParam(1, $this->shop_ID);
         }
         if($shop_ID == null && $user_ID != null){
-            $query = $query  .
-                " WHERE r.user_ID = ?";
+            $query = $query . " WHERE r.user_ID = ?";
 
             $stmt = $this->conn->prepare($query);
             $this->user_ID=htmlspecialchars(strip_tags($user_ID));
