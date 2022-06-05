@@ -69,7 +69,7 @@ else :
             else :
                 $insert_query = "INSERT INTO `user`(`name`,`email`,`password`) VALUES(:name,:email,:password)";
 
-                $insert_stmt = $conn->prepare($insert_query);
+                $insert_stmt = $db->prepare($insert_query);
 
                 // DATA BINDING
                 $insert_stmt->bindValue(':name', htmlspecialchars(strip_tags($name)), PDO::PARAM_STR);
