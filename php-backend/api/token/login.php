@@ -7,7 +7,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 include_once '../../config/database.php';
 include_once '../../models/user.php';
-include_once '../../classes/JwtHandler.php';
+include_once './classes/JwtHandler.php';
 
 function msg($success,$status,$message,$extra = []){
     return array_merge([
@@ -18,7 +18,7 @@ function msg($success,$status,$message,$extra = []){
 }
 
 $db_connection = new Database();
-$conn = $db_connection->dbConnection();
+$conn = $db_connection->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));
 $returnData = [];
@@ -54,7 +54,7 @@ else:
     else:
         try{
             
-            $fetch_user_by_email = "SELECT * FROM `user` WHERE `email`=:email";
+            $fetch_user_by_email = "SELECT * FROM user WHERE email = :email";
             $query_stmt = $conn->prepare($fetch_user_by_email);
             $query_stmt->bindValue(':email', $email,PDO::PARAM_STR);
             $query_stmt->execute();
@@ -62,11 +62,14 @@ else:
             // IF THE USER IS FOUNDED BY EMAIL
             if($query_stmt->rowCount()):
                 $row = $query_stmt->fetch(PDO::FETCH_ASSOC);
-                $check_password = password_verify($password, $row['password']);
+//                $check_password = password_verify($password, $row['password']);
 
                 // VERIFYING THE PASSWORD (IS CORRECT OR NOT?)
                 // IF PASSWORD IS CORRECT THEN SEND THE LOGIN TOKEN
-                if($check_password):
+                if(
+//                    password_verify()
+                    $password ==  $row['password']
+                ):
 
                     $jwt = new JwtHandler();
                     $token = $jwt->jwtEncodeData(
