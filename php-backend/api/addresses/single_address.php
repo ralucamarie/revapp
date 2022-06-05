@@ -24,7 +24,7 @@ else if ($city != null && $country != null){
 
 if ($item != null) {
     $addressArray = array(
-        // "id" =>  $item->id,
+        "id" =>  $item->id,
         "city" => $item->city,
         "country" => $item->country
     );

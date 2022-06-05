@@ -10,10 +10,13 @@ $database = new Database();
 $db = $database->getConnection();
 
 $items = new Address($db);
-$country = isset($_GET['country']) ? $_GET['country'] : null;
+$country = $_GET['country'] ?? null;
+$city = $_GET['city'] ?? null;
 
-if($country != null)
-    $stmt = $items->getAddresses($country);
+if($city == null && $country != null)
+    $stmt = $items->getAddresses(null, $country);
+if($city != null && $country == null)
+    $stmt = $items->getAddresses($city);
 else
     $stmt = $items->getAddresses();
 

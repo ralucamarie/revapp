@@ -16,18 +16,26 @@ class Address
         $this->conn = $db;
     }
 
-    public function getAddresses(?string $country = null) {
-        if ($country == null){
+    public function getAddresses(?string $city = null, ?string $country = null) {
+        if ($country == null && $city == null){
             $sqlQuery = "SELECT * FROM " . $this->dbTable;
             $stmt = $this->conn->prepare($sqlQuery);
         }
-        else {            
+        if($country != null && $city == null){
             $sqlQuery = "SELECT * FROM " . $this->dbTable . 
             " WHERE country = ?";
 
             $stmt = $this->conn->prepare($sqlQuery);
             $this->country = htmlspecialchars(strip_tags($country));
             $stmt->bindParam(1, $this->country);
+        }
+        if($country == null && $city != null){
+            $sqlQuery = "SELECT * FROM " . $this->dbTable .
+                " WHERE city = ?";
+
+            $stmt = $this->conn->prepare($sqlQuery);
+            $this->city = htmlspecialchars(strip_tags($city));
+            $stmt->bindParam(1, $this->city);
         }
         $stmt->execute();
         return $stmt;

@@ -10,19 +10,20 @@ $database = new Database();
 $db = $database->getConnection();
 
 $items = new Review($db);
-$user_ID = isset($_GET['user_ID']) ? $_GET['user_ID'] : null;
-$shop_ID = isset($_GET['shop_ID']) ? $_GET['shop_ID'] : null;
+$user_ID = $_GET['user_ID'] ?? null;
+$shop_ID = $_GET['shop_ID'] ?? null;
+$names = true;
 
 if($user_ID != null && $shop_ID == null)
-    $stmt = $items->getReviews($user_ID, null);
+    $stmt = $items->getReviews($names, $user_ID, null);
 
 if($user_ID == null && $shop_ID != null)
-    $stmt = $items->getReviews( null ,$shop_ID);
+    $stmt = $items->getReviews($names, null ,$shop_ID);
 
 if($user_ID != null && $shop_ID != null)
-    $stmt = $items->getReviews($user_ID,$shop_ID);
+    $stmt = $items->getReviews($names, $user_ID,$shop_ID);
     
-else $stmt = $items->getReviews();
+else $stmt = $items->getReviews($names);
 
 $itemCount = $stmt->rowCount();
 
@@ -35,8 +36,11 @@ if ($itemCount > 0) {
         $e = array(
             "id" => $id,
             "review_date" => $review_date,
-            "shop_ID" => $shop_ID,
-            "user_ID" => $user_ID,
+//            "shop_ID" => $shop_ID,
+//            "user_ID" => $user_ID,
+            "user_name" => $user_name,
+            "user_surname" => $user_surname,
+            "shop_name" => $shop_name,
             "rating" => $rating,
             "title" => $title,
             "content" => $content
