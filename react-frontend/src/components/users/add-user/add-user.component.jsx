@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import NativeSelect from "@mui/material/NativeSelect";
 import Alert from "@mui/material/Alert";
+import { styled } from "@mui/material/styles";
 
 let emptyUser = {
   id: null,
@@ -166,6 +167,14 @@ const AddUser = ({ onSave, userToEdit }) => {
       setUserToAdd(emptyUser);
     }
   };
+  const ColorButton = styled(Button)(({ theme }) => ({
+    color: "#fff",
+    backgroundColor: "#FF5D0C",
+    "&:hover": {
+      backgroundColor: "#FF5D0C",
+    },
+    marginRight: "10px",
+  }));
 
   return (
     <Container component="main" maxWidth="xs">
@@ -297,9 +306,14 @@ const AddUser = ({ onSave, userToEdit }) => {
               />
             </Grid>
             <Grid item xs={12} sm={12}>
-              <Button variant="contained" className="button" onClick={saveUser}>
+              <ColorButton
+                variant="contained"
+                className="button"
+                onClick={saveUser}
+                color="#FF5D0C"
+              >
                 Save
-              </Button>
+              </ColorButton>
               <Button variant="contained" className="button" onClick={cancel}>
                 Cancel
               </Button>
