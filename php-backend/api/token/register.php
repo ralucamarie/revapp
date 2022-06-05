@@ -5,9 +5,11 @@ header("Access-Control-Allow-Methods: POST");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-require __DIR__ . '/classes/Database.php';
-$db_connection = new Database();
-$conn = $db_connection->dbConnection();
+include_once '../../config/database.php';
+include_once '../../models/user.php';
+
+$database = new Database();
+$db = $database->getConnection();
 
 function msg($success, $status, $message, $extra = [])
 {
@@ -56,7 +58,7 @@ else :
     else :
         try {
 
-            $check_email = "SELECT `email` FROM `users` WHERE `email`=:email";
+            $check_email = "SELECT `email` FROM `user` WHERE `email`=:email";
             $check_email_stmt = $conn->prepare($check_email);
             $check_email_stmt->bindValue(':email', $email, PDO::PARAM_STR);
             $check_email_stmt->execute();
@@ -65,7 +67,7 @@ else :
                 $returnData = msg(0, 422, 'This E-mail already in use!');
 
             else :
-                $insert_query = "INSERT INTO `users`(`name`,`email`,`password`) VALUES(:name,:email,:password)";
+                $insert_query = "INSERT INTO `user`(`name`,`email`,`password`) VALUES(:name,:email,:password)";
 
                 $insert_stmt = $conn->prepare($insert_query);
 

@@ -5,8 +5,9 @@ header("Access-Control-Allow-Methods: POST");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-require __DIR__.'/classes/Database.php';
-require __DIR__.'/classes/JwtHandler.php';
+include_once '../../config/database.php';
+include_once '../../models/user.php';
+include_once '../../classes/JwtHandler.php';
 
 function msg($success,$status,$message,$extra = []){
     return array_merge([
@@ -53,7 +54,7 @@ else:
     else:
         try{
             
-            $fetch_user_by_email = "SELECT * FROM `users` WHERE `email`=:email";
+            $fetch_user_by_email = "SELECT * FROM `user` WHERE `email`=:email";
             $query_stmt = $conn->prepare($fetch_user_by_email);
             $query_stmt->bindValue(':email', $email,PDO::PARAM_STR);
             $query_stmt->execute();
@@ -69,7 +70,7 @@ else:
 
                     $jwt = new JwtHandler();
                     $token = $jwt->jwtEncodeData(
-                        'http://localhost/php_auth_api/',
+                        'http://localhost/revapp/php-backend/token',
                         array("user_id"=> $row['id'])
                     );
                     

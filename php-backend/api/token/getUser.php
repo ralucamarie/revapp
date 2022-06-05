@@ -5,12 +5,13 @@ header("Access-Control-Allow-Methods: GET");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-require __DIR__.'/classes/Database.php';
-require __DIR__.'/AuthMiddleware.php';
+include_once '../../config/database.php';
+include_once '../../models/user.php';
+include_once '../../AuthMiddleware.php';
 
 $allHeaders = getallheaders();
-$db_connection = new Database();
-$conn = $db_connection->dbConnection();
-$auth = new Auth($conn, $allHeaders);
+$database = new Database();
+$db = $database->getConnection();
+$auth = new Auth($db, $allHeaders);
 
 echo json_encode($auth->isValid());
