@@ -3,32 +3,33 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json;");
 
 
-include_once '../../models/category.php';
 include_once '../../config/database.php';
+include_once '../../models/reviewAppreciation.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$items = new Category($db);
+$items = new ReviewAppreciation($db);
 
-$stmt = $items->getCategories();
+$stmt = $items->getReviewAppreciations();
 $itemCount = $stmt->rowCount();
 
 if ($itemCount > 0) {
 
-    $categoryArray = array();
+    $reviewAppreciationArray = array();
 
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
         $e = array(
-            "id" => $id,
-            "category_name" => $category_name
+            "review_ID" => $review_ID,
+            "user_ID" => $user_ID,
+            "like_status" => $like_status
         );
 
-        array_push($categoryArray, $e);
+        array_push($reviewAppreciationArray, $e);
     }
-    echo json_encode($categoryArray);
+    echo json_encode($reviewAppreciationArray);
 } else {
     echo json_encode("");
 }

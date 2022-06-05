@@ -4,27 +4,28 @@ header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Ca
 header("Content-Type: application/json;");
 
 include_once '../../config/database.php';
-include_once '../../models/shop.php';
+include_once '../../models/user.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$item = new Shop($db);
+$item = new User($db);
 
 $item->id = isset($_GET['id']) ? $_GET['id'] : die();
-$item->getSingleShop();
+
+$item->getSingleUser();
 
 if ($item != null) {
-
-    $shop_Array = array(
+    $user_Arr = array(
         "id" =>  $item->id,
-        "shop_name" => $item->shop_name,
-        "category_ID" => $item->category_ID,
-        "website_url" => $item->website_url
+        "first_name" => $item->first_name,
+        "last_name" => $item->last_name,
+        "email_id" => $item->email_id
     );
+
     http_response_code(200);
-    echo json_encode($shop_Array);
+    echo json_encode($user_Arr);
 } else {
     http_response_code(404);
-    echo json_encode("Shop not found.");
+    echo json_encode("User record not found.");
 }

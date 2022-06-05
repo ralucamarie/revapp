@@ -3,32 +3,34 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json;");
 
 
-include_once '../../models/category.php';
 include_once '../../config/database.php';
+include_once '../../models/shop.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$items = new Category($db);
+$items = new Shop($db);
 
-$stmt = $items->getCategories();
+$stmt = $items->getShops();
 $itemCount = $stmt->rowCount();
 
 if ($itemCount > 0) {
 
-    $categoryArray = array();
+    $shopArray = array();
 
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
         $e = array(
             "id" => $id,
-            "category_name" => $category_name
+            "shop_name" => $shop_name,
+            "category_ID" => $category_ID,
+            "website_url" => $website_url
         );
 
-        array_push($categoryArray, $e);
+        array_push($shopArray, $e);
     }
-    echo json_encode($categoryArray);
+    echo json_encode($shopArray);
 } else {
     echo json_encode("");
 }

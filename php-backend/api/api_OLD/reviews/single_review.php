@@ -4,27 +4,31 @@ header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Ca
 header("Content-Type: application/json;");
 
 include_once '../../config/database.php';
-include_once '../../models/shop.php';
+include_once '../../models/review.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$item = new Shop($db);
+$item = new Review($db);
 
 $item->id = isset($_GET['id']) ? $_GET['id'] : die();
-$item->getSingleShop();
+
+$item->getSingleReview();
 
 if ($item != null) {
-
-    $shop_Array = array(
+    $reviewArray = array(
         "id" =>  $item->id,
-        "shop_name" => $item->shop_name,
-        "category_ID" => $item->category_ID,
-        "website_url" => $item->website_url
+        "review_date" => $item->review_date,
+        "shop_ID" => $item->shop_ID,
+        "user_ID" => $item->user_ID,
+        "rating" => $item->rating,
+        "title" => $item->title,
+        "content" => $item->content
     );
+
     http_response_code(200);
-    echo json_encode($shop_Array);
+    echo json_encode($reviewArray);
 } else {
     http_response_code(404);
-    echo json_encode("Shop not found.");
+    echo json_encode("Review not found.");
 }

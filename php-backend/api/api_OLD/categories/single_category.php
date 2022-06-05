@@ -4,27 +4,26 @@ header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Ca
 header("Content-Type: application/json;");
 
 include_once '../../config/database.php';
-include_once '../../models/shop.php';
+include_once '../../models/category.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$item = new Shop($db);
+$item = new Category($db);
 
 $item->id = isset($_GET['id']) ? $_GET['id'] : die();
-$item->getSingleShop();
+
+$item->getSingleCategory();
 
 if ($item != null) {
-
-    $shop_Array = array(
+    $category_Array = array(
         "id" =>  $item->id,
-        "shop_name" => $item->shop_name,
-        "category_ID" => $item->category_ID,
-        "website_url" => $item->website_url
+        "category_name" => $item->category_name,
     );
+
     http_response_code(200);
-    echo json_encode($shop_Array);
+    echo json_encode($category_Array);
 } else {
     http_response_code(404);
-    echo json_encode("Shop not found.");
+    echo json_encode("Category not found.");
 }
