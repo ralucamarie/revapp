@@ -59,7 +59,7 @@ else :
         try {
 
             $check_email = "SELECT `email` FROM `user` WHERE `email`=:email";
-            $check_email_stmt = $conn->prepare($check_email);
+            $check_email_stmt = $db->prepare($check_email);
             $check_email_stmt->bindValue(':email', $email, PDO::PARAM_STR);
             $check_email_stmt->execute();
 
