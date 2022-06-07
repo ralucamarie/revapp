@@ -1,48 +1,78 @@
-import React from "react";
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-const SignIn = () => {
+const theme = createTheme();
+
+export default function SignIn() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get('email'),
+      password: data.get('password'),
+    });
+  };
+
   return (
-    <div>
-      <br></br>
-      <div className="container">
-        <div className="row">
-          <div className="card col-md-6 offset-md-3 offset-md-3">
-            <div className="card-body">
-              <form>
-                <div className="form-group">
-                  <label> Email:</label>
-                  <input
-                    placeholder="Email Address"
-                    name="email"
-                    className="form-control"
-                    // value={userToSignIn.email}
-                    // onChange={changeEmailHandler}
-                  />
-                </div>
-                <div className="form-group">
-                  <label> Password: </label>
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    name="password"
-                    className="form-control"
-                    // value={userToSignIn.password}
-                    // onChange={changePasswordHandler}
-                  />
-                </div>
-                <button
-                  className="btn btn-success"
-                  //  onClick={logInUser}
-                >
-                  <h5>Log-In</h5>
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Log in
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+              <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Log In
+            </Button>
+            
+          </Box>
+        </Box>
+        
+      </Container>
+    </ThemeProvider>
   );
-};
-// }
-export default SignIn;
+}

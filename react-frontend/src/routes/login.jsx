@@ -10,7 +10,7 @@ const Login = () => {
       flexDirection="column"
       sx={{ marginTop: 10 }}
     >
-      <h5>Login Page</h5>
+     
       <SignIn />
     </Box>
   );
