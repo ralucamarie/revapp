@@ -13,6 +13,11 @@ class ReviewService {
       mode: "no-cors",
     });
   }
+
+  updateReview(review) {
+    console.log("review from api call", review);
+    return axios.put(`${REVIEW_API_URL}/update.php`, review);
+  }
 }
 
 export default new ReviewService();

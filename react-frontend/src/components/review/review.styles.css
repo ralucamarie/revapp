@@ -1,0 +1,16 @@
+.edit {
+  font-size: 1rem;
+  color: #000;
+  font-weight: bold;
+}
+
+.goToShop {
+  font-size: 1rem;
+  color: #ff7043;
+  font-weight: bold;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+}

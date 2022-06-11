@@ -9,6 +9,7 @@ import Paper from "@mui/material/Paper";
 
 const UserProfile = () => {
   const [reviews, setReviews] = useState([]);
+  const [editedReview, setEditedReview] = useState(null);
 
   const fetchData = () => {
     ReviewService.getReviews().then((res) => {
@@ -20,6 +21,15 @@ const UserProfile = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleReviewOnSave = (review) => {
+    setReviews(
+      reviews.map((mapReview) =>
+        mapReview.id != review.id ? mapReview : review
+      )
+    );
+    ReviewService.updateReview(review);
+  };
 
   return (
     <Box
@@ -37,7 +47,11 @@ const UserProfile = () => {
         <Container>
           <h2>My Comments</h2>
           {reviews.map((review) => (
-            <Review key={review.id} propReview={review} />
+            <Review
+              key={review.id}
+              propReview={review}
+              onSave={handleReviewOnSave}
+            />
           ))}
         </Container>
       </Paper>
