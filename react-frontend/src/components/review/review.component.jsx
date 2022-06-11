@@ -1,4 +1,3 @@
-import "./review.styles.css";
 import * as React from "react";
 
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,12 +8,36 @@ import { useState } from "react";
 import { Typography } from "@material-ui/core";
 import { Divider } from "@material-ui/core";
 import { Rating } from "@mui/material";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+
+import "./review.styles.css";
 
 //TODO - afiseaza scorul total al unui shop langa numele lui, apoi ratingul e care l-a dat userul
-const Review = ({ propReview }) => {
+const Review = ({ propReview, onSave }) => {
   const { content, id, rating, review_date, shop_ID, title, user_ID } =
     propReview;
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editedReview, setEditedReview] = useState(propReview);
   console.log(propReview);
+
+  const editReview = () => {
+    setIsEditMode(true);
+    console.log(editedReview.title);
+  };
+
+  const saveReview = () => {
+    onSave(editedReview);
+    setIsEditMode(false);
+  };
+
+  const handleChange = (event) => {
+    setEditedReview({
+      ...editedReview,
+      [event.target.name]: event.target.value,
+    });
+    console.log(event.target.name + event.target.value);
+  };
 
   return (
     <React.Fragment>
@@ -49,31 +72,71 @@ const Review = ({ propReview }) => {
             </Box>
             <Divider />
           </Box>
-          <Typography gutterBottom component="div">
-            <Box
-              sx={{
-                fontWeight: "bold",
-                m: 1,
-                pl: 1,
-                pt: 0.5,
-                fontSize: 20,
-              }}
-            >
-              {title}
-            </Box>
-          </Typography>
 
-          <Typography variant="subtitle1" gutterBottom component="div">
+          {/* Content that can be eddited: */}
+          {!isEditMode ? (
+            <>
+              <Typography gutterBottom component="div">
+                <Box
+                  sx={{
+                    fontWeight: "bold",
+                    m: 1,
+                    pl: 1,
+                    pt: 0.5,
+                    fontSize: 20,
+                  }}
+                >
+                  {title}
+                </Box>
+              </Typography>
+
+              <Typography variant="subtitle1" gutterBottom component="div">
+                <Box
+                  sx={{
+                    pl: 2,
+                    pt: 0.5,
+                    fontSize: 20,
+                  }}
+                >
+                  {content}
+                </Box>
+              </Typography>
+            </>
+          ) : (
             <Box
+              component="form"
               sx={{
-                pl: 2,
-                pt: 0.5,
-                fontSize: 20,
+                "& .MuiTextField-root": { m: 1, width: "98%" },
               }}
+              noValidate
+              autoComplete="off"
             >
-              {content}
+              <div className="formContainer">
+                <TextField
+                  fullWidth
+                  id="form-title"
+                  label="Title"
+                  name="title"
+                  multiline
+                  maxRows={4}
+                  value={editedReview.title}
+                  onChange={handleChange}
+                />
+                <TextField
+                  id="form-content"
+                  label="Content"
+                  name="content"
+                  multiline
+                  value={editedReview.content}
+                  rows={4}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </div>
             </Box>
-          </Typography>
+          )}
+
+          {/* end of edited content */}
           <Divider />
           <Box display="flex" justifyContent="space-between" sx={{}}>
             <Typography component="div">
@@ -81,19 +144,18 @@ const Review = ({ propReview }) => {
                 Published on: {review_date}
               </Box>
             </Typography>
-            <Typography variant="button" display="block" gutterBottom>
-              <Box
-                sx={{
-                  pr: 2,
-                  pt: 0.5,
-                  fontSize: 16,
-                  color: "#ff7043",
-                  fontWeight: "bold",
-                }}
+            <Box>
+              <Button
+                variant="text"
+                className="edit"
+                onClick={isEditMode ? saveReview : editReview}
               >
-                go to shop
-              </Box>
-            </Typography>
+                {isEditMode ? "save" : "edit"}
+              </Button>
+              <Button variant="text" className="goToShop">
+                GO TO SHOP
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Paper>
