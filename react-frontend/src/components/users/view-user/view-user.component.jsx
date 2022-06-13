@@ -11,14 +11,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import ListItemButton from "@mui/material/Divider";
 
-const ViewUser = () => {
-  const user = {
-    name: "Johnny",
-    surname: "Bravo",
-    email: "jb@bravo.com",
-    city: "London",
-    country: "UK",
-  };
+const ViewUser = ({ user }) => {
   const style = {
     width: "100%",
     maxWidth: 360,

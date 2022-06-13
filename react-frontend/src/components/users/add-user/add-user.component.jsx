@@ -180,12 +180,6 @@ const AddUser = ({ onSave, userToEdit }) => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        {/* <Avatar className={classes.avatar}>
-          <LockIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography> */}
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
@@ -277,10 +271,6 @@ const AddUser = ({ onSave, userToEdit }) => {
                 onChange={editField}
                 error={formErrors.repeatPassword.length > 0}
                 helperText={formErrors.repeatPassword}
-                // inputProps={{
-                //   type: "password",
-                //   autoComplete: "new-password",
-                // }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
