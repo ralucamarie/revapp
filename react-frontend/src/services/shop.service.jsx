@@ -1,10 +1,9 @@
 import axios from "axios";
 
-const CATEGORY_API_URL = "http://localhost/revapp/php-backend/api/categories";
+const SHOP_API_URL = "http://localhost/revapp/php-backend/api/shops";
 
-
-export function getCategories() {
-  return axios.get(`${CATEGORY_API_URL}/read.php`, {
+export function getShops() {
+  return axios.get(`${SHOP_API_URL}/read.php`, {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",

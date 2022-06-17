@@ -2,48 +2,26 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json;");
 
-
 include_once '../../models/category.php';
 include_once '../../config/database.php';
-include_once '../../models/user.php';
-include_once '../../models/role.php';
-include_once '../../models/address.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$users = new User($db);
-$address = new Address($db);
-$role = new Role($db);
+$items = new Category($db);
+$stmt = $items->getCategories();
 
-$stmt = $users->getUsers();
-$itemCount = $stmt->rowCount();
+$itemCount = $stmt->rowCount();if ($itemCount > 0) {$categoryArray = array();
 
-if ($itemCount > 0) {
-
-    $categoryArray = array();
-
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        extract($row);
-        $address->id = $address_ID;
-        $address->getSingleAddress();
-        $role->id = $role_ID;
-        $role->getSingleRole();
-
-
-        $oneUser = array(
-            "id" => $id,
-            "name" => $name,
-            "surname" => $surname,
-            "email" => $email,
-            "role" => $role->role_name,
-            "city" => $address->city,
-            "country" => "$address->country",
-        );
-        array_push($userArr, $oneUser);
-    }
-    echo json_encode($categoryArray);
-} else {
-    echo json_encode("");
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+extract($row);
+$e = array(
+"id" => $id,
+"category_name" => $category_name
+);array_push($categoryArray, $e);
 }
+echo json_encode($categoryArray);
+} else {
+echo json_encode("");
+}
+

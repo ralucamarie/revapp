@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import cx from 'clsx';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -9,29 +9,30 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded';
+import { getCategories } from '../../services/category.service';
 
-const categories = ["Animals & Pets",
-    "Beauty & Well-being",
-    "Business Services",
-    "Construction & Manufacturing",
-    "Education & Training",
-    "Electronics & Technology",
-    "Events & Entertainment",
-    "Food, Beverages & Tobacco",
-    "Health & Medical",
-    "Hobbies & Crafts",
-    "Home & Garden",
-    "Home Services",
-    "Legal Services & Government",
-    "Media & Publishing",
-    "Money & Insurance",
-    "Public & Local Services",
-    "Restaurants & Bars",
-    "Shopping & Fashion",
-    "Sports",
-    "Travel & Vacation",
-    "Utilities",
-    "Vehicles & Transportation"]
+// const categories = ["Animals & Pets",
+//     "Beauty & Well-being",
+//     "Business Services",
+//     "Construction & Manufacturing",
+//     "Education & Training",
+//     "Electronics & Technology",
+//     "Events & Entertainment",
+//     "Food, Beverages & Tobacco",
+//     "Health & Medical",
+//     "Hobbies & Crafts",
+//     "Home & Garden",
+//     "Home Services",
+//     "Legal Services & Government",
+//     "Media & Publishing",
+//     "Money & Insurance",
+//     "Public & Local Services",
+//     "Restaurants & Bars",
+//     "Shopping & Fashion",
+//     "Sports",
+//     "Travel & Vacation",
+//     "Utilities",
+//     "Vehicles & Transportation"]
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -51,9 +52,15 @@ const useStyles = makeStyles(() => ({
   }));
 
 export const CategoryListMenu = () => {
+    const [categories, setCategories] = useState([]);
     const styles = useStyles();
     const shadowStyles = useFadedShadowStyles();
     const [checked, setChecked] = React.useState([1]);
+
+    React.useEffect(()=> {
+      const fetchedCategories = getCategories();
+      setShops(fetchedCategories);
+    }, [])
 
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
