@@ -58,7 +58,7 @@ export const CategoryListMenu = () => {
 
     React.useEffect(()=> {
       const fetchedCategories = getCategories();
-      setShops(fetchedCategories);
+      setCategories(fetchedCategories);
     }, [])
 
     const handleToggle = (value) => () => {

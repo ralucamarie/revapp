@@ -95,10 +95,9 @@ export const ReviewShopCard = React.memo(function ReviewCard() {
           </Box>
         </CardContent>
       </Card>
-    })
-  });
-  </div>
+    })}
+    </div>
   );
-}
+});
 
 export default ReviewShopCard
