@@ -9,21 +9,23 @@ import Signup from "./routes/signup";
 import Footer from "./components/layouts/footer/footer.component";
 import Header from "./components/layouts/header/header.component";
 import Home from "./routes/home";
+import UserProfile from "./routes/user-profile";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    <div>
-      <Header></Header>
+      <div>
+        <Header></Header>
         <Routes>
-            <Route path="/" element={<Home />}/>
-            <Route path="/users" element={<Users />} />
-            <Route path="/login" element={<Login />}/>
-            <Route path="/signup" element={<Signup/>}/>
+          <Route path="/" element={<Home />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/user-profile" element={<UserProfile />} />
         </Routes>
-      <Footer></Footer>
-    </div>
+        <Footer></Footer>
+      </div>
     </BrowserRouter>
   </React.StrictMode>
 );
