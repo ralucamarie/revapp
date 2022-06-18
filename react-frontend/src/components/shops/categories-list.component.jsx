@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import cx from 'clsx';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -10,29 +10,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded';
 import { getCategories } from '../../services/category.service';
-
-// const categories = ["Animals & Pets",
-//     "Beauty & Well-being",
-//     "Business Services",
-//     "Construction & Manufacturing",
-//     "Education & Training",
-//     "Electronics & Technology",
-//     "Events & Entertainment",
-//     "Food, Beverages & Tobacco",
-//     "Health & Medical",
-//     "Hobbies & Crafts",
-//     "Home & Garden",
-//     "Home Services",
-//     "Legal Services & Government",
-//     "Media & Publishing",
-//     "Money & Insurance",
-//     "Public & Local Services",
-//     "Restaurants & Bars",
-//     "Shopping & Fashion",
-//     "Sports",
-//     "Travel & Vacation",
-//     "Utilities",
-//     "Vehicles & Transportation"]
+import { getShops } from '../../services/shop.service';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -44,7 +22,6 @@ const useStyles = makeStyles(() => ({
   content: {
     position: "relative",
     padding: 24,
-    // margin: '-24% 16px 0',
     backgroundColor: "#fff",
     borderRadius: 4,
   },
@@ -52,19 +29,43 @@ const useStyles = makeStyles(() => ({
 
 export const CategoryListMenu = () => {
     const [categories, setCategories] = useState([]);
+    const [shops, setShops] = useState([]);
     const styles = useStyles();
     const shadowStyles = useFadedShadowStyles();
     const [checked, setChecked] = React.useState([1]);
 
     React.useEffect(()=> {
-      const fetchedCategories = getCategories();
-      setCategories(fetchedCategories);
+      const getCategoriesData = async() => {
+        await getCategories().then(
+          response => {
+          setCategories(response.data)
+        })
+      }
+      const getShopsData = async () => {
+        await getShops().then(
+          response => {
+            setShops(response.data)
+          })
+        }
+
+      getCategoriesData();
+      getShopsData()
     }, [])
 
-    const handleToggle = (value) => () => {
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
+    function getShopsByCategory(shops, categories, categoryName) {
+      console.log(shops)
+      let categoryId = categories.find(element => element.category_name == categoryName).id
+      let shopsToDisplay = shops.filter(shop => shop.category_ID === categoryId)
 
+      console.log(shopsToDisplay)
+    } 
+
+      
+
+    const handleToggle = (value, categoryName) => () => {
+        const currentIndex = checked.indexOf(value);
+        const newChecked = []
+    
     if (currentIndex === -1) {
       newChecked.push(value);
     } else {
@@ -72,6 +73,7 @@ export const CategoryListMenu = () => {
     }
 
     setChecked(newChecked);
+    getShopsByCategory(shops, categories, categoryName)
   };
 
   return (
@@ -90,15 +92,16 @@ export const CategoryListMenu = () => {
                 secondaryAction={
                   <Checkbox
                     edge="end"
-                    onChange={handleToggle(index)}
+                    onChange={handleToggle(index, category.category_name)}
                     checked={checked.indexOf(index) !== -1}
                     inputProps={{ "aria-labelledby": labelId }}
+                    label = {category.category_name}
                   />
                 }
                 disablePadding
               >
                 <ListItemButton>
-                  <ListItemText id={labelId}>{category}</ListItemText>
+                  <ListItemText id={labelId}>{category.category_name}</ListItemText>
                 </ListItemButton>
               </ListItem>
             );

@@ -42,20 +42,12 @@ export default function Header() {
             <Link
               underline="none"
               href="/"
-              //   sx={{
-              //     fontSize: 16,
-              //     color: "black",
-              //     "&:hover": {
-              //       color: "black",
-              //     },
-              //   }}
             >
               <Box
                 sx={{}}
                 component="img"
                 width="150px"
                 src={logo}
-                // "/public/logo_transparent.jpg"
               />
             </Link>
           </Typography>

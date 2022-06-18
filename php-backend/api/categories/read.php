@@ -31,8 +31,4 @@ if ($itemCount > 0) {
 } else {
     echo json_encode("");
 }
-echo json_encode($categoryArray);
-} else {
-echo json_encode("");
-}
 
