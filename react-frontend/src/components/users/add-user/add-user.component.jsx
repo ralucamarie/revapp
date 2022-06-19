@@ -181,7 +181,13 @@ const AddUser = ({ onSave, userToEdit }) => {
       <CssBaseline />
       <div className={classes.paper}>
         <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
+          <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            spacing={2}
+          >
             <Grid item xs={12} sm={12}>
               <FormControl fullWidth>
                 <InputLabel variant="standard" htmlFor="uncontrolled-native">
