@@ -7,7 +7,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 include_once '../../config/database.php';
 include_once '../../models/user.php';
-include_once './classes/JwtHandler.php';
+include_once '../../classes/JwtHandler.php';
 
 function msg($success,$status,$message,$extra = []){
     return array_merge([
