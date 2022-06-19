@@ -10,23 +10,17 @@ import Footer from "./components/layouts/footer/footer.component";
 import Header from "./components/layouts/header/header.component";
 import Home from "./routes/home";
 import UserProfile from "./routes/user-profile";
+import UserContextProvider from "./context/UserContext";
+import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <div>
-        <Header></Header>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/user-profile" element={<UserProfile />} />
-        </Routes>
-        <Footer></Footer>
-      </div>
-    </BrowserRouter>
+    <UserContextProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </UserContextProvider>
   </React.StrictMode>
 );
 
