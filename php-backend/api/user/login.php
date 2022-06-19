@@ -1,5 +1,5 @@
 <?php
-include_once './config/database.php';
+include_once '../../config/database.php';
 require "../vendor/autoload.php";
 include_once '../../models/user.php';
 use \Firebase\JWT\JWT;
@@ -14,8 +14,8 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 $email = '';
 $password = '';
 
-$databaseService = new DatabaseService();
-$conn = $databaseService->getConnection();
+$database = new Database();
+$db = $database->getConnection();
 
 
 
@@ -28,7 +28,7 @@ $table_name = 'user';
 
 $query = "SELECT id, name , surname , password FROM " . $table_name . " WHERE email = ? LIMIT 0,1";
 
-$stmt = $conn->prepare( $query );
+$stmt = $db->prepare( $query );
 $stmt->bindParam(1, $email);
 $stmt->execute();
 $num = $stmt->rowCount();
@@ -40,7 +40,10 @@ if($num > 0){
     $lastname = $row['surname'];
     $password2 = $row['password'];
 
-    if(password_verify($password, $password2))
+    if(
+        // password_verify($password, $password2)
+        $password == $password2
+        )
     {
         $secret_key = "YOUR_SECRET_KEY";
         $issuer_claim = "THE_ISSUER"; // this can be the servername
@@ -63,7 +66,7 @@ if($num > 0){
 
         http_response_code(200);
 
-        $jwt = JWT::encode($token, $secret_key);
+        $jwt = JWT::encode($token, $secret_key, 'HS256');
         echo json_encode(
             array(
                 "message" => "Successful login.",
