@@ -1,7 +1,7 @@
 <?php
-require './vendor/autoload.php';
+require './../vendor/autoload.php';
 
-include_once './vendor/firebase/php-jwt/src/JWT.php';
+use Firebase\JWT\JWT;
 
 class JwtHandler
 {

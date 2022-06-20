@@ -7,7 +7,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 include_once '../../config/database.php';
 include_once '../../models/user.php';
-include_once '../../classes/JwtHandler.php';
+require __DIR__.'/classes/JwtHandler.php';
 
 function msg($success,$status,$message,$extra = []){
     return array_merge([
@@ -47,7 +47,7 @@ else:
         $returnData = msg(0,422,'Invalid Email Address!');
     
     // IF PASSWORD IS LESS THAN 8 THE SHOW THE ERROR
-    elseif(strlen($password) < 8):
+    elseif(strlen($password) < 6):
         $returnData = msg(0,422,'Your password must be at least 8 characters long!');
 
     // THE USER IS ABLE TO PERFORM THE LOGIN ACTION
