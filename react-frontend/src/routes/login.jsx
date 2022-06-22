@@ -1,3 +1,4 @@
+import * as React from "react";
 import SignIn from "../components/users/sign-in/sign-in.component";
 import { Box } from "@mui/material";
 
@@ -9,7 +10,6 @@ const Login = () => {
       flexDirection="column"
       sx={{ marginTop: 10 }}
     >
-      <h5>Login Page</h5>
       <SignIn />
     </Box>
   );

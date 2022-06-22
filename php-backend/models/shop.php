@@ -10,7 +10,8 @@ class Shop
     public $category_ID;
     public $website_url;
 
-    public function __construct($db){
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
@@ -35,7 +36,8 @@ class Shop
         }
     }
 
-    public function createShop(){
+    public function createShop()
+    {
         $query = "INSERT INTO " . $this->dbTable . " 
                 SET 
                    shop_name = :shop_name,
@@ -44,23 +46,24 @@ class Shop
 
         $stmt = $this->conn->prepare($query);
 
-        $this->shop_name=htmlspecialchars(strip_tags($this->shop_name));
-        $this->category_ID=htmlspecialchars(strip_tags($this->category_ID));
-        $this->website_url=strip_tags($this->website_url);
+        $this->shop_name = htmlspecialchars(strip_tags($this->shop_name));
+        $this->category_ID = htmlspecialchars(strip_tags($this->category_ID));
+        $this->website_url = strip_tags($this->website_url);
 
         $stmt->bindParam(":shop_name", $this->shop_name);
         $stmt->bindParam(":category_ID", $this->category_ID);
         $stmt->bindParam(":website_url", $this->website_url);
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
         }
         return false;
     }
 
-    public function getSingleShop(){
+    public function getSingleShop()
+    {
         $sqlQuery = "SELECT * FROM
-                       ". $this->dbTable ."
+                       " . $this->dbTable . "
                    WHERE 
                       id = ?
                    LIMIT 0,1";
@@ -78,7 +81,8 @@ class Shop
         $this->website_url = $dataRow['website_url'];
     }
 
-    public function updateShop(){
+    public function updateShop()
+    {
         $query = "UPDATE " . $this->dbTable . " 
                     SET 
                         shop_name = :shop_name,
@@ -89,35 +93,35 @@ class Shop
 
         $stmt = $this->conn->prepare($query);
 
-        $this->shop_name=htmlspecialchars(strip_tags($this->shop_name));
-        $this->category_ID=htmlspecialchars(strip_tags($this->category_ID));
-        $this->website_url=strip_tags($this->website_url);
+        $this->shop_name = htmlspecialchars(strip_tags($this->shop_name));
+        $this->category_ID = htmlspecialchars(strip_tags($this->category_ID));
+        $this->website_url = strip_tags($this->website_url);
 
-        $this->id=htmlspecialchars(strip_tags($this->id));
+        $this->id = htmlspecialchars(strip_tags($this->id));
 
         $stmt->bindParam(":shop_name", $this->shop_name);
         $stmt->bindParam(":category_ID", $this->category_ID);
         $stmt->bindParam(":website_url", $this->website_url);
-        $stmt->bindParam(":id",$this->id);
+        $stmt->bindParam(":id", $this->id);
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
         }
         return false;
     }
 
-    function deleteShop(){
+    function deleteShop()
+    {
         $query = "DELETE FROM " . $this->dbTable . " WHERE id = ?";
         $stmt = $this->conn->prepare($query);
 
-        $this->id=htmlspecialchars(strip_tags($this->id));
+        $this->id = htmlspecialchars(strip_tags($this->id));
 
         $stmt->bindParam(1, $this->id);
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
         }
         return false;
     }
-
 }

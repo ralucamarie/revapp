@@ -1,0 +1,11 @@
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-field {
+  font-size: larger;
+  font-weight: 200;
+}
