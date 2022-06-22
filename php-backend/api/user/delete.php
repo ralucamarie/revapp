@@ -16,16 +16,10 @@ $db = $database->getConnection();
 
 $item = new User($db);
 
-$data = json_decode(file_get_contents("php://input"));
+$item->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-$item->id = $data->id;
-$item->first_name = $data->first_name;
-$item->last_name = $data->last_name;
-$item->email_id = $data->email_id;
-
-
-if ($item->updateUser()) {
-    echo json_encode("User record updated.");
+if ($item->deleteUser()) {
+    echo json_encode("User deleted.");
 } else {
-    echo json_encode("User record could not be updated.");
+    echo json_encode("Not deleted");
 }
