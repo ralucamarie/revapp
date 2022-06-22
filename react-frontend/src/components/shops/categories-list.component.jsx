@@ -1,4 +1,4 @@
-import React, {useState, useHistory} from 'react';
+import React, {useState} from 'react';
 import cx from 'clsx';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -28,7 +28,6 @@ const useStyles = makeStyles(() => ({
 
 export const CategoryListMenu = ({parentCallback}) => {
     const [categories, setCategories] = useState([]);
-    const [shops, setShops] = useState([]);
     const styles = useStyles();
     const shadowStyles = useFadedShadowStyles();
     const [checked, setChecked] = React.useState([]);
@@ -49,7 +48,6 @@ export const CategoryListMenu = ({parentCallback}) => {
         if (currentIndex === -1) {
           newChecked.push(value);
         } else if (currentIndex === 0){
-          console.log("aici")
             categoryName = ""
             parentCallback(categoryName)
         } else {

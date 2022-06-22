@@ -10,6 +10,7 @@ import Footer from "./components/layouts/footer/footer.component";
 import Header from "./components/layouts/header/header.component";
 import Home from "./routes/home";
 import UserProfile from "./routes/user-profile";
+import ShopDetails from "./routes/shop-details";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -23,6 +24,7 @@ root.render(
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/shop-details/:shopId" element={<ShopDetails/>}/>
         </Routes>
         <Footer></Footer>
       </div>

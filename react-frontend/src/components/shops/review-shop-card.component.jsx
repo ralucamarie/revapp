@@ -11,6 +11,8 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded';
 import { Pagination } from "@material-ui/lab";
 import usePagination from "../business-logic/pagination";
+import Link from "@mui/material/Link";
+
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -33,7 +35,7 @@ const useStyles = makeStyles(() => ({
   },
   locationIcon: {
     marginRight: 4,
-  },
+  }
 }));
 
 export const ReviewShopCard = (props) => {
@@ -57,7 +59,7 @@ export const ReviewShopCard = (props) => {
         <List spacing={2}>
         {_DATA.currentData().map((shop) => {
           return (
-            <ListItem key={shop.shopId}>
+            <ListItem key={shop.id}>
             <Card elevation={0} className={styles.root}>
               <CardContent className={cx(shadowStyles.root, styles.content)}>
                 <h3 className={styles.title}>{shop.name}</h3>
@@ -98,7 +100,9 @@ export const ReviewShopCard = (props) => {
                     </Typography>
                   </Box>
                   <IconButton size={'small'}>
+                    <Link underline="none" href={`/shop-details/${shop.id}`}>
                     <MoreHorizIcon/>
+                    </Link>
                   </IconButton>
                 </Box>
               </CardContent>
