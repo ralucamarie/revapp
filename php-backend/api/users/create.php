@@ -45,7 +45,6 @@ if ($userAddress->id) {
 } else {
     echo ('No address found');
 }
-
 $userRole->getRoleIdByRoleName();
 if ($userRole->id) {
     $user->role_ID = $userRole->id;

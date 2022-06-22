@@ -4,7 +4,7 @@ class Review
 {
     private $conn;
     private $dbTable = 'review';
-    
+
     public $id;
     public $review_date;
     public $shop_ID;
@@ -17,15 +17,57 @@ class Review
     public function __construct($db){
         $this->conn = $db;
     }
-    
-    public function getReviews(){
+
+    //ar trebui sa se foloseasca long dar php nu are long sau bigint
+    //dar pentru noi e ok si int simplu
+    public function getReviews(?bool $names = null, ?int $user_ID = null, ?int $shop_ID = null){
         // with * select all columns
-        $query = "SELECT * from " . $this->dbTable;
+        $querySelect = "SELECT r.id, 
+                    r.review_date, 
+                    r.shop_ID, 
+                    r.user_ID, 
+                    r.rating, 
+                    r.title,
+                    r.content ";
+        $queryFrom = "FROM " . $this->dbTable . " r";
+        $query = $querySelect . $queryFrom;
+        if ($names){
+            $querySelect = $querySelect . ", u.name AS user_name, u.surname AS user_surname, s.shop_name AS shop_name ";
+            $queryFrom = $queryFrom .
+                " LEFT JOIN user u ON u.id = r.user_ID  
+                LEFT JOIN shop s ON s.id = r.shop_ID";
+            $query = $querySelect . $queryFrom;
+        }
         $stmt = $this->conn->prepare($query);
+
+        if($shop_ID != null && $user_ID == null){
+            $query = $query . " WHERE r.shop_ID = ?";
+
+            $stmt = $this->conn->prepare($query);
+            $this->shop_ID=htmlspecialchars(strip_tags($shop_ID));
+            $stmt->bindParam(1, $this->shop_ID);
+        }
+        if($shop_ID == null && $user_ID != null){
+            $query = $query . " WHERE r.user_ID = ?";
+
+            $stmt = $this->conn->prepare($query);
+            $this->user_ID=htmlspecialchars(strip_tags($user_ID));
+            $stmt->bindParam(1, $this->user_ID);
+        }
+        if($shop_ID != null && $user_ID != null){
+            $query = $query  .
+                " WHERE r.user_ID = ? AND r.shop_ID = ?";
+
+            $stmt = $this->conn->prepare($query);
+            $this->user_ID=htmlspecialchars(strip_tags($user_ID));
+            $this->shop_ID=htmlspecialchars(strip_tags($shop_ID));
+            $stmt->bindParam(1, $this->user_ID);
+            $stmt->bindParam(2, $this->shop_ID);
+        }
         $stmt->execute();
         return $stmt;
     }
-    
+
     public function createReview(){
         // ar putea exista ceva probleme din cauza faptului ca am folosit numele coloanei date si atat
         // am schimbat cu review_date si in MySQL si aici

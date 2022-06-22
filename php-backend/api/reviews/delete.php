@@ -25,7 +25,7 @@ $reviewAppr = new ReviewAppreciation($db);
 $reviewAppr->review_ID = $item->id;
 
 if($reviewAppr->deleteByReviewID()){
-    echo json_encode("ReviewAppreciations with review_ID " .$item->id. " deleted.");
+    echo json_encode("ReviewAppreciantions with review_ID " .$item->id. " deleted.");
 }
 else {
     echo json_encode("Cloud not delete ReviewAppreciations with review_ID " .$item->id);
