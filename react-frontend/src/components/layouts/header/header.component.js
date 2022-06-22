@@ -37,6 +37,7 @@ const rightLink = {
 
 export default function Header() {
   const { user, logout } = useContext(UserContext);
+  
 
   return (
     <div>

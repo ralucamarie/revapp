@@ -10,7 +10,7 @@ include_once './AuthMiddleware.php';
 
 $allHeaders = getallheaders();
 $db_connection = new Database();
-$db = $database->getConnection();
+$db = $db_connection->getConnection();
 $auth = new Auth($db, $allHeaders);
 
 echo json_encode($auth->isValid());
