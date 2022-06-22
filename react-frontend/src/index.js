@@ -10,17 +10,25 @@ import Footer from "./components/layouts/footer/footer.component";
 import Header from "./components/layouts/header/header.component";
 import Home from "./routes/home";
 import UserProfile from "./routes/user-profile";
-import UserContextProvider from "./context/UserContext";
-import App from "./App";
+import ShopDetails from "./routes/shop-details";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <UserContextProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </UserContextProvider>
+    <BrowserRouter>
+      <div>
+        <Header></Header>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/shop-details/:shopId" element={<ShopDetails/>}/>
+        </Routes>
+        <Footer></Footer>
+      </div>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

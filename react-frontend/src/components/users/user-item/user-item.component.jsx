@@ -2,8 +2,6 @@ import * as React from "react";
 import userService from "../../../services/user.service";
 import "./user-item.styles.css";
 import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
-import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 
 const UserItem = (props) => {
