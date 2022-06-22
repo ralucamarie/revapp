@@ -6,11 +6,15 @@ import { useState, useEffect } from "react";
 import Review from "../components/review/review.component";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 const UserProfile = () => {
   const [reviews, setReviews] = useState([]);
   const [editedReview, setEditedReview] = useState(null);
+  const { user } = useContext(UserContext);
 
+  //TODO: fetch reviews of user from the Context
   const fetchData = () => {
     ReviewService.getReviews().then((res) => {
       console.log(res.data);
@@ -25,7 +29,7 @@ const UserProfile = () => {
   const handleReviewOnSave = (review) => {
     setReviews(
       reviews.map((mapReview) =>
-        mapReview.id != review.id ? mapReview : review
+        mapReview.id !== review.id ? mapReview : review
       )
     );
     ReviewService.updateReview(review);
@@ -38,7 +42,7 @@ const UserProfile = () => {
       flexDirection="column"
       sx={{ marginTop: 10 }}
     >
-      <ViewUser />
+      <ViewUser user={user} />
       <Paper
         sx={{
           mb: 2,

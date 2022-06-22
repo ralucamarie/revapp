@@ -10,6 +10,8 @@ import MuiAppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import logo from "../../../static/images/logo.png";
 import userAvatar from "../../../static/images/avatar.jpg";
+import { useContext } from "react";
+import { UserContext } from "../../../context/UserContext";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -34,6 +36,8 @@ const rightLink = {
 };
 
 export default function Header() {
+  const { user, logout } = useContext(UserContext);
+
   return (
     <div>
       <AppBar position="fixed" sx={{ color: "grey" }}>
@@ -53,36 +57,43 @@ export default function Header() {
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Box className="avatar" sx={{ display: "flex" }}>
-            <StyledLinks>
-              <Link underline="none" href="/login" sx={rightLink}>
-                <div>Login</div>
-              </Link>
-            </StyledLinks>
+            {!user ? (
+              <>
+                <StyledLinks>
+                  <Link underline="none" href="/login" sx={rightLink}>
+                    <div>Login</div>
+                  </Link>
+                </StyledLinks>
+                <StyledLinks>
+                  <Link underline="none" href="/signup" sx={rightLink}>
+                    <div>Signup</div>
+                  </Link>
+                </StyledLinks>
+              </>
+            ) : (
+              <>
+                {user.role === "Administrator" && (
+                  <StyledLinks>
+                    <Link underline="none" href="/users" sx={rightLink}>
+                      <div>Users</div>
+                    </Link>
+                  </StyledLinks>
+                )}
 
-            <StyledLinks>
-              <Link underline="none" href="/signup" sx={rightLink}>
-                <div>Signup</div>
-              </Link>
-            </StyledLinks>
-
-            <StyledLinks>
-              <Link underline="none" href="/users" sx={rightLink}>
-                <div>Users</div>
-              </Link>
-            </StyledLinks>
-
-            <StyledLinks>
-              <Link underline="none" href="/user-profile" sx={rightLink}>
-                <Box className="avatar" sx={{ display: "flex" }}>
-                  <Box sx={{ pr: 0.5 }}>Profile</Box>
-                  <Avatar
-                    alt="Remy Sharp"
-                    src={userAvatar}
-                    sx={{ width: 24, height: 24 }}
-                  />
-                </Box>
-              </Link>
-            </StyledLinks>
+                <StyledLinks>
+                  <Link underline="none" href="/user-profile" sx={rightLink}>
+                    <Box className="avatar" sx={{ display: "flex" }}>
+                      <Box sx={{ pr: 0.5 }}>Profile</Box>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src={userAvatar}
+                        sx={{ width: 24, height: 24 }}
+                      />
+                    </Box>
+                  </Link>
+                </StyledLinks>
+              </>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
