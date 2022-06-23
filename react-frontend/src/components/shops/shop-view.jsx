@@ -8,7 +8,6 @@ import Paper from "@mui/material/Paper";
 import defaultShopImage from "../../static/images/defaultShopImage.jpg";
 import Divider from "@mui/material/Divider";
 import { getCategoryById } from '../../services/category.service';
-import ReviewService from "../../services/review.service";
 
 const style = {
   width: "100%",
@@ -17,73 +16,16 @@ const style = {
 };
 
 const ShopView = (props) => {
-  console.log("ShopView id: ", props.shopDetails)
   const [category, setCategory] = useState([]);
-  const [reviews, setReviews] = useState([]);
-  let shopWithRaitingCalculation = {}
+  let raitingCalculation = calculateRaiting(props.reviews)
+  console.log(raitingCalculation)
 
   useEffect(() => {
-    const getReviewsData = async () => {
-      await ReviewService.getReviews().then(
-        response => {
-          setReviews(response.data)
-        })
-      }
-    
-    const getCategoryNameById = async (categoryId) => {
-      await getCategoryById(categoryId).then(
+      getCategoryById(props.shopDetails.id).then(
         response => {
           setCategory(response.data)
-        })
-    }    
-    
-    getReviewsData()
-    getCategoryNameById(props.shopDetails.id)
-    // shopWithRaitingCalculation = populateShopDetails(reviews, props.shopDetailsProps.id)
-  },[props.shopDetails.id])
-
-  // function findReviewsByShopId(reviewsToSearch, shopId) {
-  //   console.log("Reviews: ", reviewsToSearch, shopId)
-  //   let reviewsByShopId = [];
-  //   reviewsToSearch.map((review) => {
-  //       if(review.shop_ID === shopId) {
-  //           reviewsByShopId.push(review);
-  //       }
-  //       return reviewsByShopId
-  //       })
-  //   return reviewsByShopId
-  // }
-
-  // function populateShopDetails(shopId, reviews){
-  //   let newShopDetails = {
-  //     rateValue: 0,
-  //     numberOfReview: 0,
-  //   }
-
-  //   let countReview = 0;
-  //   let rateValueSum = 0
-  
-  //   let reviewsBasedOnShopID = findReviewsByShopId(reviews, shopId);
-  //   console.log(reviewsBasedOnShopID)
-  //   reviewsBasedOnShopID.map((review) => {
-  //     countReview++
-  //     rateValueSum += review.rating
-  //   })
-
-  //   if(countReview !== 0 || rateValueSum !== 0){
-  //     newShopDetails.rateValue = Math.round(((rateValueSum / countReview) + Number.EPSILON) * 100) / 100
-  //   } else {
-  //     newShopDetails.rateValue = ""
-  //   }         
-  //   newShopDetails.numberOfReview = countReview
-
-  //   let shopDetailsToDisplay = newShopDetails
-  //   return shopDetailsToDisplay
-  // }
-
-  // // if(props.shopDetailsToDisplay.id !== null) {
-  //   shopWithRaitingCalculation = populateShopDetails(reviews, props.shopDetails.id)
-  // // }
+      })
+    },[props.shopDetails.id])
 
   return (
     <React.Fragment>
@@ -127,12 +69,12 @@ const ShopView = (props) => {
               <Divider />
               <div className="row">
                 <label> Raiting: </label>
-                <div className="shop-field"> {shopWithRaitingCalculation.rateValue}</div>
+                <div className="shop-field"> {raitingCalculation.rateValue}</div>
               </div>
               <Divider />
               <div className="row">
                 <label> Reviews </label>
-                <div className="shop-field"> {shopWithRaitingCalculation.numberOfReview}</div>
+                <div className="shop-field"> {raitingCalculation.numberOfReviews}</div>
               </div>
             </Box>
           </Container>
@@ -141,5 +83,29 @@ const ShopView = (props) => {
     </React.Fragment>
   );
 };
+
+function calculateRaiting(reviews){
+  let raitingObject = {
+    rateValue: 0,
+    numberOfReviews: 0,
+  }
+
+  let countReview = 0;
+  let rateValueSum = 0
+
+  reviews.map((review) => {
+    countReview++
+    rateValueSum += review.rating
+  })
+
+  if(countReview !== 0 || rateValueSum !== 0){
+    raitingObject.rateValue = Math.round(((rateValueSum / countReview) + Number.EPSILON) * 100) / 100
+  } else {
+    raitingObject.rateValue = ""
+  }  
+  
+  raitingObject.numberOfReviews = countReview
+  return raitingObject
+}
 
 export default ShopView;
