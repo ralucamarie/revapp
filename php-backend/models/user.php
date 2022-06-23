@@ -57,7 +57,7 @@ class User
         $this->name = htmlspecialchars(strip_tags($this->name));
         $this->surname = htmlspecialchars(strip_tags($this->surname));
         $this->email = htmlspecialchars(strip_tags($this->email));
-        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        $this->password = hash("sha256", $this->password);
         $this->address_ID = htmlspecialchars(strip_tags($this->address_ID));
         $this->role_ID = htmlspecialchars(strip_tags($this->role_ID));
 
