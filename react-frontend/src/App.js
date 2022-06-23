@@ -1,9 +1,8 @@
 import * as React from "react";
 import { Outlet } from "react-router-dom";
 import "./App.css";
-import UserService from "./services/user.service.jsx";
 import { useContext } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { UserContext } from "./context/UserContext";
 import Login from "./routes/login";
 import Home from "./routes/home";
@@ -12,6 +11,7 @@ import Users from "./routes/users";
 import Signup from "./routes/signup";
 import UserProfile from "./routes/user-profile";
 import Footer from "./components/layouts/footer/footer.component";
+import ShopDetails from "./routes/shop-details"
 
 function App() {
   const { user } = useContext(UserContext);
@@ -32,6 +32,7 @@ function App() {
         )}
         {user && <Route path="/user-profile" element={<UserProfile />} />}
         {/* <Route path="*" element={<Navigate to={user ? "/" : "/login"} />} /> */}
+        <Route path="/shop-details/:shopId" element={<ShopDetails/>}/>
       </Routes>
       <Outlet />
       <Footer></Footer>
