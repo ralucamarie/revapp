@@ -2,7 +2,6 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json;");
 
-
 include_once '../../models/category.php';
 include_once '../../config/database.php';
 
@@ -32,3 +31,4 @@ if ($itemCount > 0) {
 } else {
     echo json_encode("");
 }
+

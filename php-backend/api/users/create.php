@@ -45,6 +45,7 @@ if ($userAddress->id) {
 } else {
     echo ('No address found');
 }
+<<<<<<< HEAD
 // $addresses = new Address($db);;
 // $stmt = $addresses->getAddresses();
 // $addressCount = $stmt->rowCount();
@@ -77,6 +78,8 @@ if ($userAddress->id) {
 //         }
 //     }
 // }
+=======
+>>>>>>> main
 $userRole->getRoleIdByRoleName();
 if ($userRole->id) {
     $user->role_ID = $userRole->id;

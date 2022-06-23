@@ -44,13 +44,15 @@ export default function Header() {
       <AppBar position="fixed" sx={{ color: "grey" }}>
         <Toolbar>
           <Typography>
-            <Link underline="none" href="/">
+            <Link
+              underline="none"
+              href="/"
+            >
               <Box
                 sx={{}}
                 component="img"
                 width="150px"
                 src={logo}
-                // "/public/logo_transparent.jpg"
               />
             </Link>
           </Typography>

@@ -1,39 +1,15 @@
-import * as React from "react";
-import cx from "clsx";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Checkbox from "@mui/material/Checkbox";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import { useFadedShadowStyles } from "@mui-treasury/styles/shadow/faded";
-
-const categories = [
-  "Animals & Pets",
-  "Beauty & Well-being",
-  "Business Services",
-  "Construction & Manufacturing",
-  "Education & Training",
-  "Electronics & Technology",
-  "Events & Entertainment",
-  "Food, Beverages & Tobacco",
-  "Health & Medical",
-  "Hobbies & Crafts",
-  "Home & Garden",
-  "Home Services",
-  "Legal Services & Government",
-  "Media & Publishing",
-  "Money & Insurance",
-  "Public & Local Services",
-  "Restaurants & Bars",
-  "Shopping & Fashion",
-  "Sports",
-  "Travel & Vacation",
-  "Utilities",
-  "Vehicles & Transportation",
-];
+import React, {useState} from 'react';
+import cx from 'clsx';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Checkbox from '@mui/material/Checkbox';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded';
+import { getCategories } from '../../services/category.service';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -45,28 +21,40 @@ const useStyles = makeStyles(() => ({
   content: {
     position: "relative",
     padding: 24,
-    // margin: '-24% 16px 0',
     backgroundColor: "#fff",
     borderRadius: 4,
   },
 }));
 
-export const CategoryListMenu = () => {
-  const styles = useStyles();
-  const shadowStyles = useFadedShadowStyles();
-  const [checked, setChecked] = React.useState([1]);
+export const CategoryListMenu = ({parentCallback}) => {
+    const [categories, setCategories] = useState([]);
+    const styles = useStyles();
+    const shadowStyles = useFadedShadowStyles();
+    const [checked, setChecked] = React.useState([]);
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+    React.useEffect(()=> {
+      const getCategoriesData = async() => {
+        await getCategories().then(
+          response => {
+          setCategories(response.data)
+        })
+      }
+      getCategoriesData();
+    }, [])
 
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
+    const handleToggle = (value, categoryName) => () => {
+        const currentIndex = checked.indexOf(value);
+        const newChecked = []
+        if (currentIndex === -1) {
+          newChecked.push(value);
+        } else if (currentIndex === 0){
+            categoryName = ""
+            parentCallback(categoryName)
+        } else {
+          newChecked.splice(currentIndex, 1);
+        }
+        setChecked(newChecked);
+        parentCallback(categoryName)
   };
 
   return (
@@ -85,15 +73,16 @@ export const CategoryListMenu = () => {
                 secondaryAction={
                   <Checkbox
                     edge="end"
-                    onChange={handleToggle(index)}
+                    onChange={handleToggle(index, category.category_name)}
                     checked={checked.indexOf(index) !== -1}
                     inputProps={{ "aria-labelledby": labelId }}
+                    label = {category.category_name}
                   />
                 }
                 disablePadding
               >
                 <ListItemButton>
-                  <ListItemText id={labelId}>{category}</ListItemText>
+                  <ListItemText id={labelId}>{category.category_name}</ListItemText>
                 </ListItemButton>
               </ListItem>
             );
