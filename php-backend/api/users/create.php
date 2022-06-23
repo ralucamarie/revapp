@@ -45,7 +45,38 @@ if ($userAddress->id) {
 } else {
     echo ('No address found');
 }
+// $addresses = new Address($db);;
+// $stmt = $addresses->getAddresses();
+// $addressCount = $stmt->rowCount();
+// //asses if our address exists
+// if ($addressCount > 0) {
+//     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+//         extract($row);
+//         var_dump($row);
+//         if ((strtolower($userAddress->city) == strtolower($city)) && (strtolower($userAddress->country) == strtolower($country))) {
+//             $user->address_ID = $id;
+//         } else {
+//             $userAddress->createAddress();
+//             $user->address_ID = $db->lastInsertId;
+//         }
+//     }
+// }
 
+//get the role id
+//get all roles
+// $roles = new Role($db);
+// $stmt = $roles->getRoles();
+// $rowCount = $stmt->rowCount();
+// if ($rowCount > 0) {
+//     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+//         extract($row);
+//         if (strtoupper($userRole->role_name) == $role_name) {
+//             $user->role_ID = $id;
+//         } else {
+//             echo ("User Role not found");
+//         }
+//     }
+// }
 $userRole->getRoleIdByRoleName();
 if ($userRole->id) {
     $user->role_ID = $userRole->id;

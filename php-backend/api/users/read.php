@@ -34,7 +34,7 @@ if ($itemCount > 0) {
 
         $oneUser = array(
             "id" => $id,
-            "name" => $name, 
+            "name" => $name,
             "surname" => $surname,
             "email" => $email,
             "role" => $role->role_name,
