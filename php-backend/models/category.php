@@ -1,17 +1,21 @@
 <?php
-class Category{
+class Category
+{
 
     private $conn;
     private $dbTable = 'category';
 
     public $id;
+
     public $category_name;
 
-    public function __construct($db){
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
-    public function getCategories(){
+    public function getCategories()
+    {
         // with * select all columns
         $query = "SELECT * from " . $this->dbTable;
         $stmt = $this->conn->prepare($query);
@@ -19,27 +23,29 @@ class Category{
         return $stmt;
     }
 
-    public function createCategory(){
+    public function createCategory()
+    {
         $query = "INSERT INTO " . $this->dbTable . " 
                     SET category_name = :category_name";
 
         $stmt = $this->conn->prepare($query);
 
-        $this->category_name=htmlspecialchars(strip_tags($this->category_name));
-        $stmt->bindParam(":category_name",$this->category_name);
+        $this->category_name = htmlspecialchars(strip_tags($this->category_name));
+        $stmt->bindParam(":category_name", $this->category_name);
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
         }
         return false;
     }
 
-    public function getSingleCategory(){
-        $query = "SELECT * FROM ". $this->dbTable ." 
+    public function getSingleCategory()
+    {
+        $query = "SELECT * FROM " . $this->dbTable . " 
                 WHERE 
                 id = ?
                 LIMIT 0,1";
-        
+
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(1, $this->id);
@@ -49,10 +55,28 @@ class Category{
         $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $this->category_name = $dataRow['category_name'];
-
     }
-    
-    public function updateCategory(){
+
+    public function getCategoryIDbyCategoryName($name)
+    {
+        $query = "SELECT * FROM " . $this->dbTable . " 
+                WHERE 
+                category_name = ?
+                LIMIT 0,1";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(1, $name);
+
+        $stmt->execute();
+
+        $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $this->id = $dataRow['id'];
+    }
+
+    public function updateCategory()
+    {
         $query = "UPDATE " . $this->dbTable . " 
         SET 
             category_name = :category_name 
@@ -60,31 +84,30 @@ class Category{
 
         $stmt = $this->conn->prepare($query);
 
-        $this->category_name=htmlspecialchars(strip_tags($this->category_name));
-        $this->id=htmlspecialchars(strip_tags($this->id));
+        $this->category_name = htmlspecialchars(strip_tags($this->category_name));
+        $this->id = htmlspecialchars(strip_tags($this->id));
 
-        $stmt->bindParam(":category_name",$this->category_name);
-        $stmt->bindParam(":id",$this->id);
+        $stmt->bindParam(":category_name", $this->category_name);
+        $stmt->bindParam(":id", $this->id);
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
         }
         return false;
     }
 
-    function deleteCategory(){
+    function deleteCategory()
+    {
         $query = "DELETE FROM " . $this->dbTable . " WHERE id = ?";
         $stmt = $this->conn->prepare($query);
 
-        $this->id=htmlspecialchars(strip_tags($this->id));
+        $this->id = htmlspecialchars(strip_tags($this->id));
 
         $stmt->bindParam(1, $this->id);
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
         }
         return false;
     }
 }
-
-?>

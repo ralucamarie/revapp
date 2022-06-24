@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { ReviewShopCard } from "../components/shops/review-shop-card.component";
 import { CategoryListMenu } from "../components/shops/categories-list.component";
-import { useContext } from "react";
-import { UserContext } from "../context/UserContext";
 import { getShops } from "../services/shop.service";
 import { getCategories } from "../services/category.service";
 import ReviewService from "../services/review.service";
 import { populateShopWithProperties } from "../components/business-logic/shopData";
+import AddShop from "../components/shops/add-shop.component";
 
 const Home = () => {
-  const { user, logout } = useContext(UserContext);
   const [shops, setShops] = useState([]);
   const [categories, setCategories] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -34,7 +32,6 @@ const Home = () => {
         setReviews(response.data);
       });
     };
-
     getCategoriesData();
     getShopsData();
     getReviewsData();
@@ -57,15 +54,24 @@ const Home = () => {
       height="100vh"
       display="flex"
       flexDirection="row"
-      alignItems={"center"}
+      alignItems={"top"}
+      alignContent={"top"}
       justifyItems={"space-between"}
       m={"15%"}
     >
-      {console.log(user)}
       <CategoryListMenu
         parentCallback={categoryNameCallBack}
       ></CategoryListMenu>
-      <ReviewShopCard shopList={shopsToDisplay[0]}></ReviewShopCard>
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems={"top"}
+        alignContent={"top"}
+        justifyItems={"space-between"}
+      >
+        <AddShop/> 
+        <ReviewShopCard shopList={shopsToDisplay[0].reverse()}></ReviewShopCard>
+      </Box>
     </Box>
   );
 };
