@@ -28,3 +28,14 @@ export function getShopsById(shopId) {
     mode: "no-cors",
   });
 }
+
+export function createShop(shop) {
+    console.log("shop from api call", shop);
+    return axios.post(`${SHOP_API_URL}/create.php`, shop, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      mode: "no-cors",
+    });
+  }
