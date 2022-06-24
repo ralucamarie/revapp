@@ -13,12 +13,20 @@ $database = new Database();
 $db = $database->getConnection();
 
 $item = new Shop($db);
-
 $data = json_decode(file_get_contents("php://input"));
 
 $item->shop_name = $data->shop_name;
-$item->category_ID = $data->category_ID;
 $item->website_url = $data->website_url;
+$item->category_ID = $data->category_ID;
+// $category->category_name = $data->category_name;
+// $category->getCategoryIDbyCategoryName($category->category_name);
+// var_dump($category);
+// $item->category_ID = $category->id;
+
+
+
+
+//find the shop id by name and assign
 
 if ($item->createShop()) {
     echo json_encode("Shop created.");

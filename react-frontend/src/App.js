@@ -11,32 +11,35 @@ import Users from "./routes/users";
 import Signup from "./routes/signup";
 import UserProfile from "./routes/user-profile";
 import Footer from "./components/layouts/footer/footer.component";
-import ShopDetails from "./routes/shop-details"
+import ShopDetails from "./routes/shop-details";
 
 function App() {
   const { user } = useContext(UserContext);
   return (
-    <div>
-      <Header></Header>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        {user && user.role === "Administrator" && (
-          <Route path="/users" element={<Users />} />
-        )}
-        {!user && (
-          <>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </>
-        )}
-        {user && <Route path="/user-profile" element={<UserProfile />} />}
-        {/* <Route path="*" element={<Navigate to={user ? "/" : "/login"} />} /> */}
-        <Route path="/shop-details/:shopId" element={<ShopDetails/>}/>
-      </Routes>
-      <Outlet />
+    <>
+      <div className="page-container">
+        <Header></Header>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          {user && user.role === "Administrator" && (
+            <Route path="/users" element={<Users />} />
+          )}
+          {!user && (
+            <>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+            </>
+          )}
+          {user && <Route path="/user-profile" element={<UserProfile />} />}
+          {/* <Route path="*" element={<Navigate to={user ? "/" : "/login"} />} /> */}
+          <Route path="/shop-details/:shopId" element={<ShopDetails />} />
+        </Routes>
+        <Outlet />
+      </div>
+
       <Footer></Footer>
-    </div>
+    </>
   );
 }
 
