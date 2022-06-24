@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
 import NativeSelect from "@mui/material/NativeSelect";
 import { styled } from "@mui/material/styles";
 import Modal from "@material-ui/core/Modal";
@@ -40,15 +38,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const ColorButton = styled(Button)(({ theme }) => ({
+  color: "#fff",
+  backgroundColor: "#FF5D0C",
+  "&:hover": {
+    backgroundColor: "#FF5D0C",
+  },
+  marginRight: "10px",
+}));
+
 const defaultShop = {
   shop_name: "",
   category_ID: "",
   website_url: "",
 };
+
 // to add { onSaveShop } in props
 export default function AddShop() {
+  const classes = useStyles();
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
   const [shop, setShop] = useState(defaultShop);
   const [categories, setCategories] = useState([]);
+  const [formErrors, setFormErrors] = useState({
+    shop_name: "",
+    website_url: "",
+  });
+  const [nameValid, setNameValid] = useState(false);
+  const [website_urlValid, setWebsite_urlValid] = useState(false);
+  const [formValid, setFormValid] = useState(false);
 
   useEffect(() => {
     const getCategoriesData = async () => {
@@ -59,15 +77,6 @@ export default function AddShop() {
     getCategoriesData();
   }, []);
 
-  const [formErrors, setFormErrors] = useState({
-    shop_name: "",
-    website_url: "",
-  });
-  const [nameValid, setNameValid] = useState(false);
-  const [website_urlValid, setWebsite_urlValid] = useState(false);
-
-  const [formValid, setFormValid] = useState(false);
-
   const editField = (event) => {
     validateField(event.target.name, event.target.value);
     setShop({ ...shop, [event.target.name]: event.target.value });
@@ -75,7 +84,6 @@ export default function AddShop() {
 
   const validateField = (fieldName, value) => {
     let fieldValidationErrors = formErrors;
-
     switch (fieldName) {
       case "shop_name":
         setWebsite_urlValid(value.length > 2);
@@ -98,38 +106,19 @@ export default function AddShop() {
     setFormValid(nameValid && website_urlValid);
   };
 
-  const cancel = () => {
-    setShop(defaultShop);
-  };
-
   const saveShop = (e) => {
     e.preventDefault();
 
     if (formValid) {
       if (createShop(shop)) {
-        // onSaveShop();
-        console.log(shop);
         setShop(defaultShop);
         handleClose();
       }
     }
+    window.location.href ='/';
   };
 
-  const ColorButton = styled(Button)(({ theme }) => ({
-    color: "#fff",
-    backgroundColor: "#FF5D0C",
-    "&:hover": {
-      backgroundColor: "#FF5D0C",
-    },
-    marginRight: "10px",
-  }));
-
   ////////////////////////
-
-  const classes = useStyles();
-  const [modalStyle] = React.useState(getModalStyle);
-  const [open, setOpen] = React.useState(false);
-
   const handleOpen = () => {
     setOpen(true);
   };
@@ -175,7 +164,6 @@ export default function AddShop() {
                         {category.category_name}
                       </option>
                     ))}
-                    //TODO: generate option for all categories, dynamically
                   </NativeSelect>
                 </FormControl>
               </Grid>
@@ -217,25 +205,6 @@ export default function AddShop() {
                   />
                 </FormControl>
               </Grid>
-
-              {/* <Grid item xs={12} sm={12}>
-                <FormControl fullWidth>
-                  <TextField
-                    id="description"
-                    label="Description"
-                    variant="standard"
-                    name="description"
-                    className="form-control"
-                    value={shop.description}
-                    onChange={editField}
-                    error={formErrors.description.length > 0}
-                    helperText={formErrors.description}
-                    multiline
-                    rows={4}
-                  />
-                </FormControl>
-              </Grid> */}
-
               <Grid item xs={12} sm={12}>
                 <ColorButton
                   variant="contained"
@@ -253,8 +222,6 @@ export default function AddShop() {
                   Cancel
                 </Button>
               </Grid>
-
-              {/*  */}
             </Grid>
           </form>
         </div>

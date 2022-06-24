@@ -15,7 +15,6 @@ const Home = () => {
   const [searchCategoryName, setSearchCategoryName] = useState("");
   let shopsToDisplay = [];
 
-  //Am scos functiile in afara useEffectului astfel incat sa am accees la ele si din alte functii
   useEffect(() => {
     const getCategoriesData = async () => {
       await getCategories().then((response) => {
@@ -38,15 +37,6 @@ const Home = () => {
     getReviewsData();
   }, []);
 
-  //adaugat metoda pentru a fi apelata de componenta AddShop cand se adauga un shop nou, astfel incat pe home sa se aduca lista actualizata de shopuri
-  //baiul e ca intra in bucla infinita.
-
-  // const getShopsDataWhenAddingAShop = async () => {
-  //   await getShops().then((response) => {
-  //     setShops(response.data);
-  //   });
-  // };
-
   const categoryNameCallBack = (categoryName) => {
     setSearchCategoryName(categoryName);
   };
@@ -58,8 +48,6 @@ const Home = () => {
     searchCategoryName
   );
   shopsToDisplay.push(...shopsToDisplay, shopsAfterPopulate);
-
-  //when adding a shop the gui list of shops needs to update
 
   return (
     <Box
@@ -81,9 +69,8 @@ const Home = () => {
         alignContent={"top"}
         justifyItems={"space-between"}
       >
-        <AddShop />
-        {/* onSaveShop={getShopsDataWhenAddingAShop()} */}
-        <ReviewShopCard shopList={shopsToDisplay[0]}></ReviewShopCard>
+        <AddShop/> 
+        <ReviewShopCard shopList={shopsToDisplay[0].reverse()}></ReviewShopCard>
       </Box>
     </Box>
   );
