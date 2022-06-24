@@ -34,7 +34,7 @@ if ($item != null) {
         "role_name" => $role->role_name,
         "address_ID" => $item->address_ID,
         "city" => $address->city,
-        "country"=> $address->country
+        "country" => $address->country
     );
 
     http_response_code(200);

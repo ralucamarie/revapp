@@ -1,6 +1,7 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json");
+header("Content-Type: application/json; charset=UTF-8");
+// header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, Accept, Accept-Encoding");
 
 
 include_once '../../config/database.php';
@@ -29,6 +30,7 @@ if ($itemCount > 0) {
         $address->getSingleAddress();
         $role->id = $role_ID;
         $role->getSingleRole();
+
 
         $oneUser = array(
             "id" => $id,
