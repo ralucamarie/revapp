@@ -15,11 +15,13 @@ const UserProfile = () => {
   const { user, wait } = useContext(UserContext);
 
   //TODO: fetch reviews of user from the Context
-  const fetchData = () => {
+  const fetchData = async () => {
     ReviewService.getReviews(user.id).then((res) => {
       // console.log(res.data);
-      setReviews(res.data);
-      console.log(reviews);
+      if (setReviews(res.data)) {
+        return;
+      }
+      return;
     });
   };
   useEffect(() => {
@@ -52,8 +54,8 @@ const UserProfile = () => {
       >
         <Container>
           <h2>My Reviews</h2>
-
-          {reviews.length > 0 ? (
+          
+          {reviews.length > 0 && !(reviews ==="No Review found or something went wrong") ? (
             reviews.map((review) => (
               <Review
                 key={review.id}
