@@ -12,14 +12,14 @@ import { UserContext } from "../context/UserContext";
 const UserProfile = () => {
   const [reviews, setReviews] = useState([]);
   const [editedReview, setEditedReview] = useState(null);
-  const { user } = useContext(UserContext);
+  const { user, wait } = useContext(UserContext);
 
   //TODO: fetch reviews of user from the Context
   const fetchData = () => {
-    ReviewService.getReviews().then((res) => {
-      console.log(res.data);
+    ReviewService.getReviews(user.id).then((res) => {
+      // console.log(res.data);
       setReviews(res.data);
-      console.log(reviews);
+      // console.log(reviews);
     });
   };
   useEffect(() => {

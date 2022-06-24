@@ -81,15 +81,17 @@ class User
     public function getSingleUser()
     {
         $sqlQuery = "SELECT
-                    id, 
+                    id , 
                     name, 
                     surname, 
-                    email
-                  FROM
-                    " . $this->dbTable . "
-                WHERE 
-                   id = ?
-                LIMIT 0,1";
+                    email,
+                    role_ID,
+                    address_ID
+                    FROM
+                    " . $this->dbTable . " 
+                    WHERE 
+                    id = ?
+                    LIMIT 0,1";
 
         $stmt = $this->conn->prepare($sqlQuery);
 
@@ -102,6 +104,8 @@ class User
         $this->name = $dataRow['name'];
         $this->surname = $dataRow['surname'];
         $this->email = $dataRow['email'];
+        $this->role_ID = $dataRow['role_ID'];
+        $this->address_ID = $dataRow['address_ID'];
     }
 
 

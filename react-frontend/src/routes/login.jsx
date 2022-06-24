@@ -7,7 +7,7 @@ import { UserContext } from "../context/UserContext";
 import { Navigate } from "react-router-dom";
 
 const Login = () => {
-  const { loginUser, wait, loggedInCheck } = useContext(UserContext);
+  const {loginUser, wait, loggedInCheck } = useContext(UserContext);
   const [redirect, setRedirect] = useState(false);
   const [errMsg, setErrMsg] = useState(false);
   const [formData, setFormData] = useState({
@@ -40,7 +40,7 @@ const Login = () => {
     }
     setErrMsg(data.message);
   };
-  {if (redirect) return <Navigate to="/home" replace={true} />}
+  if (redirect) return <Navigate to="/home" replace={true} />
   return (
     <Box
       height="100vh"
@@ -76,12 +76,12 @@ const Login = () => {
           {redirect ? (
             redirect
           ) : (
-            <button type="submit" disabled={wait}>
+            <button type="submit">
               Login
             </button>
           )}
           <div className="bottom-link">
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/user-profile">Sign Up</Link>
           </div>
         </form>
       </div>

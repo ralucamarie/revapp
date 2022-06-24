@@ -30,7 +30,6 @@ if ($itemCount > 0) {
         $role->id = $role_ID;
         $role->getSingleRole();
 
-
         $oneUser = array(
             "id" => $id,
             "name" => $name,

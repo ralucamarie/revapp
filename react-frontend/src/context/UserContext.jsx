@@ -4,7 +4,7 @@ import axios from "axios";
 export const UserContext = createContext();
 
 export const Axios = axios.create({
-  baseURL: "http://localhost/revapp/php-backend/api",
+  baseURL: "http://localhost/revapp2/php-backend/api",
 });
 
 export const UserContextProvider = ({ children }) => {
@@ -34,6 +34,7 @@ export const UserContextProvider = ({ children }) => {
   const loginUser = async ({ email, password }) => {
     setWait(true);
     try {
+      // console.log("Incercam post cu axios");
       const { data } = await Axios.post("token/login.php", {
         email,
         password,
@@ -41,6 +42,7 @@ export const UserContextProvider = ({ children }) => {
       if (data.success && data.token) {
         localStorage.setItem("loginToken", data.token);
         setWait(false);
+        // console.log(data);
         return { success: 1 };
       }
       setWait(false);
@@ -52,10 +54,13 @@ export const UserContextProvider = ({ children }) => {
   };
 
   const loggedInCheck = async () => {
+    console.log("Am intrat in loginn check");
     const loginToken = localStorage.getItem("loginToken");
-    Axios.defaults.headers.common["Authorization"] = "Bearer " + loginToken;
+    // Axios.defaults.headers.common['Authorization'] = "Bearer " + loginToken;
+    Axios.defaults.headers.common = {'Authorization' : "Bearer " + loginToken};
     if (loginToken) {
       const { data } = await Axios.get("token/getUser.php");
+      console.log(data.user);
       if (data.success && data.user) {
         setUser(data.user);
         return;

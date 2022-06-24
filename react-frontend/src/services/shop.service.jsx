@@ -1,7 +1,6 @@
 import axios from "axios";
-
-const SHOP_API_URL = "http://localhost/revapp/php-backend/api/shops";
-
+import {SHOP_API_URL} from "./api_ulrs_constants.jsx";
+console.log(SHOP_API_URL);
 export function getShops() {
   return axios.get(`${SHOP_API_URL}/read.php`, {
     headers: {

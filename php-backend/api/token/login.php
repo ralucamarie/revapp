@@ -64,11 +64,11 @@ else:
                 $row = $query_stmt->fetch(PDO::FETCH_ASSOC);
 //                $check_password = password_verify($password, $row['password']);
                 $input_password_hash = hash("sha256", $password);
-                $db_password_hashed = hash("sha256", $row['password']);
-                echo 'Not hashed password from db= ' . $row['password'] . "\n";
-                echo 'Not hashed password from input= ' . $password."\n";
-                echo "Hashed password from db= " . $db_password_hashed."\n";
-                echo "Hashed password from user= " . $input_password_hash."\n";
+//                $db_password_hashed = hash("sha256", $row['password']);
+//                echo 'Not hashed password from db= ' . $row['password'] . "\n";
+//                echo 'Not hashed password from input= ' . $password."\n";
+//                echo "Hashed password from db= " . $db_password_hashed."\n";
+//                echo "Hashed password from user= " . $input_password_hash."\n";
 
                 // VERIFYING THE PASSWORD (IS CORRECT OR NOT?)
                 // IF PASSWORD IS CORRECT THEN SEND THE LOGIN TOKEN
