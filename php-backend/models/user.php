@@ -57,7 +57,7 @@ class User
         $this->name = htmlspecialchars(strip_tags($this->name));
         $this->surname = htmlspecialchars(strip_tags($this->surname));
         $this->email = htmlspecialchars(strip_tags($this->email));
-        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        $this->password = hash("sha256", $this->password);
         $this->address_ID = htmlspecialchars(strip_tags($this->address_ID));
         $this->role_ID = htmlspecialchars(strip_tags($this->role_ID));
 
@@ -81,15 +81,17 @@ class User
     public function getSingleUser()
     {
         $sqlQuery = "SELECT
-                    id, 
+                    id , 
                     name, 
                     surname, 
-                    email
-                  FROM
-                    " . $this->dbTable . "
-                WHERE 
-                   id = ?
-                LIMIT 0,1";
+                    email,
+                    role_ID,
+                    address_ID
+                    FROM
+                    " . $this->dbTable . " 
+                    WHERE 
+                    id = ?
+                    LIMIT 0,1";
 
         $stmt = $this->conn->prepare($sqlQuery);
 
@@ -102,6 +104,8 @@ class User
         $this->name = $dataRow['name'];
         $this->surname = $dataRow['surname'];
         $this->email = $dataRow['email'];
+        $this->role_ID = $dataRow['role_ID'];
+        $this->address_ID = $dataRow['address_ID'];
     }
 
 

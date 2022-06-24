@@ -4,7 +4,7 @@ import axios from "axios";
 export const UserContext = createContext();
 
 export const Axios = axios.create({
-  baseURL: "http://localhost/php-auth-api/",
+  baseURL: "http://localhost/revapp/php-backend/api",
 });
 
 export const UserContextProvider = ({ children }) => {
@@ -13,15 +13,17 @@ export const UserContextProvider = ({ children }) => {
 
   //TODO:replace baseURL and php links with the ones made by Sergiu
   //TODO: add USER role by default
-  const signupUser = async ({ name, email, password, city, country }) => {
+  const signupUser = async ({ name, surname, email, password, city, country, role }) => {
     setWait(true);
     try {
-      const { data } = await Axios.post("signup.php", {
+      const { data } = await Axios.post("users/create.php", {
         name,
+        surname,
         email,
         password,
         city,
         country,
+        role
       });
       setWait(false);
       return data;
@@ -34,13 +36,15 @@ export const UserContextProvider = ({ children }) => {
   const loginUser = async ({ email, password }) => {
     setWait(true);
     try {
-      const { data } = await Axios.post("login.php", {
+      // console.log("Incercam post cu axios");
+      const { data } = await Axios.post("token/login.php", {
         email,
         password,
       });
       if (data.success && data.token) {
         localStorage.setItem("loginToken", data.token);
         setWait(false);
+        // console.log(data);
         return { success: 1 };
       }
       setWait(false);
@@ -52,10 +56,13 @@ export const UserContextProvider = ({ children }) => {
   };
 
   const loggedInCheck = async () => {
+    console.log("Am intrat in loginn check");
     const loginToken = localStorage.getItem("loginToken");
-    Axios.defaults.headers.common["Authorization"] = "Bearer " + loginToken;
+    // Axios.defaults.headers.common['Authorization'] = "Bearer " + loginToken;
+    Axios.defaults.headers.common = { Authorization: "Bearer " + loginToken };
     if (loginToken) {
-      const { data } = await Axios.get("getUser.php");
+      const { data } = await Axios.get("token/getUser.php");
+      console.log(data.user);
       if (data.success && data.user) {
         setUser(data.user);
         return;

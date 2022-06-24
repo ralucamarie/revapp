@@ -1,7 +1,5 @@
 import axios from "axios";
-
-const USER_API_URL = "http://localhost/revapp/php-backend/api/users";
-
+import {USER_API_URL} from "./api_ulrs_constants.jsx";
 class UserService {
   getUsers() {
     return axios.get(`${USER_API_URL}/read.php`, {

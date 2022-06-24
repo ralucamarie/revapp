@@ -1,7 +1,6 @@
 import axios from "axios";
-
-const SHOP_API_URL = "http://localhost/revapp/php-backend/api/shops";
-
+import {SHOP_API_URL} from "./api_ulrs_constants.jsx";
+console.log(SHOP_API_URL);
 export function getShops() {
   return axios.get(`${SHOP_API_URL}/read.php`, {
     headers: {
@@ -28,3 +27,14 @@ export function getShopsById(shopId) {
     mode: "no-cors",
   });
 }
+
+export function createShop(shop) {
+    console.log("shop from api call", shop);
+    return axios.post(`${SHOP_API_URL}/create.php`, shop, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      mode: "no-cors",
+    });
+  }
