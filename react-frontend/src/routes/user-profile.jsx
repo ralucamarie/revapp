@@ -12,14 +12,16 @@ import { UserContext } from "../context/UserContext";
 const UserProfile = () => {
   const [reviews, setReviews] = useState([]);
   const [editedReview, setEditedReview] = useState(null);
-  const { user } = useContext(UserContext);
+  const { user, wait } = useContext(UserContext);
 
   //TODO: fetch reviews of user from the Context
-  const fetchData = () => {
-    ReviewService.getReviews().then((res) => {
-      console.log(res.data);
-      setReviews(res.data);
-      console.log(reviews);
+  const fetchData = async () => {
+    ReviewService.getReviews(user.id).then((res) => {
+      // console.log(res.data);
+      if (setReviews(res.data)) {
+        return;
+      }
+      return;
     });
   };
   useEffect(() => {
@@ -27,12 +29,14 @@ const UserProfile = () => {
   }, []);
 
   const handleReviewOnSave = (review) => {
-    setReviews(
-      reviews.map((mapReview) =>
-        mapReview.id !== review.id ? mapReview : review
-      )
-    );
-    ReviewService.updateReview(review);
+    if (reviews.length > 0) {
+      setReviews(
+        reviews.map((mapReview) =>
+          mapReview.id !== review.id ? mapReview : review
+        )
+      );
+      ReviewService.updateReview(review);
+    }
   };
 
   return (
@@ -49,14 +53,19 @@ const UserProfile = () => {
         }}
       >
         <Container>
-          <h2>My Comments</h2>
-          {reviews.map((review) => (
-            <Review
-              key={review.id}
-              propReview={review}
-              onSave={handleReviewOnSave}
-            />
-          ))}
+          <h2>My Reviews</h2>
+          
+          {reviews.length > 0 && !(reviews ==="No Review found or something went wrong") ? (
+            reviews.map((review) => (
+              <Review
+                key={review.id}
+                propReview={review}
+                onSave={handleReviewOnSave}
+              />
+            ))
+          ) : (
+            <h3>"You have no reviews yet"</h3>
+          )}
         </Container>
       </Paper>
     </Box>

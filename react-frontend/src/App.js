@@ -22,7 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
-          {user && user.role === "Administrator" && (
+          {user && user.role_ID === 3 && (
             <Route path="/users" element={<Users />} />
           )}
           {!user && (
@@ -32,12 +32,10 @@ function App() {
             </>
           )}
           {user && <Route path="/user-profile" element={<UserProfile />} />}
-          {/* <Route path="*" element={<Navigate to={user ? "/" : "/login"} />} /> */}
           <Route path="/shop-details/:shopId" element={<ShopDetails />} />
         </Routes>
         <Outlet />
       </div>
-
       <Footer></Footer>
     </>
   );

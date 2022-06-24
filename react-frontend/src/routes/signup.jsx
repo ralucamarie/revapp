@@ -15,10 +15,12 @@ import NativeSelect from "@mui/material/NativeSelect";
 import FormControl from "@mui/material/FormControl";
 import { styled } from "@mui/material/styles";
 import Alert from "@mui/material/Alert";
+import { Navigate } from "react-router-dom";
 
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import userService from "../services/user.service";
 
 const useStyles = makeStyles((theme) => ({
   palette: {
@@ -52,10 +54,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Signup = () => {
-  const { signupUser, wait } = useContext(UserContext);
+  const { wait } = useContext(UserContext);
   const [errMsg, setErrMsg] = useState(false);
   const [successMsg, setSuccessMsg] = useState(false);
   const [formData, setFormData] = useState({
+    id: null,
     name: "",
     surname: "",
     email: "",
@@ -63,6 +66,7 @@ const Signup = () => {
     repeatPassword: "",
     city: "",
     country: "",
+    role: "USER",
   });
 
   const classes = useStyles();
@@ -86,12 +90,12 @@ const Signup = () => {
 
   const submitForm = async (e) => {
     e.preventDefault();
-
-    if (!Object.values(formData).every((val) => val.trim() !== "")) {
-      setSuccessMsg(false);
-      setErrMsg("Please Fill in all Required Fields!");
-      return;
-    }
+    console.log(formData);
+    // if (!Object.values(formData).every((val) => val === "")) {
+    //   setSuccessMsg(false);
+    //   setErrMsg("Please Fill in all Required Fields!");
+    //   return;
+    // }
 
     if (formData.password !== formData.repeatPassword) {
       setSuccessMsg(false);
@@ -99,15 +103,27 @@ const Signup = () => {
       return;
     }
 
-    const data = await signupUser(formData);
-    if (data.success) {
+    if (userService.createUser(formData)) {
       e.target.reset();
       setSuccessMsg("You have successfully signed-up.");
       setErrMsg(false);
-    } else if (!data.success && data.message) {
+      <Navigate to="/dashboard" replace={true} />;
+    } else {
       setSuccessMsg(false);
-      setErrMsg(data.message);
+      setErrMsg("User was not created");
     }
+
+    //methods used with userContext:
+    // const data = await signupUser(formData);
+    // if (data.success) {
+    //   e.target.reset();
+    //   setSuccessMsg("You have successfully signed-up.");
+    //   setErrMsg(false);
+    //   <Navigate to="/login" replace={true} />;
+    // } else if (!data.success && data.message) {
+    //   setSuccessMsg(false);
+    //   setErrMsg(data.message);
+    // }
   };
 
   return (
