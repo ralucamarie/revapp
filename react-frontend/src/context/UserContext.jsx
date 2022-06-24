@@ -4,7 +4,7 @@ import axios from "axios";
 export const UserContext = createContext();
 
 export const Axios = axios.create({
-  baseURL: "http://localhost/revapp2/php-backend/api",
+  baseURL: "http://localhost/revapp/php-backend/api",
 });
 
 export const UserContextProvider = ({ children }) => {
@@ -13,15 +13,17 @@ export const UserContextProvider = ({ children }) => {
 
   //TODO:replace baseURL and php links with the ones made by Sergiu
   //TODO: add USER role by default
-  const signupUser = async ({ name, email, password, city, country }) => {
+  const signupUser = async ({ name, surname, email, password, city, country, role }) => {
     setWait(true);
     try {
       const { data } = await Axios.post("users/create.php", {
         name,
+        surname,
         email,
         password,
         city,
         country,
+        role
       });
       setWait(false);
       return data;
@@ -57,7 +59,7 @@ export const UserContextProvider = ({ children }) => {
     console.log("Am intrat in loginn check");
     const loginToken = localStorage.getItem("loginToken");
     // Axios.defaults.headers.common['Authorization'] = "Bearer " + loginToken;
-    Axios.defaults.headers.common = {'Authorization' : "Bearer " + loginToken};
+    Axios.defaults.headers.common = { Authorization: "Bearer " + loginToken };
     if (loginToken) {
       const { data } = await Axios.get("token/getUser.php");
       console.log(data.user);

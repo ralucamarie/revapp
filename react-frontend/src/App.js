@@ -11,7 +11,7 @@ import Users from "./routes/users";
 import Signup from "./routes/signup";
 import UserProfile from "./routes/user-profile";
 import Footer from "./components/layouts/footer/footer.component";
-import ShopDetails from "./routes/shop-details"
+import ShopDetails from "./routes/shop-details";
 
 function App() {
   const { user } = useContext(UserContext);
@@ -21,7 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
-        {user && user.role === "Administrator" && (
+        {user && user.role_ID === 3 && (
           <Route path="/users" element={<Users />} />
         )}
         {!user && (
@@ -32,7 +32,7 @@ function App() {
         )}
         {user && <Route path="/user-profile" element={<UserProfile />} />}
         {/* <Route path="*" element={<Navigate to={user ? "/" : "/login"} />} /> */}
-        <Route path="/shop-details/:shopId" element={<ShopDetails/>}/>
+        <Route path="/shop-details/:shopId" element={<ShopDetails />} />
       </Routes>
       <Outlet />
       <Footer></Footer>

@@ -37,27 +37,21 @@ const rightLink = {
 
 export default function Header() {
   const { user, logout } = useContext(UserContext);
-  
 
   return (
     <div>
       <AppBar position="fixed" sx={{ color: "grey" }}>
         <Toolbar>
           <Typography>
-            <Link
-              underline="none"
-              href="/"
-            >
-              <Box
-                sx={{}}
-                component="img"
-                width="150px"
-                src={logo}
-              />
+            <Link underline="none" href="/">
+              <Box sx={{}} component="img" width="150px" src={logo} />
             </Link>
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          <Box className="avatar" sx={{ display: "flex" }}>
+          <Box
+            className="avatar"
+            sx={{ display: "flex", alignItems: "center" }}
+          >
             {!user ? (
               <>
                 <StyledLinks>
@@ -73,8 +67,8 @@ export default function Header() {
               </>
             ) : (
               <>
-                {user.role === "Administrator" && (
-                  <StyledLinks>
+                {user.role_ID === 3 && (
+                  <StyledLinks sx={{}}>
                     <Link underline="none" href="/users" sx={rightLink}>
                       <div>Users</div>
                     </Link>
@@ -93,6 +87,10 @@ export default function Header() {
                     </Box>
                   </Link>
                 </StyledLinks>
+
+                <button onClick={logout} className="logout">
+                  Logout
+                </button>
               </>
             )}
           </Box>
