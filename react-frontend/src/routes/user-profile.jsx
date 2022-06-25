@@ -8,25 +8,18 @@ import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
+import { Pagination } from "@material-ui/lab";
+import usePagination from "../../src/components/business-logic/pagination";
 
 const UserProfile = () => {
   const [reviews, setReviews] = useState([]);
-  const [editedReview, setEditedReview] = useState(null);
-  const { user, wait } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
-  //TODO: fetch reviews of user from the Context
-  const fetchData = async () => {
-    ReviewService.getReviews(user.id).then((res) => {
-      // console.log(res.data);
-      if (setReviews(res.data)) {
-        return;
-      }
-      return;
-    });
-  };
   useEffect(() => {
-    fetchData();
-  }, []);
+    ReviewService.getReviews(user.id).then((res) => {
+      setReviews(res.data)
+    });
+  }, [user.id]);
 
   const handleReviewOnSave = (review) => {
     if (reviews.length > 0) {
@@ -37,6 +30,17 @@ const UserProfile = () => {
       );
       ReviewService.updateReview(review);
     }
+  };
+
+  let [page, setPage] = useState(1);
+  const PER_PAGE = 3;
+
+  const count = Math.ceil(reviews.length / PER_PAGE);
+  const _DATA = usePagination(reviews, PER_PAGE);
+
+  const handleChange = (e, p) => {
+    setPage(p);
+    _DATA.jump(p);
   };
 
   return (
@@ -56,7 +60,7 @@ const UserProfile = () => {
           <h2>My Reviews</h2>
           
           {reviews.length > 0 && !(reviews ==="No Review found or something went wrong") ? (
-            reviews.map((review) => (
+            _DATA.currentData().map((review) => (
               <Review
                 key={review.id}
                 propReview={review}
@@ -66,6 +70,16 @@ const UserProfile = () => {
           ) : (
             <h3>"You have no reviews yet"</h3>
           )}
+        </Container>
+        <Container>
+          <Pagination
+            count={count}
+            size="large"
+            page={page}
+            variant="outlined"
+            shape="rounded"
+            onChange={handleChange}
+          />
         </Container>
       </Paper>
     </Box>

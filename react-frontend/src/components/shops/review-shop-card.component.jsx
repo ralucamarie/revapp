@@ -76,7 +76,7 @@ export const ReviewShopCard = (props) => {
                   alignItems={'center'}
                   mb={1}
                 >
-                  <Rating  name={'rating'} value={shop.rateValue} size={'small'} />
+                  <Rating  name={'rating'} value={shop.rateValue} size={'small'} readOnly/>
                   <Typography variant={'body2'} className={styles.rateValue}>
                     {shop.rateValue}
                   </Typography>

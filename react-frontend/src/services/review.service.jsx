@@ -1,7 +1,6 @@
 import axios from "axios";
 import {REVIEW_API_URL} from "./api_ulrs_constants.jsx";
 
-// const REVIEW_API_URL = "//localhost/revapp/php-backend/api/reviews";
 
 class ReviewService {
   getReviews(user_ID = null) {
@@ -30,7 +29,6 @@ class ReviewService {
   }
 
   updateReview(review) {
-    console.log("review from api call", review);
     return axios.put(`${REVIEW_API_URL}/update.php`, review);
   }
 
@@ -45,6 +43,10 @@ class ReviewService {
       },
       mode: "no-cors",
     });
+  }
+
+  addReview(review) {
+    return axios.post(`${REVIEW_API_URL}/create.php`, review);
   }
 }
 

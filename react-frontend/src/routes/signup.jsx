@@ -1,18 +1,14 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import AddUser from "../components/users/add-user/add-user.component";
 import Avatar from "@mui/material/Avatar";
 import LockIcon from "@mui/icons-material/Lock";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import InputLabel from "@mui/material/InputLabel";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import NativeSelect from "@mui/material/NativeSelect";
-import FormControl from "@mui/material/FormControl";
 import { styled } from "@mui/material/styles";
 import Alert from "@mui/material/Alert";
 import { Navigate } from "react-router-dom";
@@ -90,12 +86,6 @@ const Signup = () => {
 
   const submitForm = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    // if (!Object.values(formData).every((val) => val === "")) {
-    //   setSuccessMsg(false);
-    //   setErrMsg("Please Fill in all Required Fields!");
-    //   return;
-    // }
 
     if (formData.password !== formData.repeatPassword) {
       setSuccessMsg(false);
@@ -267,57 +257,3 @@ const Signup = () => {
 };
 
 export default Signup;
-
-// const useStyles = makeStyles((theme) => ({
-//   palette: {
-//     secondary: {
-//       light: "#A08E95",
-//       main: "#A08E95",
-//       // dark: will be calculated from palette.secondary.main,
-//       contrastText: "#ffcc00",
-//     },
-//   },
-//   "@global": {
-//     body: {
-//       backgroundColor: theme.palette.common.white,
-//     },
-
-//     flexDirection: "column",
-//     alignItems: "center",
-//   },
-
-//   avatar: {
-//     margin: theme.spacing(1),
-//     backgroundColor: theme.palette.secondary.main,
-//   },
-//   form: {
-//     width: "100%", // Fix IE 11 issue.
-//     marginTop: theme.spacing(3),
-//   },
-//   submit: {
-//     margin: theme.spacing(3, 0, 2),
-//   },
-// }));
-
-// const Signup = () => {
-//   const classes = useStyles();
-//   return (
-//     <Box
-//       height="100vh"
-//       display="flex"
-//       flexDirection="column"
-//       sx={{ marginTop: 10 }}
-//       alignItems="center"
-//     >
-//       <Avatar className={classes.avatar} sx={{ bgcolor: "#FF5D0C" }}>
-//         <LockIcon />
-//       </Avatar>
-//       <Typography component="h1" variant="h5">
-//         Sign up
-//       </Typography>
-//       <AddUser></AddUser>
-//     </Box>
-//   );
-// };
-
-// export default Signup;

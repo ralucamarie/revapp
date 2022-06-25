@@ -1,5 +1,4 @@
 import * as React from "react";
-import SignIn from "../components/users/sign-in/sign-in.component";
 import { Box } from "@mui/material";
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
@@ -46,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = () => {
-  const { loginUser, wait, loggedInCheck } = useContext(UserContext);
+  const { loginUser, loggedInCheck } = useContext(UserContext);
   const [redirect, setRedirect] = useState(false);
   const [errMsg, setErrMsg] = useState(false);
   const [formData, setFormData] = useState({
@@ -94,7 +93,7 @@ const Login = () => {
     marginRight: "10px",
   }));
 
-  if (redirect) return <Navigate to="/home" replace={true} />;
+  if (redirect) return <Navigate to="/" replace={true} />;
   return (
     <Box
       height="100vh"
@@ -160,43 +159,13 @@ const Login = () => {
               {/*  */}
             </Grid>
           </form>
-          <div className="bottom-link">
-            <Link to="/user-profile">Sign Up</Link>
-          </div>
+          <Box className="bottom-link">
+            <Link to="/signup" underline="none">
+              Signup
+            </Link>
+          </Box>
         </div>
       </Container>
-
-      {/* <SignIn /> */}
-      {/* <div className="myform">
-        <h2>Login</h2>
-        <form onSubmit={submitForm}>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            name="email"
-            onChange={onChangeInput}
-            placeholder="Your email"
-            id="email"
-            value={formData.email}
-            required
-          />
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            name="password"
-            onChange={onChangeInput}
-            placeholder="New password"
-            id="password"
-            value={formData.password}
-            required
-          />
-          {errMsg && <div className="err-msg">{errMsg}</div>}
-          {redirect ? redirect : <button type="submit">Login</button>}
-          <div className="bottom-link">
-            <Link to="/user-profile">Sign Up</Link>
-          </div>
-        </form>
-      </div> */}
     </Box>
   );
 };

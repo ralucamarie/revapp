@@ -1,22 +1,22 @@
 
 function findReviewsByShopId(reviewsToSearch, shopId) {
-let reviewsByShopId = [];
-reviewsToSearch.map((review) => {
-    if(review.shop_ID === shopId) {
-        reviewsByShopId.push(review);
-    }
-    return reviewsByShopId
-    })
-return reviewsByShopId
+  let reviewsByShopId = [];
+  reviewsToSearch.map((review) => {
+      if(review.shop_ID === shopId) {
+          reviewsByShopId.push(review);
+      }
+      return reviewsByShopId
+      })
+  return reviewsByShopId
 }
 
 function getShopsByCategory(shops, categories, searchCategoryName) {
-let shopsAfterFilter = []
-if(searchCategoryName !== "") {
-    let categoryId = categories.find(element => element.category_name === searchCategoryName).id
-    shopsAfterFilter = shops.filter(shop => shop.category_ID === categoryId)
-}
-return shopsAfterFilter
+  let shopsAfterFilter = []
+  if(searchCategoryName !== "") {
+      let categoryId = categories.find(element => element.category_name === searchCategoryName).id
+      shopsAfterFilter = shops.filter(shop => shop.category_ID === categoryId)
+  }
+  return shopsAfterFilter
 }
 
 export function populateShopWithProperties(shops, categories, reviews, searchCategoryName) {
@@ -39,6 +39,7 @@ export function populateShopWithProperties(shops, categories, reviews, searchCat
         reviewsBasedOnShopID.map((review) => {
           countReview++
           rateValueSum += review.rating
+          return {countReview, rateValueSum}
         })
 
         if(countReview !== 0 || rateValueSum !== 0){

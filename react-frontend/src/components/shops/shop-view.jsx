@@ -8,24 +8,18 @@ import Paper from "@mui/material/Paper";
 import defaultShopImage from "../../static/images/defaultShopImage.jpg";
 import Divider from "@mui/material/Divider";
 import { getCategoryById } from '../../services/category.service';
-
-const style = {
-  width: "100%",
-  maxWidth: 360,
-  bgcolor: "background.paper",
-};
+import { Rating } from '@mui/material';
 
 const ShopView = (props) => {
   const [category, setCategory] = useState([]);
   let raitingCalculation = calculateRaiting(props.reviews)
-  console.log(raitingCalculation)
 
   useEffect(() => {
-      getCategoryById(props.shopDetails.id).then(
+      getCategoryById(props.shopDetails.category_ID).then(
         response => {
           setCategory(response.data)
       })
-    },[props.shopDetails.id])
+    },[props.shopDetails.category_ID])
 
   return (
     <React.Fragment>
@@ -69,7 +63,10 @@ const ShopView = (props) => {
               <Divider />
               <div className="row">
                 <label> Raiting: </label>
-                <div className="shop-field"> {raitingCalculation.rateValue}</div>
+                <div className="shop-field">
+                  <Rating  name={'rating'} value={raitingCalculation.rateValue} size={'small'} sx={{marginRight: 2}} readOnly />
+                  {raitingCalculation.rateValue}
+                </div>
               </div>
               <Divider />
               <div className="row">
@@ -96,6 +93,7 @@ function calculateRaiting(reviews){
   reviews.map((review) => {
     countReview++
     rateValueSum += review.rating
+    return {countReview, rateValueSum}
   })
 
   if(countReview !== 0 || rateValueSum !== 0){

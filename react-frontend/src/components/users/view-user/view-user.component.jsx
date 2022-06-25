@@ -1,5 +1,4 @@
-import UserService from "../../../services/user.service";
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import "./view-user.styles.css";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -10,13 +9,21 @@ import ListItem from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import ListItemButton from "@mui/material/Divider";
+import { getAddressById } from "../../../services/address.service";
 
 const ViewUser = ({ user }) => {
-  const style = {
-    width: "100%",
-    maxWidth: 360,
-    bgcolor: "background.paper",
+  const [address, setAddress] = useState({})
+
+  const fetchData = async (addressId) => {
+    getAddressById(addressId).then((res) => {  
+      setAddress(res.data)
+    });
   };
+
+  useEffect(() => {
+    fetchData(user.address_ID);
+  }, [user.address_ID]);
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -30,8 +37,6 @@ const ViewUser = ({ user }) => {
           <Container
             sx={{
               display: "flex",
-              // p: 2,
-              // m: 2,
             }}
           >
             <Box
@@ -66,12 +71,12 @@ const ViewUser = ({ user }) => {
               <Divider />
               <div className="row">
                 <label> City: </label>
-                <div className="profile-field"> {user.city}</div>
+                <div className="profile-field"> {address.city}</div>
               </div>
               <Divider />
               <div className="row">
                 <label>Country: </label>
-                <div className="profile-field"> {user.country}</div>
+                <div className="profile-field"> {address.country}</div>
               </div>
 
               <List>

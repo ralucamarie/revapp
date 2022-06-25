@@ -6,7 +6,6 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import NativeSelect from "@mui/material/NativeSelect";
-import { styled } from "@mui/material/styles";
 import Modal from "@material-ui/core/Modal";
 import { getCategories } from "../../services/category.service";
 import { createShop } from "../../services/shop.service";
@@ -38,14 +37,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ColorButton = styled(Button)(({ theme }) => ({
-  color: "#fff",
-  backgroundColor: "#FF5D0C",
-  "&:hover": {
-    backgroundColor: "#FF5D0C",
-  },
-  marginRight: "10px",
-}));
+// const ColorButton = styled(Button)(({ theme }) => ({
+//   color: "#fff",
+//   backgroundColor: "#FF5D0C",
+//   "&:hover": {
+//     backgroundColor: "#FF5D0C",
+//   },
+//   marginRight: "10px",
+// }));
 
 const defaultShop = {
   shop_name: "",
@@ -206,14 +205,14 @@ export default function AddShop() {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={12}>
-                <ColorButton
+                <Button
                   variant="contained"
                   className="button"
                   onClick={saveShop}
-                  color="#FF5D0C"
+                  color="primary"
                 >
                   Save
-                </ColorButton>
+                </Button>
                 <Button
                   variant="contained"
                   className="button"
