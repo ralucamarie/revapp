@@ -102,18 +102,6 @@ const Signup = () => {
       setSuccessMsg(false);
       setErrMsg("User was not created");
     }
-
-    //methods used with userContext:
-    // const data = await signupUser(formData);
-    // if (data.success) {
-    //   e.target.reset();
-    //   setSuccessMsg("You have successfully signed-up.");
-    //   setErrMsg(false);
-    //   <Navigate to="/login" replace={true} />;
-    // } else if (!data.success && data.message) {
-    //   setSuccessMsg(false);
-    //   setErrMsg(data.message);
-    // }
   };
 
   return (

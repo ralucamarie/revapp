@@ -43,8 +43,8 @@ const ListUserComponent = (props) => {
     }
 
     setEditedUser({});
-    // setIsEditMode(false);
-    // alert(`Users updated.`);
+    setIsEditMode(false);
+    alert(`Users updated.`);
   };
   const editUserHandler = (user) => {
     setIsEditMode(true);
@@ -61,20 +61,24 @@ const ListUserComponent = (props) => {
     setIsEditMode(!isEditMode);
   };
 
-  // function displayUsers() {
-  //   if (users.length !== 0) {
-  //     return users.map((user) => (
-  //       <UserItem
-  //         key={user.id}
-  //         user={user}
-  //         onDelete={() => deleteUserHandler()}
-  //         onEdit={() => editUserHandler(user)}
-  //       />
-  //     ));
-  //   } else {
-  //     return <div>There are no users</div>;
-  //   }
-  // }
+  const onCancelHandler = () => {
+    setEditedUser(emptyUser);
+  };
+
+  function displayUsers() {
+    if (users.length !== 0) {
+      return users.map((user) => (
+        <UserItem
+          key={user.id}
+          user={user}
+          onDelete={() => deleteUserHandler()}
+          onEdit={() => editUserHandler(user)}
+        />
+      ));
+    } else {
+      return <div>There are no users</div>;
+    }
+  }
 
   return (
     <Box height="100vh" sx={{ marginTop: 10 }}>
@@ -86,14 +90,14 @@ const ListUserComponent = (props) => {
         {!isEditMode ? "Add User" : " Close "}
       </Button>
       {isEditMode && (
-        <div className="row">
+        <Box className="row" sx={{ display: "flex", flexDirection: "column" }}>
           <h2>Add a new user:</h2>
           <AddUser
             key="addUser"
             onSave={onSaveUserHandler}
             userToEdit={editedUser}
           />
-        </div>
+        </Box>
       )}
       <br></br>
       <div style={{ height: 400, width: "100%" }}>
@@ -105,6 +109,7 @@ const ListUserComponent = (props) => {
               user={user}
               onDelete={() => deleteUserHandler()}
               onEdit={() => editUserHandler(user)}
+              onCancel={() => onCancelHandler()}
             />
           ))}
         </Stack>

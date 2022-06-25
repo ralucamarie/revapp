@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Button from "@material-ui/core/Button";
@@ -8,6 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import NativeSelect from "@mui/material/NativeSelect";
+import Alert from "@mui/material/Alert";
 import { styled } from "@mui/material/styles";
 
 let emptyUser = {
@@ -19,18 +20,18 @@ let emptyUser = {
   repeatPassword: "",
   city: "",
   country: "",
-  role: "",
+  role: "USER",
 };
 
-let dbCreateUser = {
-  name: "",
-  surname: "",
-  email: "",
-  password: "",
-  city: "",
-  country: "",
-  role: "",
-};
+// let dbCreateUser = {
+//   name: "",
+//   surname: "",
+//   email: "",
+//   password: "",
+//   city: "",
+//   country: "",
+//   role: "",
+// };
 // user => {"email":"d@gmail.com","password":"123456","role":"20","name":"Raluca","surname":"Marie","city":"Cluj-Napoca","country":"Romania"}
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -53,10 +54,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddUser = ({ onSave, userToEdit }) => {
-  const [userToAdd, setUserToAdd] = useState(
-    userToEdit ? userToEdit : emptyUser
+const AddUser = ({ onSave, userToEdit, onCancel }) => {
+  const [formData, setFormData] = useState(
+    userToEdit
+      ? { ...userToEdit, password: "" }
+      : {
+          id: null,
+          name: "",
+          surname: "",
+          email: "",
+          password: "",
+          repeatPassword: "",
+          city: "",
+          country: "",
+          role: "USER",
+        }
   );
+  console.log("user to edit" + JSON.stringify(userToEdit));
+  console.log("form dada:" + JSON.stringify(formData));
 
   const [formErrors, setFormErrors] = useState({
     name: "",
@@ -70,20 +85,16 @@ const AddUser = ({ onSave, userToEdit }) => {
   const [surnameValid, setSurnameValid] = useState(false);
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
-  const [passwordsMatch, setPasswordsMatch] = useState(false);
+  // const [passwordsMatch, setPasswordsMatch] = useState(false);
 
   const [formValid, setFormValid] = useState(false);
 
   const classes = useStyles();
 
   const editField = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
     validateField(event.target.name, event.target.value);
-    setUserToAdd({ ...userToAdd, [event.target.name]: event.target.value });
   };
-
-  //TODO
-
-  //add RepeatPass to object and compare after.
 
   const validateField = (fieldName, value) => {
     let fieldValidationErrors = formErrors;
@@ -111,21 +122,21 @@ const AddUser = ({ onSave, userToEdit }) => {
           ? ""
           : "Password is too short";
         break;
-      case "repeatPassword":
-        console.log(
-          "Passw: ",
-          userToAdd.password,
-          "repeat pass :",
-          userToAdd.repeatPassword
-        );
-        if (userToAdd.password === userToAdd.repeatPassword)
-          setPasswordsMatch(true);
+      // case "repeatPassword":
+      //   console.log(
+      //     "Passw: ",
+      //     formData.password,
+      //     "repeat pass :",
+      //     formData.repeatPassword
+      //   );
+      //   if (formData.password === formData.repeatPassword)
+      //     setPasswordsMatch(true);
 
-        console.log(passwordsMatch);
-        fieldValidationErrors.repeatPassword = passwordsMatch
-          ? ""
-          : "Passwords don't match";
-        break;
+      //   console.log(passwordsMatch);
+      //   fieldValidationErrors.repeatPassword = passwordsMatch
+      //     ? ""
+      //     : "Passwords don't match";
+      //   break;
       default:
         break;
     }
@@ -134,36 +145,28 @@ const AddUser = ({ onSave, userToEdit }) => {
   };
 
   const validateForm = () => {
-    setFormValid(
-      nameValid && surnameValid && emailValid && passwordValid && passwordsMatch
-    );
+    setFormValid(nameValid && surnameValid && emailValid && passwordValid);
   };
 
   const cancel = () => {
-    setUserToAdd(emptyUser);
+    setFormData(emptyUser);
+    onCancel();
   };
 
   const saveUser = (e) => {
     e.preventDefault();
 
-    if (userToEdit) {
-      setUserToAdd(userToEdit);
+    console.log("user => " + JSON.stringify(formData));
+
+    if (!userToEdit && formValid) {
+      onSave(formData);
+      setFormData(emptyUser);
+      window.location.reload();
     }
-
-    console.log("user => " + JSON.stringify(userToAdd));
-    dbCreateUser.id = userToEdit ? userToEdit.id : null;
-    dbCreateUser.name = userToAdd.name;
-    dbCreateUser.surname = userToAdd.surname;
-    dbCreateUser.email = userToAdd.email;
-    dbCreateUser.city = userToAdd.city;
-    dbCreateUser.country = userToAdd.country;
-    dbCreateUser.password = userToAdd.password;
-    dbCreateUser.role = userToAdd.role ? userToAdd.role : "USER";
-
-    console.log("user => " + JSON.stringify(dbCreateUser));
-    if (formValid) {
-      onSave(dbCreateUser);
-      setUserToAdd(emptyUser);
+    if (userToEdit) {
+      onSave(formData);
+      setFormData(emptyUser);
+      window.location.reload();
     }
   };
   const ColorButton = styled(Button)(({ theme }) => ({
@@ -180,13 +183,7 @@ const AddUser = ({ onSave, userToEdit }) => {
       <CssBaseline />
       <div className={classes.paper}>
         <form className={classes.form} noValidate>
-          <Grid
-            container
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
-            spacing={2}
-          >
+          <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
               <FormControl fullWidth>
                 <InputLabel variant="standard" htmlFor="uncontrolled-native">
@@ -212,7 +209,7 @@ const AddUser = ({ onSave, userToEdit }) => {
                 variant="standard"
                 name="name"
                 className="form-control"
-                value={userToAdd.name}
+                value={formData.name}
                 onChange={editField}
                 error={formErrors?.name.length > 0}
                 helperText={formErrors?.name}
@@ -231,7 +228,7 @@ const AddUser = ({ onSave, userToEdit }) => {
                 variant="standard"
                 name="surname"
                 className="form-control"
-                value={userToAdd.surname}
+                value={formData.surname}
                 onChange={editField}
                 error={formErrors.surname.length > 0}
                 helperText={formErrors.surname}
@@ -246,7 +243,7 @@ const AddUser = ({ onSave, userToEdit }) => {
                 label="Email"
                 variant="standard"
                 className="form-control"
-                value={userToAdd.email}
+                value={formData.email}
                 onChange={editField}
                 error={formErrors.email.length > 0}
                 helperText={formErrors.email}
@@ -259,7 +256,7 @@ const AddUser = ({ onSave, userToEdit }) => {
                 label="Password"
                 variant="standard"
                 className="form-control"
-                value={userToAdd.password}
+                value={formData.password}
                 onChange={editField}
                 error={formErrors.password.length > 0}
                 helperText={formErrors.password}
@@ -272,7 +269,7 @@ const AddUser = ({ onSave, userToEdit }) => {
                 name="repeatPassword"
                 variant="standard"
                 className="form-control"
-                value={userToAdd.repeatPassword}
+                value={formData.repeatPassword}
                 onChange={editField}
                 error={formErrors.repeatPassword.length > 0}
                 helperText={formErrors.repeatPassword}
@@ -285,7 +282,7 @@ const AddUser = ({ onSave, userToEdit }) => {
                 name="city"
                 variant="standard"
                 className="form-control"
-                value={userToAdd.city}
+                value={formData.city}
                 onChange={editField}
               />
             </Grid>
@@ -296,7 +293,7 @@ const AddUser = ({ onSave, userToEdit }) => {
                 name="country"
                 variant="standard"
                 className="form-control"
-                value={userToAdd.country}
+                value={formData.country}
                 onChange={editField}
               />
             </Grid>
@@ -305,7 +302,6 @@ const AddUser = ({ onSave, userToEdit }) => {
                 variant="contained"
                 className="button"
                 onClick={saveUser}
-                color="#FF5D0C"
               >
                 Save
               </ColorButton>
