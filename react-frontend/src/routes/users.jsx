@@ -94,14 +94,14 @@ const ListUserComponent = (props) => {
         {!isEditMode ? "Add User" : " Close "}
       </Button>
       {isEditMode && (
-        <div className="row">
+        <Box className="row" sx={{ display: "flex", flexDirection: "column" }}>
           <h2>Add a new user:</h2>
           <AddUser
             key="addUser"
             onSave={onSaveUserHandler}
             userToEdit={editedUser}
           />
-        </div>
+        </Box>
       )}
       <br></br>
       <div style={{ height: 400, width: "100%" }}>

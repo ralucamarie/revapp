@@ -112,18 +112,6 @@ const Signup = () => {
       setSuccessMsg(false);
       setErrMsg("User was not created");
     }
-
-    //methods used with userContext:
-    // const data = await signupUser(formData);
-    // if (data.success) {
-    //   e.target.reset();
-    //   setSuccessMsg("You have successfully signed-up.");
-    //   setErrMsg(false);
-    //   <Navigate to="/login" replace={true} />;
-    // } else if (!data.success && data.message) {
-    //   setSuccessMsg(false);
-    //   setErrMsg(data.message);
-    // }
   };
 
   return (
@@ -268,56 +256,3 @@ const Signup = () => {
 
 export default Signup;
 
-// const useStyles = makeStyles((theme) => ({
-//   palette: {
-//     secondary: {
-//       light: "#A08E95",
-//       main: "#A08E95",
-//       // dark: will be calculated from palette.secondary.main,
-//       contrastText: "#ffcc00",
-//     },
-//   },
-//   "@global": {
-//     body: {
-//       backgroundColor: theme.palette.common.white,
-//     },
-
-//     flexDirection: "column",
-//     alignItems: "center",
-//   },
-
-//   avatar: {
-//     margin: theme.spacing(1),
-//     backgroundColor: theme.palette.secondary.main,
-//   },
-//   form: {
-//     width: "100%", // Fix IE 11 issue.
-//     marginTop: theme.spacing(3),
-//   },
-//   submit: {
-//     margin: theme.spacing(3, 0, 2),
-//   },
-// }));
-
-// const Signup = () => {
-//   const classes = useStyles();
-//   return (
-//     <Box
-//       height="100vh"
-//       display="flex"
-//       flexDirection="column"
-//       sx={{ marginTop: 10 }}
-//       alignItems="center"
-//     >
-//       <Avatar className={classes.avatar} sx={{ bgcolor: "#FF5D0C" }}>
-//         <LockIcon />
-//       </Avatar>
-//       <Typography component="h1" variant="h5">
-//         Sign up
-//       </Typography>
-//       <AddUser></AddUser>
-//     </Box>
-//   );
-// };
-
-// export default Signup;
