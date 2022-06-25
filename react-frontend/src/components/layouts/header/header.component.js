@@ -12,6 +12,7 @@ import logo from "../../../static/images/logo.png";
 import userAvatar from "../../../static/images/avatar.jpg";
 import { useContext } from "react";
 import { UserContext } from "../../../context/UserContext";
+import Button from "@material-ui/core/Button";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -87,10 +88,9 @@ export default function Header() {
                     </Box>
                   </Link>
                 </StyledLinks>
-
-                <button onClick={logout} className="logout">
-                  Logout
-                </button>
+                <Button onClick={logout}  variant="contained" color="primary">
+                  Sign out
+                </Button>
               </>
             )}
           </Box>

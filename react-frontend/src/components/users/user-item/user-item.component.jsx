@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 
 const UserItem = (props) => {
   const user = props.user;
-  const { id, name, surname, email, city, country, role } = user;
+  const { name, surname, email, city, country, role } = user;
 
   const deleteUser = (id) => {
     userService.deleteUser(id);

@@ -1,40 +1,18 @@
 import * as React from "react";
-
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import { useState } from "react";
 import { Typography } from "@material-ui/core";
 import { Divider } from "@material-ui/core";
 import { Rating } from "@mui/material";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-
-
 import "./review.styles.css";
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 
-//TODO - afiseaza scorul total al unui shop langa numele lui, apoi ratingul e care l-a dat userul
-const Review = ({ propReview, onSave }) => {
-  const { content, rating, review_date, shop_ID, shop_name, title} = propReview;
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [editedReview, setEditedReview] = useState(propReview);
 
-  const editReview = () => {
-    setIsEditMode(true);
-  };
-
-  const saveReview = () => {
-    onSave(editedReview);
-    setIsEditMode(false);
-  };
-
-  const handleChange = (event) => {
-    setEditedReview({
-      ...editedReview,
-      [event.target.name]: event.target.value,
-    });
-  };
+const ReviewForShop = ({ propReview }) => {
+const {title, content, rating, review_date, user_name, user_surname} = propReview;
 
   return (
     <React.Fragment>
@@ -48,7 +26,6 @@ const Review = ({ propReview, onSave }) => {
           <Box display="flex" flexDirection="column" sx={{ p: 0.1 }}>
             <Box display="flex" justifyContent="space-between" sx={{}}>
               <Typography gutterBottom component="div">
-                {/* To be replaced with shop name */}
                 <Box
                   sx={{
                     fontWeight: "bold",
@@ -58,7 +35,7 @@ const Review = ({ propReview, onSave }) => {
                     textTransform: "uppercase",
                   }}
                 >
-                  {shop_name} 
+                  {user_name} {user_surname}
                 </Box>
               </Typography>
               <Typography gutterBottom component="div">
@@ -72,10 +49,7 @@ const Review = ({ propReview, onSave }) => {
             </Box>
             <Divider />
           </Box>
-
-          {/* Content that can be eddited: */}
-          {!isEditMode ? (
-            <>
+            <Box>
               <Typography gutterBottom component="div">
                 <Box
                   sx={{
@@ -101,42 +75,7 @@ const Review = ({ propReview, onSave }) => {
                   {content}
                 </Box>
               </Typography>
-            </>
-          ) : (
-            <Box
-              component="form"
-              sx={{
-                "& .MuiTextField-root": { m: 1, width: "98%" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <div className="formContainer">
-                <TextField
-                  fullWidth
-                  id="form-title"
-                  label="Title"
-                  name="title"
-                  multiline
-                  maxRows={4}
-                  value={editedReview.title}
-                  onChange={handleChange}
-                />
-                <TextField
-                  id="form-content"
-                  label="Content"
-                  name="content"
-                  multiline
-                  value={editedReview.content}
-                  rows={4}
-                  onChange={handleChange}
-                  fullWidth
-                />
-              </div>
             </Box>
-          )}
-
-          {/* end of edited content */}
           <Divider />
           <Box display="flex" justifyContent="space-between" sx={{}}>
             <Typography component="div">
@@ -145,24 +84,18 @@ const Review = ({ propReview, onSave }) => {
               </Box>
             </Typography>
             <Box>
-              <Button
-                variant="text"
-                className="edit"
-                onClick={isEditMode ? saveReview : editReview}
-              >
-                {isEditMode ? "save" : "edit"}
-              </Button>
-              <Button variant="text" className="goToShop">
-                <Link underline="none" href={`/shop-details/${shop_ID}`}>
-                 GO TO SHOP
-                </Link>
-              </Button>
+                <Button>
+                    <ThumbUpIcon color="primary"/>
+                </Button>
+                <Button>
+                    <ThumbDownIcon color="primary"/>
+                </Button>
             </Box>
-          </Box>
+            </Box>
         </Box>
       </Paper>
     </React.Fragment>
   );
 };
 
-export default Review;
+export default ReviewForShop;

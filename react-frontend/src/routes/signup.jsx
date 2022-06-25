@@ -1,18 +1,14 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import AddUser from "../components/users/add-user/add-user.component";
 import Avatar from "@mui/material/Avatar";
 import LockIcon from "@mui/icons-material/Lock";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import InputLabel from "@mui/material/InputLabel";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import NativeSelect from "@mui/material/NativeSelect";
-import FormControl from "@mui/material/FormControl";
 import { styled } from "@mui/material/styles";
 import Alert from "@mui/material/Alert";
 import { Navigate } from "react-router-dom";
@@ -90,12 +86,6 @@ const Signup = () => {
 
   const submitForm = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    // if (!Object.values(formData).every((val) => val === "")) {
-    //   setSuccessMsg(false);
-    //   setErrMsg("Please Fill in all Required Fields!");
-    //   return;
-    // }
 
     if (formData.password !== formData.repeatPassword) {
       setSuccessMsg(false);
@@ -255,4 +245,3 @@ const Signup = () => {
 };
 
 export default Signup;
-

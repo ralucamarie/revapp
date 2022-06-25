@@ -21,7 +21,7 @@ function App() {
         <Header></Header>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
+          {/* <Route path="/home" element={<Home />} /> */}
           {user && user.role_ID === 3 && (
             <Route path="/users" element={<Users />} />
           )}

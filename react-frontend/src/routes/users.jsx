@@ -4,7 +4,6 @@ import UserItem from "../components/users/user-item/user-item.component";
 import AddUser from "../components/users/add-user/add-user.component";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { DataGrid } from "@mui/x-data-grid";
 import Stack from "@mui/material/Stack";
 
 let emptyUser = {
@@ -22,8 +21,6 @@ const ListUserComponent = (props) => {
   const [users, setUsers] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editedUser, setEditedUser] = useState(emptyUser);
-  const [cities, setCities] = useState([]);
-  const [countries, setCountries] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -31,22 +28,17 @@ const ListUserComponent = (props) => {
 
   const fetchData = () => {
     UserService.getUsers().then((res) => {
-      console.log(res.data);
       setUsers(res.data);
     });
   };
 
   const onSaveUserHandler = (newUser) => {
-    console.log(newUser);
     if (editedUser.id) {
-      console.log("Edited user= " + editedUser);
       const newUserList = users.map((user) =>
         user.id !== newUser.id ? user : newUser
       );
       UserService.updateUser(newUser).then(setUsers(newUserList));
     } else {
-      console.log("User to add " + newUser);
-
       UserService.createUser(newUser).then(() => fetchData());
     }
 
