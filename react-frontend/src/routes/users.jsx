@@ -51,8 +51,8 @@ const ListUserComponent = (props) => {
     }
 
     setEditedUser({});
-    // setIsEditMode(false);
-    // alert(`Users updated.`);
+    setIsEditMode(false);
+    alert(`Users updated.`);
   };
   const editUserHandler = (user) => {
     setIsEditMode(true);
@@ -67,6 +67,10 @@ const ListUserComponent = (props) => {
 
   const addUserOnClick = () => {
     setIsEditMode(!isEditMode);
+  };
+
+  const onCancelHandler = () => {
+    setEditedUser(emptyUser);
   };
 
   function displayUsers() {
@@ -113,6 +117,7 @@ const ListUserComponent = (props) => {
               user={user}
               onDelete={() => deleteUserHandler()}
               onEdit={() => editUserHandler(user)}
+              onCancel={() => onCancelHandler()}
             />
           ))}
         </Stack>

@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddUser = ({ onSave, userToEdit }) => {
+const AddUser = ({ onSave, userToEdit, onCancel }) => {
   const [formData, setFormData] = useState(
     userToEdit
       ? { ...userToEdit, password: "" }
@@ -70,7 +70,7 @@ const AddUser = ({ onSave, userToEdit }) => {
           role: "USER",
         }
   );
-  console.log("user to add" + JSON.stringify(userToEdit));
+  console.log("user to edit" + JSON.stringify(userToEdit));
   console.log("form dada:" + JSON.stringify(formData));
 
   const [formErrors, setFormErrors] = useState({
@@ -150,25 +150,23 @@ const AddUser = ({ onSave, userToEdit }) => {
 
   const cancel = () => {
     setFormData(emptyUser);
+    onCancel();
   };
 
   const saveUser = (e) => {
     e.preventDefault();
 
-    console.log("user => " + JSON.stringify(userToEdit));
-    // dbCreateUser.id = userToEdit ? userToEdit.id : null;
-    // dbCreateUser.name = userToAdd.name;
-    // dbCreateUser.surname = userToAdd.surname;
-    // dbCreateUser.email = userToAdd.email;
-    // dbCreateUser.city = userToAdd.city;
-    // dbCreateUser.country = userToAdd.country;
-    // dbCreateUser.password = userToAdd.password;
-    // dbCreateUser.role = userToAdd.role ? userToAdd.role : "USER";
-
     console.log("user => " + JSON.stringify(formData));
-    if (formValid) {
+
+    if (!userToEdit && formValid) {
       onSave(formData);
       setFormData(emptyUser);
+      window.location.reload();
+    }
+    if (userToEdit) {
+      onSave(formData);
+      setFormData(emptyUser);
+      window.location.reload();
     }
   };
   const ColorButton = styled(Button)(({ theme }) => ({
