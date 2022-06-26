@@ -96,7 +96,7 @@ const Login = () => {
   if (redirect) return <Navigate to="/" replace={true} />;
   return (
     <Box
-      height="100vh"
+      height = "80vh"
       display="flex"
       flexDirection="column"
       sx={{ marginTop: 10 }}

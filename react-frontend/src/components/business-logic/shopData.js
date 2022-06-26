@@ -81,7 +81,10 @@ export function populateShopWithProperties(shops, categories, reviews, searchCat
           }
            
             shopWithProperties.numberOfReview = countReview
-            shopWithProperties.category = categories.find(element => element.id === shop.category_ID).category_name
+            let category = categories.find(element => element.id === shop.category_ID)
+            if(category && category.category_name !== "") {
+              shopWithProperties.category = category.category_name;
+            }
             shopWithProperties.name = shop.shop_name
             shopWithProperties.websiteUrl = shop.website_url
             shopWithProperties.id = shop.id

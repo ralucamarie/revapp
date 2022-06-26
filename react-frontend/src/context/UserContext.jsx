@@ -76,6 +76,7 @@ export const UserContextProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("loginToken");
     setUser(null);
+    window.location.href ='/';
   };
 
   return (

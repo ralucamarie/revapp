@@ -106,7 +106,7 @@ const Signup = () => {
 
   return (
     <Box
-      height="100vh"
+      height = "80vh"
       display="flex"
       flexDirection="column"
       sx={{ marginTop: 10 }}

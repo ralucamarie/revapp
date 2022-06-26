@@ -10,6 +10,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import ListItemButton from "@mui/material/Divider";
 import { getAddressById } from "../../../services/address.service";
+import userAvatar from "../../../static/images/avatar.jpg";
 
 const ViewUser = ({ user }) => {
   const [address, setAddress] = useState({})
@@ -46,7 +47,8 @@ const ViewUser = ({ user }) => {
               }}
               component="img"
               alt="User Image"
-              src="https://www.fillmurray.com/400/200"
+              src={userAvatar}
+              // src="https://www.fillmurray.com/400/200"
             />
             <Box
               sx={{

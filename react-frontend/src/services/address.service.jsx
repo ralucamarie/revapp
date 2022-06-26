@@ -1,6 +1,6 @@
 import axios from "axios";
 import {ADDRESS_API_URL} from "./api_ulrs_constants.jsx";
-console.log(ADDRESS_API_URL);
+
 export function getAddresses() {
   return axios.get(`${ADDRESS_API_URL}/read.php`, {
     headers: {

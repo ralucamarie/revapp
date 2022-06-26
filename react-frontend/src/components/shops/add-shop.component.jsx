@@ -53,7 +53,7 @@ const defaultShop = {
 };
 
 // to add { onSaveShop } in props
-export default function AddShop() {
+export default function AddShop(props) {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
@@ -119,7 +119,11 @@ export default function AddShop() {
 
   ////////////////////////
   const handleOpen = () => {
-    setOpen(true);
+    if(!props.userId)  {
+      window.location.href ="/login";
+  } else {
+      setOpen(true);
+  }
   };
   const handleClose = () => {
     setOpen(false);

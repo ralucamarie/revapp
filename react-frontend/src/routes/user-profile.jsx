@@ -45,7 +45,6 @@ const UserProfile = () => {
 
   return (
     <Box
-      height="100vh"
       display="flex"
       flexDirection="column"
       sx={{ marginTop: 10 }}

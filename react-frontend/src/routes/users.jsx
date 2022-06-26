@@ -81,7 +81,7 @@ const ListUserComponent = (props) => {
   }
 
   return (
-    <Box height="100vh" sx={{ marginTop: 10 }}>
+    <Box sx={{ marginTop: 10 }}>
       <Button
         variant="contained"
         className="button"

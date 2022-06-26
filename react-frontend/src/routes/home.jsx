@@ -7,12 +7,15 @@ import { getCategories } from "../services/category.service";
 import ReviewService from "../services/review.service";
 import { populateShopWithProperties } from "../components/business-logic/shopData";
 import AddShop from "../components/shops/add-shop.component";
+import { useContext } from "react";
+import { UserContext } from "../../src/context/UserContext";
 
 const Home = () => {
   const [shops, setShops] = useState([]);
   const [categories, setCategories] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [searchCategoryName, setSearchCategoryName] = useState("");
+  const { user } = useContext(UserContext);
   let shopsToDisplay = [];
 
   useEffect(() => {
@@ -51,13 +54,13 @@ const Home = () => {
 
   return (
     <Box
-      height="100vh"
       display="flex"
       flexDirection="row"
       alignItems={"top"}
       alignContent={"top"}
       justifyItems={"space-between"}
-      m={"15%"}
+      m={"9%"}
+      ml={"16%"}
     >
       <CategoryListMenu
         parentCallback={categoryNameCallBack}
@@ -69,7 +72,9 @@ const Home = () => {
         alignContent={"top"}
         justifyItems={"space-between"}
       >
-        <AddShop/> 
+        <Box ml={"2.5%"}>
+          <AddShop userId = {user !== null ? user.id : null}/>
+        </Box>
         <ReviewShopCard shopList={shopsToDisplay[0].reverse()}></ReviewShopCard>
       </Box>
     </Box>

@@ -21,7 +21,6 @@ function App() {
         <Header></Header>
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/home" element={<Home />} /> */}
           {user && user.role_ID === 3 && (
             <Route path="/users" element={<Users />} />
           )}
@@ -35,8 +34,8 @@ function App() {
           <Route path="/shop-details/:shopId" element={<ShopDetails />} />
         </Routes>
         <Outlet />
+        <Footer ></Footer>
       </div>
-      <Footer></Footer>
     </>
   );
 }

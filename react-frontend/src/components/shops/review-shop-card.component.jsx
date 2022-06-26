@@ -111,7 +111,7 @@ export const ReviewShopCard = (props) => {
           )
         })}
         </List>
-
+      
         <Pagination
           count={count}
           size="large"
@@ -119,7 +119,6 @@ export const ReviewShopCard = (props) => {
           variant="outlined"
           shape="rounded"
           onChange={handleChange}
-
         />
       </Box>
     );

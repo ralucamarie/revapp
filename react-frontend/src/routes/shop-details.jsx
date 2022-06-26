@@ -11,7 +11,6 @@ import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../../src/context/UserContext";
 import AddReview from "../../src/components/review/add-review.component";
-import Link from "@mui/material/Link";
 import { Pagination } from "@material-ui/lab";
 import usePagination from "../../src/components/business-logic/pagination";
 
@@ -20,7 +19,7 @@ const ShopDetails = () => {
   const [reviews, setReviews] = useState([]);
   const {shopId} = useParams();
   const { user } = useContext(UserContext);
-console.log(user)
+
   useEffect(() => {
     getShopsById(shopId).then((res) => {
       setShopDetails(res.data);
@@ -45,7 +44,6 @@ console.log(user)
 
   return (
     <Box
-      height="100vh"
       display="flex"
       flexDirection="column"
       sx={{ marginTop: 10 }}

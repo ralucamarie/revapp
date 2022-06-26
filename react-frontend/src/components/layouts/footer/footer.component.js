@@ -13,7 +13,7 @@ function Copyright() {
     <React.Fragment>
       {"© "}
       <Link color="inherit" href="#">
-        Online Shops Reviews
+        Revapp
       </Link>{" "}
       {new Date().getFullYear()}
     </React.Fragment>
@@ -34,10 +34,11 @@ const iconStyle = {
 
 export default function Footer() {
   return (
-    <Typography component="footer" sx={{ display: "flex", bgcolor: "dark" }}>
-      <Container sx={{ my: 3, display: "flex" }}>
-        <Grid container spacing={5}>
-          <Grid item xs={6} sm={4} md={3}>
+    <Typography component="footer" sx={{ display: "flex"}}>
+      <Container color="primary" sx={{ my: 3, display: "flex", justifyContent: "center",
+      alignItems: "center"}}>
+        <Grid container md={12} spacing={5}>
+          <Grid item xs={12} sm={12} md={6}>
             <Grid
               container
               direction="column"
@@ -61,7 +62,7 @@ export default function Footer() {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={6} sm={4} md={2}>
+          <Grid item xs={12} sm={12} md={6}>
             <Typography variant="h6" marked="left" gutterBottom>
               Legal
             </Typography>
@@ -74,12 +75,7 @@ export default function Footer() {
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={6} sm={8} md={4}>
-            <Typography variant="h6" marked="left" gutterBottom>
-              Language
-            </Typography>
-          </Grid>
-          <Grid item>
+          <Grid item xs={12} sm={12} md={12}>
             <Typography variant="caption" sx={{ ml: 2 }}>
               {"Icons made by "}
               <Link

@@ -1,6 +1,6 @@
 import axios from "axios";
 import {SHOP_API_URL} from "./api_ulrs_constants.jsx";
-console.log(SHOP_API_URL);
+
 export function getShops() {
   return axios.get(`${SHOP_API_URL}/read.php`, {
     headers: {
